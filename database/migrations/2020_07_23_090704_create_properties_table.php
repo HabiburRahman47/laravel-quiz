@@ -20,7 +20,7 @@ class CreatePropertiesTable extends Migration
             $table->text('description')->nullable();
             $table->unsignedBigInteger('property_type_id')->unsigned()->index();
             $table->foreign('property_type_id')->references('id')->on('property_types')->onDelete('cascade');
-            $table->tinyInteger('visibility')->default('1');
+            $table->tinyInteger('visibility')->default('0');
             $table->unsignedBigInteger('created_by_id')->index();
             $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
