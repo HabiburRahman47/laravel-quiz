@@ -43,10 +43,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
-
-        //
     }
 
     /**
@@ -72,9 +69,58 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+        $this->mapApiV1Routes();
+        $this->mapApiFallBackRoute();
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiV1Routes()
+    {
+        Route::prefix('api/v1/admin')
             ->middleware('api')
             ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
+            ->name('api.v1.admin.')
+            ->group(function ($router) {
+                foreach (glob(base_path('routes/api/v1/admin/*.php')) as $eachRoute) {
+                    require $eachRoute;
+                }
+            });
+
+        Route::prefix('api/v1/auth')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->name('api.v1.auth.')
+            ->group(function ($router) {
+                foreach (glob(base_path('routes/api/v1/auth/*.php')) as $eachRoute) {
+                    require $eachRoute;
+                }
+            });
+
+        Route::prefix('api/v1/site')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->name('api.v1.site.')
+            ->group(
+                function ($router) {
+                    foreach (glob(base_path('routes/api/v1/site/*.php')) as $eachRoute) {
+                        require $eachRoute;
+                    }
+                }
+            );
+    }
+
+    protected function mapApiFallBackRoute(){
+        Route::prefix('api')
+            ->middleware('api')->group(
+                function ($router) {
+                    $router->fallback("$this->namespace\API\V1\FallbackController");
+                }
+            );
     }
 }
