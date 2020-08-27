@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Admin\Property;
 
 use App\Http\Controllers\API\V1\Admin\AdminAPIBaseController;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\Admin\Property\PropertyTypeRequest;
+use App\Http\Requests\API\V1\Admin\Property\StorePropertyTypeRequest;
 use App\Http\Resources\API\V1\Admin\Property\PropertyTypeCollection;
 use App\Http\Resources\API\V1\Admin\Property\PropertyTypeResource;
 use App\Models\V1\Property\PropertyType;
@@ -31,7 +31,7 @@ class PropertyTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PropertyTypeRequest $request)
+    public function store(StorePropertyTypeRequest $request)
     {
         //$this->makeFakeLogin();
         $created_by_id = auth()->user()->id;
@@ -66,7 +66,7 @@ class PropertyTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PropertyTypeRequest $request, $id)
+    public function update(StorePropertyTypeRequest $request, $id)
     {
         $propertyType=PropertyType::findOrFail($id);
         $propertyType->fill($request->all());

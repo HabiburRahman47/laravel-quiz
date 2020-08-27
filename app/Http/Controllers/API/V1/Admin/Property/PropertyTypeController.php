@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\V1\Admin\Property;
 
 use App\Http\Controllers\API\V1\Admin\AdminAPIBaseController;
-use App\Http\Requests\API\V1\Admin\Property\PropertyTypeRequest;
+use App\Http\Requests\API\V1\Admin\Property\StorePropertyTypeRequest;
+use App\Http\Requests\API\V1\Admin\Property\UpdatePropertyTypeRequest;
+use App\Http\Resources\API\V1\Admin\Property\PropertyResource;
 use App\Http\Resources\API\V1\Admin\Property\PropertyTypeCollection;
 use App\Http\Resources\API\V1\Admin\Property\PropertyTypeResource;
 use App\Models\V1\Property\PropertyType;
@@ -14,103 +16,85 @@ class PropertyTypeController extends AdminAPIBaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return PropertyTypeCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        $propertyTypes=PropertyType::all();
+        $propertyTypes = PropertyType::with('properties')
+            ->applyKeywordSearch()
+            ->applySorting()
+            ->paginate(10);
         return new PropertyTypeCollection($propertyTypes);
     }
-
-
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StorePropertyTypeRequest $request
+     * @return PropertyTypeResource
      */
-    public function store(PropertyTypeRequest $request)
+    public function store(StorePropertyTypeRequest $request)
     {
-        //$this->makeFakeLogin();
         $created_by_id = auth()->user()->id;
-
-        // $property=PropertyType::create($request->all());
-        $propertyType= new PropertyType();
+        $propertyType = new PropertyType();
         $propertyType->fill($request->all());
         $propertyType->created_by_id = $created_by_id;
         $propertyType->save();
-        //return response()->json($propertyType);
         return new PropertyTypeResource($propertyType);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return PropertyTypeResource
      */
     public function show($id)
     {
-        $propertyType=PropertyType::with('properties.events.eventType')->findOrFail($id);
+        $propertyType = PropertyType::with('properties')->findOrFail($id);
         return new PropertyTypeResource($propertyType);
-        //$propertyType=PropertyType::with('properties.owner')->findOrFail($id);
-        //return new PropertyTypeResource($propertyType);
     }
 
     /**
-
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdatePropertyTypeRequest $request
+     * @param  int $id
+     * @return PropertyTypeResource
      */
-    public function update(PropertyTypeRequest $request, $id)
+    public function update(UpdatePropertyTypeRequest $request, $id)
     {
-        $propertyType=PropertyType::findOrFail($id);
+        $propertyType = PropertyType::findOrFail($id);
         $propertyType->fill($request->all());
         $propertyType->save();
         return new PropertyTypeResource($propertyType);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage permanently.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    //PERMANENT DELETE
     public function destroy($id)
     {
-        //$propertyType=PropertyType::onlyTrashed()->where('id',$id)->forceDelete();
-        $propertyType=PropertyType::findOrFail($id);
+        $propertyType = PropertyType::findOrFail($id);
         $propertyType->forceDelete();
-        return response('PERMANENTLY DELETED');
+        return response()->noContent();
     }
 
-    //soft delete
     public function trash($id)
     {
-        $propertyType=PropertyType::find($id);
+        $propertyType = PropertyType::findOrFail($id);
         $propertyType->delete();
         return response()->noContent();
     }
 
-        //restore data
     public function restore($id)
     {
-        $propertyType=PropertyType::withTrashed()->where('id',$id)->restore();
-        return response('SUCCESSFULLY RESTORED');
-    }
-
-
-
-    //searching anything
-    public function search(Request $request)
-    {
-        $propertyTypeName=$request->get('name');
-        $propertyTypes=PropertyType::where('name','LIKE','%'.$propertyTypeName.'%')->orderBy('id')->paginate(2);
-        return response($propertyTypes);
+        $propertyType = PropertyType::withTrashed()->where('id', $id)->restore();
+        //withTrashed findOrFail
+        return new PropertyTypeResource($propertyType);
     }
 }

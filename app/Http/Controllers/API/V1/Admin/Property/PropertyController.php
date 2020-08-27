@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\API\V1\Admin\Property;
 
 use App\Http\Controllers\API\V1\Admin\AdminAPIBaseController;
-use App\Http\Requests\API\V1\Admin\Event\EventRequest;
 use App\Http\Requests\API\V1\Admin\Property\PropertyRequest;
-use App\Http\Resources\API\V1\Admin\Event\EventResource;
 use App\Http\Resources\API\V1\Admin\Property\PropertyCollection;
 use App\Http\Resources\API\V1\Admin\Property\PropertyResource;
-use App\Models\V1\Event\Event;
 use App\Models\V1\Property\Property;
 use App\Models\V1\User\User;
 use Illuminate\Http\Request;
@@ -22,8 +19,8 @@ class PropertyController extends AdminAPIBaseController
      */
     public function index()
     {
-        $index = Property::with('propertyType')->get();
-        return new PropertyCollection($index);
+        $properties = Property::with('propertyType')->get();
+        return new PropertyCollection($properties);
     }
 
 
@@ -35,7 +32,6 @@ class PropertyController extends AdminAPIBaseController
      */
     public function store(PropertyRequest $request)
     {
-        //$this->makeFakeLogin();
         $created_by_id = auth()->user()->id;
         $property = new Property();
         $property->fill($request->all());
@@ -52,7 +48,7 @@ class PropertyController extends AdminAPIBaseController
      */
     public function show($id)
     {
-        $property = Property::with('propertyType','events.eventType')->findOrFail($id);
+        $property = Property::with('propertyType', 'events.eventType')->findOrFail($id);
         return new PropertyResource($property);
     }
 
@@ -75,14 +71,14 @@ class PropertyController extends AdminAPIBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     //PERMANENT DELETE
     public function destroy($id)
     {
         //$property = Property::onlyTrashed()->where('id', $id)->forceDelete();
-        $property=Property::findOrFail($id);
+        $property = Property::findOrFail($id);
         $property->forceDelete();
         return response('PERMANENTLY DELETED');
     }
@@ -112,37 +108,4 @@ class PropertyController extends AdminAPIBaseController
         return response($properties);
     }
 
-    //pivot table
-
-    public function attachPropertyToUser($propertyId, $userId)
-    {
-        $property = Property::find($propertyId);
-        $user = User::find($userId);
-        $property->users()->attach($user, ['permission' => 'manage events']);
-
-        return response('Attachment Successful');
-    }
-
-    public function detachPropertyToUser($propertyId, $userId)
-    {
-        $property = Property::find($propertyId);
-        $user = User::find($userId);
-        $property->users()->detach($user);
-
-        return response('Detachment Successful');
-    }
-
-    //join: property->event
-    public function addEvent(EventRequest $request, $propertyId)
-    {
-        //$this->makeFakeLogin();
-        $created_by_id = auth()->user()->id;
-        $event = new Event();
-        $event->fill($request->all());
-        $event->created_by_id = $created_by_id;
-        $property = Property::findOrFail($propertyId);
-        $property->events()->save($event);
-        $event->save();
-        return new EventResource($event);
-    }
 }

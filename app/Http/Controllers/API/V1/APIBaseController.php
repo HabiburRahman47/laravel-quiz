@@ -14,15 +14,6 @@ class APIBaseController extends Controller
     public function __construct()
     {
         //seamlessly using - auth('api')->attempt($cred) => auth()->attempt($cred)
-        // auth()->setDefaultDriver('api');
-
-        $fakeUserId = 1;
-        $this->makeFakeLogin($fakeUserId);
-
-    }
-
-    public function makeFakeLogin($fakeUserId)
-    {
-        auth()->loginUsingId($fakeUserId);
+         auth()->setDefaultDriver('api');
     }
 }
