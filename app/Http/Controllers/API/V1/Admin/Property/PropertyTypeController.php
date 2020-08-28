@@ -22,9 +22,11 @@ class PropertyTypeController extends AdminAPIBaseController
     public function index(Request $request)
     {
         $propertyTypes = PropertyType::with('properties')
-            ->applyKeywordSearch()
-            ->applySorting()
+            ->applyTrashFilterAble()
+            ->applyKeywordSearchAble()
+            ->applySortAble()
             ->paginate(10);
+
         return new PropertyTypeCollection($propertyTypes);
     }
 
@@ -52,7 +54,7 @@ class PropertyTypeController extends AdminAPIBaseController
      */
     public function show($id)
     {
-        $propertyType = PropertyType::with('properties')->findOrFail($id);
+        $propertyType = PropertyType::with('properties')->applyTrashFilterAble()->findOrFail($id);
         return new PropertyTypeResource($propertyType);
     }
 
@@ -84,6 +86,12 @@ class PropertyTypeController extends AdminAPIBaseController
         return response()->noContent();
     }
 
+    /**
+     * Trash the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
     public function trash($id)
     {
         $propertyType = PropertyType::findOrFail($id);
@@ -91,9 +99,17 @@ class PropertyTypeController extends AdminAPIBaseController
         return response()->noContent();
     }
 
+    /**
+     * Restore the specified resource.
+     *
+     * @param  int $id
+     * @return PropertyTypeResource
+     */
     public function restore($id)
     {
-        $propertyType = PropertyType::withTrashed()->where('id', $id)->restore();
+        $propertyType = PropertyType::withTrashed()->findOrFail($id);
+        $propertyType->restore();
+//
         //withTrashed findOrFail
         return new PropertyTypeResource($propertyType);
     }

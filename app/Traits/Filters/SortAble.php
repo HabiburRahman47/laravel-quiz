@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Filters;
 
 use Illuminate\Support\Str;
 
-trait Sortable
+trait SortAble
 {
     /**
      * Checks if a column is sortable
@@ -35,11 +35,14 @@ trait Sortable
         return $this->isColumnSortable($column) ? $query->orderBy($column, $sortDirection) : $query->latest();
     }
 
-    public function scopeApplySorting($query)
+    public function scopeApplySortAble($query, $column = null, $sortDirection = null)
     {
-        $column = request()->input('sort_by');
-        $sortDirection = request()->input('sort_direction');
-
+        if (empty($column)) {
+            $column = request()->input('sort_by');
+        }
+        if (empty($sortDirection)) {
+            $sortDirection = request()->input('sort_direction');
+        }
         if (!empty($column) && !empty($sortDirection)) {
             return $this->sortColumnBy($query, $column, $sortDirection);
         }

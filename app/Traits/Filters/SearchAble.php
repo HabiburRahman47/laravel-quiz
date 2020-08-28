@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Filters;
 
 use Illuminate\Http\Request;
 
@@ -10,13 +10,17 @@ trait SearchAble
     /**
      * The attributes that are simply searchable using query as &search_keyword=keyword.
      *
-     * @var array
+     *
+     * @param $query
+     * @param null $searchKeyword
      * @return mixed
      */
 
-    public function scopeApplyKeywordSearch($query)
+    public function scopeApplyKeywordSearchAble($query, $searchKeyword = null)
     {
-        $searchKeyword = request()->get("search_keyword");
+        if (empty($searchKeyword)) {
+            $searchKeyword = request()->input("search_keyword");
+        }
         return $query->where(function ($q) use ($searchKeyword) {
 
             for ($i = 0; $i < sizeof($this->searchable); $i++) {
@@ -30,5 +34,4 @@ trait SearchAble
             return $q;
         });
     }
-
 }
