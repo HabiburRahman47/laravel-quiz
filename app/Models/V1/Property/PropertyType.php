@@ -5,6 +5,7 @@ namespace App\Models\V1\Property;
 use App\Models\V1\User\User;
 
 
+use App\Traits\Filters\PaginateAble;
 use App\Traits\Filters\SearchAble;
 use App\Traits\Filters\SortAble;
 use App\Traits\Filters\TrashFilterAble;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PropertyType extends Model
 {
-    use SearchAble, SortAble, TrashFilterAble, SoftDeletes;
+    use SearchAble, SortAble, TrashFilterAble, PaginateAble, SoftDeletes;
 
     protected $fillable = [
         'name', 'description',

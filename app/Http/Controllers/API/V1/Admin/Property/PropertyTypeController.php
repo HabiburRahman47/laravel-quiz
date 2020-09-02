@@ -25,7 +25,7 @@ class PropertyTypeController extends AdminAPIBaseController
             ->applyTrashFilterAble()
             ->applyKeywordSearchAble()
             ->applySortAble()
-            ->paginate(10);
+            ->applyPaginateAble();
 
         return new PropertyTypeCollection($propertyTypes);
     }
