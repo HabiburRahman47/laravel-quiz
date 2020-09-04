@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['get.menu']], function () {
+Auth::routes(['register' => false]);
+Route::group(['middleware' => ['auth', 'get.menu']], function () {
     Route::get('/', function () {
         return view('admin.dashboard');
     });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

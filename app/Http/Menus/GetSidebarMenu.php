@@ -24,14 +24,12 @@ class GetSidebarMenu implements MenuInterface
 
     private function getMenuFromDB($menuId, $menuName)
     {
-        if ($menuId == 1) {
-            $this->menu = $this->getLeftMenu();
-        }
+        $this->menu = $this->getAppMenu($menuId);
     }
 
-    private function getLeftMenu(): Collection
+    private function getAppMenu($menuId): Collection
     {
-        $menuId = 1;
+        $menuToBuild = null;
         $dashboard = ["id" => 1, "parent_id" => null, "name" => "Dashboard", "href" => "/", "icon" => "cil-speedometer", "slug" => "link"];
         //
         $settings = ["id" => 10, "parent_id" => null, "name" => "Settings", "href" => null, "icon" => "cil-calculator", "slug" => "dropdown"];
@@ -41,9 +39,16 @@ class GetSidebarMenu implements MenuInterface
         $themeSection = ["id" => 19, "parent_id" => null, "name" => "Theme", "href" => null, "icon" => null, "slug" => "title",];
         $color = ["id" => 20, "parent_id" => null, "name" => "Colors", "href" => "/colors", "icon" => "cil-drop1", "slug" => "link"];
 
-        $adminMenuData = [$dashboard, $settings, $settingsNotes, $settingsEmail, $themeSection, $color];
+        $leftMenuData = [$dashboard, $settings, $settingsNotes, $settingsEmail, $themeSection, $color];
         //
-        return $this->buildMenu($adminMenuData, $menuId);
+        $topMenuData = [$dashboard, $settings, $settingsNotes, $settingsEmail];
+
+
+        if ($menuId == 1) {
+            return $this->buildMenu($leftMenuData, $menuId);
+        }
+        return $this->buildMenu($topMenuData, $menuId);
+
     }
 
     public function get($role, $menuId = 2)

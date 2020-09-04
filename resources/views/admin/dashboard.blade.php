@@ -697,8 +697,8 @@
                                 </tr>
                                 <tr>
                                     <td class="text-center">
-                                        <div class="c-avatar"><img class="c-avatar-img" src="assets/img/avatars/6.jpg"
-                                                                   alt="user@email.com"><span
+                                        <div class="c-avatar"><img class="c-avatar-img" src="{{ asset("core/avatars/user.jpg") }}"
+                                                                   alt="{{ auth()->user()->email }}"><span
                                                     class="c-avatar-status bg-danger"></span></div>
                                     </td>
                                     <td>
