@@ -16,11 +16,27 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['register' => false]);
 Route::group(['middleware' => ['auth', 'get.menu']], function () {
+
     Route::get('/', function () {
         return view('admin.dashboard');
     });
+
+    Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Property')->group(function () {
+        //property_type
+        Route::patch('property-types/{id}/trash', 'PropertyTypeController@trash');
+        Route::patch('property-types/{id}/restore', 'PropertyTypeController@restore');
+        Route::resource('property-types', 'PropertyTypeController');
+
+//        //property
+//        Route::patch('property/{id}/trash', 'Property\PropertyController@trash');
+//        Route::patch('property/{id}/restore', 'PropertyController@restore');
+//        Route::apiResource('property', 'PropertyController');
+    });
+
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+

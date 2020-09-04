@@ -9,18 +9,38 @@ use App\Http\Resources\API\V1\Admin\Property\PropertyTypeCollection;
 use App\Http\Resources\API\V1\Admin\Property\PropertyTypeResource;
 use App\Models\V1\Property\PropertyType;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PropertyTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $propertyTypes=PropertyType::all();
-        return new PropertyTypeCollection($propertyTypes);
+        if ($request->ajax()) {
+            $propertyType = PropertyType::latest()->get();
+            return DataTables::of($propertyType)
+                ->addIndexColumn()
+                ->addColumn('action', function ($propertyType) {
+                    $editUrl = route('web.admin.property-types.edit',$propertyType->id);
+
+                    $showUrl = "http://lsapp.test/property-types/show/" . $propertyType->id;
+                    $action =  '<a href="'.$showUrl.'" class="btn btn-info"  id=' . $propertyType->id . '>Show</a>
+<a href="' . $editUrl . '" class="btn btn-success" id="edit-user" id=' . $propertyType->id . '>Edit </a>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<a data-id=' . $propertyType->id . ' class="btn btn-danger delete-user">Delete</a>';
+
+                    return $action;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.property-types.index');
     }
 
 

@@ -39,7 +39,20 @@ class GetSidebarMenu implements MenuInterface
         $themeSection = ["id" => 19, "parent_id" => null, "name" => "Theme", "href" => null, "icon" => null, "slug" => "title",];
         $color = ["id" => 20, "parent_id" => null, "name" => "Colors", "href" => "/colors", "icon" => "cil-drop1", "slug" => "link"];
 
-        $leftMenuData = [$dashboard, $settings, $settingsNotes, $settingsEmail, $themeSection, $color];
+        //property
+        $propertySection = ["id" => 30, "parent_id" => null, "name" => "Property", "href" => null, "icon" => "cil-calculator", "slug" => "dropdown"];
+        $propertyTypes = ["id" => 31, "parent_id" => $propertySection["id"], "name" => "PropertyTypes", "href" => route('web.admin.property-types.index'), "icon" => null, "slug" => "link"];
+        $property = ["id" => 32, "parent_id" => $propertySection["id"], "name" => "Properties", "href" => "/mail", "icon" => null, "slug" => "link",];
+
+
+        //////////////////////////////
+        $leftMenuData = [
+            $dashboard,
+            $propertySection,$propertyTypes,$property,
+
+            $settings, $settingsNotes, $settingsEmail,
+            $themeSection, $color,
+        ];
         //
         $topMenuData = [$dashboard, $settings, $settingsNotes, $settingsEmail];
 
