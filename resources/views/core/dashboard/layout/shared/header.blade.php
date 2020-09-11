@@ -1,4 +1,4 @@
-<header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+<header class="c-header c-header-dark c-header-fixed c-header-with-subheader">
     <button class="c-header-toggler c-class-toggler d-lg-none mr-auto" type="button" data-target="#sidebar"
             data-class="c-sidebar-show"><span class="c-header-toggler-icon"></span></button>
     <a class="c-header-brand d-sm-none" href="#"><img class="c-header-brand"

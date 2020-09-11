@@ -1,3 +1,36 @@
-div.dataTables_wrapper div.dataTables_length select{
+/*Sidebar*/
+.c-sidebar {
+    background-color: #3F51B5;
+}
+
+@media (hover: hover), (-ms-high-contrast: none) {
+    .c-sidebar .c-sidebar-nav-link:hover,
+    .c-sidebar .c-sidebar-nav-dropdown-toggle:hover {
+        color: #fff;
+        background: #00BCD4;
+    }
+}
+
+/*Nav*/
+.c-header.c-header-dark {
+    background: linear-gradient(45deg, #3F51B5, #00bcd4);
+    border-bottom: 1px solid aliceblue;
+}
+.c-subheader{
+    background: aliceblue;
+}
+.c-header.c-header-dark .c-subheader {
+    border-top: 1px solid #ffffff;
+}
+
+.c-header.c-header-dark .c-header-nav .c-header-nav-link.dropdown-item {
+    color: black;
+}
+
+.c-header.c-header-dark .c-header-toggler-icon{
+    outline: none;
+}
+/*Datatable*/
+div.dataTables_wrapper div.dataTables_length select {
     width: 3.5rem;
 }

@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header card-title"><h3>Property Type</h3></div>
+                        <div class="card-header card-title"><h4 class="mb-0">Property Types</h4></div>
                         <div class="card-body">
                             <table id="property-types"
                                    class="table  table-hover table-outline dt-responsive nowrap"
