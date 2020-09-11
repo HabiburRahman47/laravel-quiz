@@ -27,6 +27,10 @@
 <!-- Main styles for this application-->
 <link href="{{ asset('core/dashboard/css/style.css') }}" rel="stylesheet">
 
+{{-- Data table--}}
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css" rel="stylesheet">
+
 @yield('css')
 
-<link href="{{ asset('core/dashboard/css/coreui-chartjs.css') }}" rel="stylesheet">
+<link href="{{ asset('core/dashboard/css/custom.css') }}" rel="stylesheet">

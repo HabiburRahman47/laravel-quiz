@@ -20,7 +20,9 @@ Route::group(['middleware' => ['auth', 'get.menu']], function () {
     Route::get('/', function () {
         return view('admin.dashboard');
     });
-
+    Route::get('/test', function () {
+        return view('admin.notifications.modals');
+    });
     Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Property')->group(function () {
         //property_type
         Route::patch('property-types/{id}/trash', 'PropertyTypeController@trash');

@@ -13,6 +13,10 @@
     @include('core.dashboard.layout.shared.header')
     <div class="c-body">
         <main class="c-main">
+            <div class="container-fluid flash-message-container">
+                @include('flash::message')
+            </div>
+
             @yield('content')
         </main>
         @include('core.dashboard.layout.shared.footer')
@@ -24,6 +28,33 @@
 <script src="{{ asset('core/dashboard/js/coreui-utils.js') }}"></script>
 @yield('javascript')
 
+<script type="text/javascript">
+    // $('#flash-overlay-modal').modal();
+    var flashOverlayModal = document.getElementById('flash-overlay-modal');
+    if (flashOverlayModal) {
+        var myModal = new coreui.Modal(flashOverlayModal, {
+            keyboard: false
+        });
+        myModal.show();
+    }
+
+    setTimeout(function () {
+        dismissNonImportantAlerts();
+    }, 3000);
+
+    function dismissNonImportantAlerts() {
+        console.log("dismissNonImportantAlerts");
+        var alertList = document.querySelectorAll('.flash-message-container > .alert');
+        alertList.forEach(function (alert) {
+            console.log(alert.classList);
+            if (!alert.classList.contains('alert-important')) {
+                var nonImportantAlerts = new coreui.Alert(alert)
+                nonImportantAlerts.close()
+            }
+        });
+    }
+
+</script>
 <!--Scroll to top-->
 <div class="scroll-to-top scroll-to-target" data-target=".header-top">
     <span class="icon fa fa-angle-up"></span>

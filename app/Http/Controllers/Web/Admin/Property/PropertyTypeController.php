@@ -21,6 +21,9 @@ class PropertyTypeController extends Controller
      */
     public function index(Request $request)
     {
+//        flash()->warning('Failed');
+//        flash()->success('Successfully done')->important();
+//        flash()->overlay('Modal Message', 'Modal Title')->error();
         if ($request->ajax()) {
             $propertyType = PropertyType::latest()->get();
             return DataTables::of($propertyType)
