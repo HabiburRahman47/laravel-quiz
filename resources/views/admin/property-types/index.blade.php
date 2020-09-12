@@ -10,6 +10,12 @@
                     <div class="card">
                         <div class="card-header card-title"><h4 class="mb-0">Property Types</h4></div>
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <a href="{{ route('web.admin.property-types.create') }}" class="btn btn-primary m-2">Create Property Type</a>
+                                </div>
+                            </div>
+                            <hr>
                             <table id="property-types"
                                    class="table  table-hover table-outline dt-responsive nowrap"
                                    style="width:100%">
@@ -40,43 +46,21 @@
 @endsection
 
 @section('javascript')
-    @include('core.dashboard.layout.partials.datatable-js')
+    @include('core.dashboard.layout.partials.datatable.js')
     <script type="text/javascript">
         $(document).ready(function () {
             var table = $('#property-types').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('web.admin.property-types.index') }}",
-                columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex'
-                },
-                    {
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'description',
-                        name: 'description'
-                    },
-                    {
-                        data: 'suggested',
-                        name: 'suggested'
-                    },
-                    {
-                        data: 'user_interface',
-                        name: 'user_interface'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'description', name: 'description'},
+                    {data: 'suggested', name: 'suggested'},
+                    {data: 'user_interface', name: 'user_interface'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });
 
