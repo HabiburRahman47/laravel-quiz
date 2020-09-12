@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Admin\Property;
 
+use App\DataTables\PropertyTypesDataTable;
 use App\Http\Controllers\API\V1\Admin\AdminAPIBaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Admin\Property\StorePropertyTypeRequest;
@@ -13,6 +14,12 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PropertyTypeController extends Controller
 {
+
+    public function index(PropertyTypesDataTable $dataTable)
+    {
+        return $dataTable->render('admin.property-types.index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +27,7 @@ class PropertyTypeController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function index(Request $request)
+    public function index2(Request $request)
     {
 //        flash()->warning('Failed');
 //        flash()->success('Successfully done')->important();
@@ -40,7 +47,7 @@ class PropertyTypeController extends Controller
                 ->make(true);
         }
 
-        return view('admin.property-types.index');
+        return view('admin.property-types.index2');
     }
 
 
