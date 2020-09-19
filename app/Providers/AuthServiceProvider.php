@@ -26,8 +26,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Passport::routes(function ($router) {
-            $router->forAccessTokens();
-        });
+        if (app()->environment('local')) {
+            Passport::routes(function ($router) {
+                $router->forAccessTokens();
+            });
+        }
     }
 }

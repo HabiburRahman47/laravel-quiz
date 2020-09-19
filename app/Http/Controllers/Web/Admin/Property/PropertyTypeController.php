@@ -20,42 +20,16 @@ class PropertyTypeController extends Controller
         return $dataTable->render('admin.property-types.index');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
-     */
-    public function index2(Request $request)
+    public function create()
     {
-//        flash()->warning('Failed');
-//        flash()->success('Successfully done')->important();
-//        flash()->overlay('Modal Message', 'Modal Title')->error();
-        if ($request->ajax()) {
-            $propertyType = PropertyType::latest()->get();
-            return DataTables::of($propertyType)
-                ->addIndexColumn()
-                ->addColumn('action', function ($propertyType) {
-                    $id = $propertyType->id;
-                    $editUrl = route('web.admin.property-types.edit', $id);
-                    $showUrl = route('web.admin.property-types.show', $id);
-                    $action = view('core.dashboard.layout.partials.datatable.action', compact('id', 'showUrl', 'editUrl'));
-                    return $action;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('admin.property-types.index2');
+        return view('admin.property-types.create');
     }
-
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param StorePropertyTypeRequest $request
+     * @return void
      */
     public function store(StorePropertyTypeRequest $request)
     {
@@ -72,7 +46,7 @@ class PropertyTypeController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return PropertyTypeResource
      */
     public function show($id)
     {
@@ -85,9 +59,9 @@ class PropertyTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param StorePropertyTypeRequest $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return PropertyTypeResource
      */
     public function update(StorePropertyTypeRequest $request, $id)
     {

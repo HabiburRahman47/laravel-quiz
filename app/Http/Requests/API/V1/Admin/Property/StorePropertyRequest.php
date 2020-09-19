@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\Admin\Property;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PropertyRequest extends FormRequest
+class StorePropertyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

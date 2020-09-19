@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1\Admin\Property;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PropertyUserRequest extends FormRequest
+class UpdatePropertyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class PropertyUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class PropertyUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'description' => 'required',
+            'type_id' => 'required',
+            //'created_by_id'=>'required',
         ];
     }
 }

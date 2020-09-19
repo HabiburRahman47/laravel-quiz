@@ -15,10 +15,10 @@ class PropertyTypeCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->transform(function ($property) {
+        return $this->collection->transform(function ($propertyType) {
             return [
-                'id' => $property->id,
-                'name' => $property->name,
+                'id' => $propertyType->id,
+                'name' => $propertyType->name,
             ];
         });
     }

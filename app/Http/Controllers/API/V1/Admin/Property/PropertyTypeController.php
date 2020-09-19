@@ -81,7 +81,7 @@ class PropertyTypeController extends AdminAPIBaseController
      */
     public function destroy($id)
     {
-        $propertyType = PropertyType::findOrFail($id);
+        $propertyType = PropertyType::withTrashed()->findOrFail($id);
         $propertyType->forceDelete();
         return response()->noContent();
     }
@@ -109,8 +109,6 @@ class PropertyTypeController extends AdminAPIBaseController
     {
         $propertyType = PropertyType::withTrashed()->findOrFail($id);
         $propertyType->restore();
-//
-        //withTrashed findOrFail
         return new PropertyTypeResource($propertyType);
     }
 }

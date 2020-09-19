@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Admin\Property;
 
 use App\Http\Controllers\API\V1\Admin\AdminAPIBaseController;
-use App\Http\Requests\API\V1\Admin\Property\PropertyRequest;
+use App\Http\Requests\API\V1\Admin\Property\StorePropertyRequest;
 use App\Models\V1\Property\Property;
 use App\Models\V1\Property\PropertyType;
 use Illuminate\Http\Request;
@@ -71,7 +71,7 @@ class PropertyController extends AdminAPIBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PropertyRequest $request)
+    public function store(StorePropertyRequest $request)
     {
 
         $created_by_id = auth()->user()->id;
@@ -118,7 +118,7 @@ class PropertyController extends AdminAPIBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PropertyRequest $request, $id)
+    public function update(StorePropertyRequest $request, $id)
     {
         $property = Property::findOrFail($id);
         $property->fill($request->all());

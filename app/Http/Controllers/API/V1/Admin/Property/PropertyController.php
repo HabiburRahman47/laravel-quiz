@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API\V1\Admin\Property;
 
 use App\Http\Controllers\API\V1\Admin\AdminAPIBaseController;
-use App\Http\Requests\API\V1\Admin\Property\PropertyRequest;
+use App\Http\Requests\API\V1\Admin\Property\StorePropertyRequest;
+use App\Http\Requests\API\V1\Admin\Property\UpdatePropertyRequest;
 use App\Http\Resources\API\V1\Admin\Property\PropertyCollection;
 use App\Http\Resources\API\V1\Admin\Property\PropertyResource;
 use App\Models\V1\Property\Property;
 use App\Models\V1\User\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PropertyController extends AdminAPIBaseController
 {
@@ -19,7 +21,11 @@ class PropertyController extends AdminAPIBaseController
      */
     public function index()
     {
-        $properties = Property::with('propertyType')->get();
+        $properties = Property::with('propertyType')
+            ->applyTrashFilterAble()
+            ->applyKeywordSearchAble()
+            ->applySortAble()
+            ->applyPaginateAble();
         return new PropertyCollection($properties);
     }
 
@@ -27,10 +33,10 @@ class PropertyController extends AdminAPIBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param PropertyRequest $request
+     * @param StorePropertyRequest $request
      * @return PropertyResource
      */
-    public function store(PropertyRequest $request)
+    public function store(StorePropertyRequest $request)
     {
         $created_by_id = auth()->user()->id;
         $property = new Property();
@@ -48,64 +54,62 @@ class PropertyController extends AdminAPIBaseController
      */
     public function show($id)
     {
-        $property = Property::with('propertyType', 'events.eventType')->findOrFail($id);
+        $property = Property::with('propertyType')->findOrFail($id);
         return new PropertyResource($property);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param PropertyRequest $request
+     * @param UpdatePropertyRequest $request
      * @param  int $id
      * @return PropertyResource
      */
-    public function update(PropertyRequest $request, $id)
+    public function update(UpdatePropertyRequest $request, $id)
     {
-        $Property = Property::findOrFail($id);
-        $Property->fill($request->all());
-        $Property->save();
+        $property = Property::findOrFail($id);
+        $property->fill($request->all());
+        $property->save();
 
-        return new PropertyResource($Property);
+        return new PropertyResource($property);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage permanently.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    //PERMANENT DELETE
     public function destroy($id)
     {
-        //$property = Property::onlyTrashed()->where('id', $id)->forceDelete();
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
         $property->forceDelete();
-        return response('PERMANENTLY DELETED');
+        return response()->noContent();
     }
 
-    //soft delete
+    /**
+     * Trash the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
     public function trash($id)
     {
-        $property = Property::find($id);
+        $property = Property::findOrFail($id);
         $property->delete();
         return response()->noContent();
     }
 
-    //restore data
+    /**
+     * Restore the specified resource.
+     *
+     * @param  int $id
+     * @return PropertyResource
+     */
     public function restore($id)
     {
         $property = Property::withTrashed()->where('id', $id)->restore();
-        return response('SUCCESSFULLY RESTORED');
+        $property->restore();
+        return new PropertyResource($property);
     }
-
-
-    //searching anything
-    public function search(Request $request)
-    {
-        $propertyName = $request->get('name');
-        $properties = Property::where('name', 'LIKE', '%' . $propertyName . '%')->orderBy('id')->paginate(2);
-
-        return response($properties);
-    }
-
 }

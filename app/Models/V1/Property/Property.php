@@ -5,13 +5,17 @@ namespace App\Models\V1\Property;
 use App\Models\V1\Calendar\Calendar;
 use App\Models\V1\Event\Event;
 use App\Models\V1\User\User;
+use App\Traits\Filters\PaginateAble;
+use App\Traits\Filters\SearchAble;
+use App\Traits\Filters\SortAble;
+use App\Traits\Filters\TrashFilterAble;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Property extends Model
 {
-    use SoftDeletes;
+    use SearchAble, SortAble, TrashFilterAble, PaginateAble, SoftDeletes;
 
     protected $fillable = [
          'name', 'private_name', 'description', 'type_id' ,'created_by_id',

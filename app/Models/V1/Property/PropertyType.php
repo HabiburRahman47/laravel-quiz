@@ -47,4 +47,13 @@ class PropertyType extends Model
         return $this->belongsTo(User::class, 'created_by_id');
     }
 
+//    public function setSuggestedAttribute($value)
+//    {
+//        $this->attributes['suggested'] = strtolower($value);
+//    }
+
+    public function getSuggestedAttribute($value)
+    {
+        return (boolean)$value;
+    }
 }

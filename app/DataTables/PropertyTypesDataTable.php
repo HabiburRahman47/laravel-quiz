@@ -25,11 +25,23 @@ class PropertyTypesDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-
+            ->addColumn('status', function ($propertyType) {
+                $status = "";
+                if ($propertyType->suggested == true) {
+                    $status .= '<span  class="badge badge-pill badge-success">Suggested</span>';
+                }
+                return $status;
+            })
             ->editColumn('created_at', function (PropertyType $propertyType) {
                 return $propertyType->created_at->format(config('common.date_time.format.output.normal'));
             })
-            ->addColumn('action', 'propertytypesdatatable.action')
+            ->addColumn('action', function ($propertyType) {
+                $id = $propertyType->id;
+                $editUrl = route('web.admin.property-types.edit', $id);
+                $showUrl = route('web.admin.property-types.show', $id);
+                return view('core.dashboard.layout.partials.datatable.action', compact('id', 'showUrl', 'editUrl'));;
+            })
+            ->rawColumns(['status'])
             ->whitelist(['name']);
     }
 
@@ -79,6 +91,7 @@ class PropertyTypesDataTable extends DataTable
 
             Column::make('DT_RowIndex')->title('No.'),
             Column::make('name'),
+            Column::make('status'),
             Column::make('created_at')->orderable(false),
             Column::computed('action')
                 ->exportable(false)

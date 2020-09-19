@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\V1\Admin\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Admin\User\UserCollection;
-use App\Http\Resources\API\V1\Admin\User\UserResource;
+use App\Http\Resources\API\V1\Site\User\UserCollection;
+use App\Http\Resources\API\V1\Site\User\UserResource;
 use App\Models\V1\User\User;
 use Illuminate\Http\Request;
 
@@ -37,9 +37,6 @@ class UserController extends Controller
         // $user=User::with('properties.propertyType.events.eventType','topics.topicType.events.eventType')->findOrFail($id);
         return new UserResource($user);
     }
-
-
-
 
 
 }
