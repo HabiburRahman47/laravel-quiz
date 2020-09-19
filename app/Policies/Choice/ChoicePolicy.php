@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Policies\Choice;
+
+use App\Model\V1\Choice\Choice;
+use App\Model\V1\User\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class ChoicePolicy
+{
+    use HandlesAuthorization;
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Model\V1\User\User  $user
+     * @return mixed
+     */
+    public function viewAny(User $user)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Choice  $choice
+     * @return mixed
+     */
+    public function view(User $user, Choice $choice)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can create models.
+     *
+     * @param  \App\Model\V1\User\User  $user
+     * @return mixed
+     */
+    public function create(User $user)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Choice  $choice
+     * @return mixed
+     */
+    public function update(User $user, Choice $choice)
+    {
+        return $this->check($user,$choice);
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Choice  $choice
+     * @return mixed
+     */
+    public function trash(User $user, Choice $choice)
+    {
+        return $this->check($user,$choice);
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Choice  $choice
+     * @return mixed
+     */
+    public function restore(User $user, Choice $choice)
+    {
+        return $this->check($user,$choice);
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Choice  $choice
+     * @return mixed
+     */
+    public function forceDelete(User $user, Choice $choice)
+    {
+        return $this->check($user,$choice);
+    }
+    public function check(User $user, Choice $choice)
+    {
+        return $user->id===$choice->created_by_id;
+    }
+}

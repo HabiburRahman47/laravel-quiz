@@ -10,7 +10,7 @@ Route::middleware('auth:api')->namespace('API\V1\Admin\Property')->group(functio
         Route::apiResource('property-types', 'PropertyTypeController');
 
         //property
-        Route::patch('properties/{id}/trash', 'Property\PropertyController@trash');
+        Route::patch('properties/{id}/trash', 'PropertyController@trash');
         Route::patch('properties/{id}/restore', 'PropertyController@restore');
         Route::apiResource('properties', 'PropertyController');
 });

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Admin\Property;
+namespace App\Http\Resources\API\V1\Admin\Card;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PropertyUserCollection extends ResourceCollection
+class CardCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

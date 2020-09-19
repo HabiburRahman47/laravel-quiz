@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Admin\Property;
+namespace App\Http\Resources\API\V1\Admin\Course;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PropertyUserCollection extends ResourceCollection
+class CourseSectionTeacherCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

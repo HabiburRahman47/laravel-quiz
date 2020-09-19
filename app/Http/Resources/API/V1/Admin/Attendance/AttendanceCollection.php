@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Admin\Property;
+namespace App\Http\Resources\API\V1\Admin\Attendance;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PropertyUserCollection extends ResourceCollection
+class AttendanceCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
