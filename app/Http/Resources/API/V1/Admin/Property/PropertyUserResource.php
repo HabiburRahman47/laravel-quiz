@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Admin\Pivot;
+namespace App\Http\Resources\API\V1\Admin\Property;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
