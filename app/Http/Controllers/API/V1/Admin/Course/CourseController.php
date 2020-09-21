@@ -8,14 +8,17 @@ use App\Http\Requests\API\V1\Admin\Course\StoreCourseRequest;
 use App\Http\Requests\API\V1\Admin\Course\UpdateCourseRequest;
 use App\Http\Resources\API\V1\Admin\Course\CourseCollection;
 use App\Http\Resources\API\V1\Admin\Course\CourseResource;
-use App\Model\V1\Course\Course;
+use App\Models\V1\Course\Course;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
     public function index(Request $request)
     {
-        $courses=Course::all();
+        $courses=Course::applyTrashFilterAble()
+            ->applyKeywordSearchAble()
+            ->applySortAble()
+            ->applyPaginateAble();
         return new CourseCollection($courses);
     }
 
@@ -54,12 +57,13 @@ class CourseController extends Controller
     //restore data
     public function restore($courseId)
     {
-        $course=Course::withTrashed()->where('id',$courseId)->restore();
+        $course=Course::withTrashed()->findOrFail($courseId);
+        $course->restore();
         return new CourseResource($course);
     }
 
     public function destroy($courseId){
-        $course=Course::onlyTrashed()->where('id',$courseId);
+        $course=Course::withTrashed()->findOrFail($courseId);
         $course->forceDelete();
         return response()->noContent();
     }

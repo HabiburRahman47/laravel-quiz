@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model\V1\Question;
+namespace App\Models\V1\Question;
 
-use App\Model\V1\Quiz\Quiz;
+use App\Models\V1\Quiz\Quiz;
 use Illuminate\Database\Eloquent\Model;
 
 class Question_Quiz extends Model

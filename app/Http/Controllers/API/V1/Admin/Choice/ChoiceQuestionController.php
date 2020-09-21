@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API\V1\Admin\Choice;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Admin\Choice\ChoiceQuestionResource;
-use App\Model\V1\Choice\Choice;
-use App\Model\V1\Choice\ChoiceQuestion;
-use App\Model\V1\Question\Question;
+use App\Models\V1\Choice\Choice;
+use App\Models\V1\Choice\ChoiceQuestion;
+use App\Models\V1\Question\Question;
 use Illuminate\Http\Request;
 
 class ChoiceQuestionController extends Controller

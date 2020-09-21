@@ -2,8 +2,8 @@
 
 namespace App\Policies\Course;
 
-use App\Model\V1\Course\CourseSectionTeacher;
-use App\Model\V1\User\User;
+use App\Models\V1\Course\CourseSectionTeacher;
+use App\Models\V1\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CourseSectionTeacherPolicy
@@ -13,7 +13,7 @@ class CourseSectionTeacherPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class CourseSectionTeacherPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\CourseSectionTeacher  $courseSectionTeacher
      * @return mixed
      */
@@ -36,7 +36,7 @@ class CourseSectionTeacherPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -47,7 +47,7 @@ class CourseSectionTeacherPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\CourseSectionTeacher  $courseSectionTeacher
      * @return mixed
      */
@@ -59,7 +59,7 @@ class CourseSectionTeacherPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\CourseSectionTeacher  $courseSectionTeacher
      * @return mixed
      */
@@ -71,7 +71,7 @@ class CourseSectionTeacherPolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\CourseSectionTeacher  $courseSectionTeacher
      * @return mixed
      */
@@ -83,7 +83,7 @@ class CourseSectionTeacherPolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\CourseSectionTeacher  $courseSectionTeacher
      * @return mixed
      */
@@ -94,6 +94,6 @@ class CourseSectionTeacherPolicy
 
     public function check(User $user, CourseSectionTeacher $courseSectionTeacher)
     {
-        return $user->id===$courseSectionTeacher->created_by_id;
+        return $user->id===$courseSectionTeacher->teacher_id;
     }
 }

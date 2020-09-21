@@ -18,7 +18,7 @@ class DepartmentResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'institution_id'=>$this->institution_id,
+            'property_id'=>$this->property_id,
             'sections'=>SectionResource::collection($this->whenloaded('sections'))
         ];
     }

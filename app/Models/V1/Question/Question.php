@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Model\V1\Question;
+namespace App\Models\V1\Question;
 
-use App\Model\V1\Choice\Choice;
-use App\Model\V1\Choice\ChoiceQuestion;
-use App\Model\V1\Quiz\Quiz;
+use App\Models\V1\Choice\Choice;
+use App\Models\V1\Choice\ChoiceQuestion;
+use App\Models\V1\Quiz\Quiz;
+use App\Traits\Filters\PaginateAble;
+use App\Traits\Filters\SearchAble;
+use App\Traits\Filters\SortAble;
+use App\Traits\Filters\TrashFilterAble;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Tags\HasTags;
 
 class Question extends Model
 {
-    use SoftDeletes,HasTags;
+    use SoftDeletes,HasTags,SortAble,SearchAble,PaginateAble,TrashFilterAble;
     protected $dates=['deleted_at'];
+    public $searchable = ["id", "name"];
+    public $sortable = ['id', 'updated_at', 'name'];
     protected $fillable=[
         'name',
         'config',

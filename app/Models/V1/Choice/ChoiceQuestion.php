@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model\V1\Choice;
+namespace App\Models\V1\Choice;
 
-use App\Model\V1\Question\Question;
+use App\Models\V1\Question\Question;
 use Illuminate\Database\Eloquent\Model;
 
 class ChoiceQuestion extends Model

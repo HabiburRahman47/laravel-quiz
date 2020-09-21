@@ -8,7 +8,7 @@ use App\Http\Requests\API\V1\Admin\Student\StudentRequest;
 use App\Http\Requests\API\V1\Admin\Student\UpdateStudentRequest;
 use App\Http\Resources\API\V1\Admin\Student\StudentCollection;
 use App\Http\Resources\API\V1\Admin\Student\StudentResource;
-use App\Model\V1\Student\Student;
+use App\Models\V1\Student\Student;
 use Illuminate\Http\Response;
 
 class StudentController extends AdminAPIBaseController
@@ -17,7 +17,10 @@ class StudentController extends AdminAPIBaseController
 
     public function index(Response $request)
     {
-        $students=Student::all();
+        $students=Student::applyTrashFilterAble()
+                ->applyKeywordSearchAble()
+                ->applySortAble()
+                ->applyPaginateAble();
         return new StudentCollection($students);
     }
 

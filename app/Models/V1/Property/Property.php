@@ -18,15 +18,18 @@ class Property extends Model
     use SearchAble, SortAble, TrashFilterAble, PaginateAble, SoftDeletes;
 
     protected $fillable = [
-         'name', 'private_name', 'description', 'type_id' ,'created_by_id',
+         'name', 'private_name', 'description', 'property_type_id' ,'created_by_id',
     ];
 
     protected $dates = ['deleted_at'];
 
+    public $searchable = ["id", "name"];
+    public $sortable = ['id', 'updated_at', 'name'];
+
     //relations
     public function propertyType()
     {
-        return $this->belongsTo(PropertyType::class,'type_id');
+        return $this->belongsTo(PropertyType::class,'property_type_id');
     }
 
     public function owner()

@@ -24,15 +24,7 @@ class StoreUserContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:5',
-            'phone_email' => 'required'
-        ];
-    }
-    public function messages()
-    {
-        return [
-            'name.required' => 'Name is required!',
-            'phone_email.required' => 'Email is required!'
+            //
         ];
     }
 }

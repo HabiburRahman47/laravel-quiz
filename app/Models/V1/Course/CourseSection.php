@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Model\V1\Course;
-use App\Model\V1\Section\Section;
+namespace App\Models\V1\Course;
+use App\Models\V1\Section\Section;
 use Illuminate\Database\Eloquent\Model;
 
 class CourseSection extends Model

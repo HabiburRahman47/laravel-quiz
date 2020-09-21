@@ -1,26 +1,32 @@
 <?php
 
-namespace App\Model\V1\Course;
+namespace App\Models\V1\Course;
 
 use App\Http\Requests\AttendanceRequest;
-use App\Model\V1\Attendance\Attendance;
-use App\Model\V1\Section\Section;
-use App\Model\V1\Institution\Institution;
-use App\Model\V1\User\User;
+use App\Models\V1\Attendance\Attendance;
+use App\Models\V1\Section\Section;
+use App\Models\V1\Property\Property;
+use App\Models\V1\User\User;
+use App\Traits\Filters\PaginateAble;
+use App\Traits\Filters\SearchAble;
+use App\Traits\Filters\SortAble;
+use App\Traits\Filters\TrashFilterAble;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,SortAble,SearchAble,TrashFilterAble,PaginateAble;
     protected $dates=['deleted_at'];
+    public $searchable = ["id", "name"];
+    public $sortable = ['id', 'updated_at', 'name'];
     protected $fillable=[
         'id',
         'name',
-        'institution_id'
+        'property_id'
     ];
-    public function institution(){
-        return $this->belongsTo(Institution::class,'institution_id');
+    public function property(){
+        return $this->belongsTo(Property::class,'property_id');
     }
     public function sections(){
         return $this->belongsToMany(Section::class);

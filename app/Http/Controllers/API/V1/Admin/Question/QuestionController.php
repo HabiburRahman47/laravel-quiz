@@ -7,7 +7,7 @@ use App\Http\Requests\API\V1\Admin\Question\StoreQuestionRequest;
 use App\Http\Requests\API\V1\Admin\Question\UpdateQuestionRequest;
 use App\Http\Resources\API\V1\Admin\Question\QuestionCollection;
 use App\Http\Resources\API\V1\Admin\Question\QuestionResource;
-use App\Model\V1\Question\Question;
+use App\Models\V1\Question\Question;
 use Illuminate\Http\Request;
 
 class QuestionController extends AdminAPIBaseController

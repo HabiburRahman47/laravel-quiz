@@ -7,14 +7,17 @@ use App\Http\Requests\API\V1\Admin\Quiz\StoreQuizRequest;
 use App\Http\Requests\API\V1\Admin\Quiz\UpdateQuizRequest;
 use App\Http\Resources\API\V1\Admin\Quiz\QuizCollection;
 use App\Http\Resources\API\V1\Admin\Quiz\QuizResource;
-use App\Model\V1\Quiz\Quiz;
+use App\Models\V1\Quiz\Quiz;
 use Illuminate\Http\Request;
 
 class QuizController extends AdminAPIBaseController
 {
     public function index(Request $request)
     {
-       $quizzes=Quiz::all();
+       $quizzes=Quiz::applyTrashFilterAble()
+                ->applyKeywordSearchAble()
+                ->applySortAble()
+                ->applyPaginateAble();
        return new QuizCollection($quizzes);
     }
 

@@ -9,8 +9,8 @@ use App\Http\Resources\API\V1\Admin\Course\CourseResource;
 use App\Http\Resources\API\V1\Admin\Course\CourseSectionResource;
 use App\Http\Resources\API\V1\Admin\Section\SectionCollection;
 use App\Http\Resources\API\V1\Admin\Section\SectionResource;
-use App\Model\V1\Course\Course;
-use App\Model\V1\Section\Section;
+use App\Models\V1\Course\Course;
+use App\Models\V1\Section\Section;
 use Illuminate\Http\Request;
 
 class SectionController extends AdminAPIBaseController
@@ -19,7 +19,10 @@ class SectionController extends AdminAPIBaseController
 
     public function index(Request $request)
     {
-        $sections = Section::all();
+        $sections = Section::applyTrashFilterAble()
+                ->applyKeywordSearchAble()
+                ->applySortAble()
+                ->applyPaginateAble();
         return new SectionCollection($sections);
     }
 
@@ -82,6 +85,7 @@ class SectionController extends AdminAPIBaseController
     // Pivot table
     public function attachCourseToSection($sectionId, $courseId)
     {
+
         $section = Section::findOrFail($sectionId);
         $course = Course::findOrFail($courseId);
         $section->courses()->attach($course);

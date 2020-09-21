@@ -8,14 +8,17 @@ use App\Http\Requests\API\V1\Admin\Choice\StoreChoiceRequest;
 use App\Http\Requests\API\V1\Admin\Choice\UpdateChoiceRequest;
 use App\Http\Resources\API\V1\Admin\Choice\ChoiceCollection;
 use App\Http\Resources\API\V1\Admin\Choice\ChoiceResource;
-use App\Model\V1\Choice\Choice;
+use App\Models\V1\Choice\Choice;
 use Illuminate\Http\Request;
 
 class ChoiceController extends AdminAPIBaseController
 {
     public function index(Request $request)
     {
-        $choices=Choice::all();
+        $choices=Choice::applyTrashFilterAble()
+            ->applyKeywordSearchAble()
+            ->applySortAble()
+            ->applyPaginateAble();
         return new ChoiceCollection($choices);
     }
 

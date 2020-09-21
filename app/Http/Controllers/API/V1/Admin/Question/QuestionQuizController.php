@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API\V1\Admin\Question;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\V1\Admin\Question\QuestionQuizResource;
-use App\Model\V1\Question\Question;
-use App\Model\V1\Question\Question_Quiz;
-use App\Model\V1\Quiz\Quiz;
+use App\Models\V1\Question\Question;
+use App\Models\V1\Question\Question_Quiz;
+use App\Models\V1\Quiz\Quiz;
 use Illuminate\Http\Request;
 
 class QuestionQuizController extends Controller

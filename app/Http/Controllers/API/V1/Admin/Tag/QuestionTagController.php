@@ -6,7 +6,7 @@ use App\Http\Controllers\API\V1\Admin\AdminAPIBaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Admin\QuestionTag\QuestionTagRequest;
 use App\Http\Resources\API\V1\Admin\Question\QuestionResource;
-use App\Model\V1\Question\Question;
+use App\Models\V1\Question\Question;
 use Illuminate\Http\Request;
 use Spatie\Tags\Tag;
 

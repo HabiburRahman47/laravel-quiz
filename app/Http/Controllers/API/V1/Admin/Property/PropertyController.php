@@ -54,7 +54,7 @@ class PropertyController extends AdminAPIBaseController
      */
     public function show($id)
     {
-        $property = Property::with('propertyType')->findOrFail($id);
+        $property = Property::with('propertyType')->applyTrashFilterAble()->findOrFail($id);
         return new PropertyResource($property);
     }
 
@@ -69,6 +69,7 @@ class PropertyController extends AdminAPIBaseController
     {
         $property = Property::findOrFail($id);
         $property->fill($request->all());
+        $this->authorize('update', $property);
         $property->save();
 
         return new PropertyResource($property);
@@ -83,6 +84,7 @@ class PropertyController extends AdminAPIBaseController
     public function destroy($id)
     {
         $property = Property::withTrashed()->findOrFail($id);
+        $this->authorize('forceDelete', $property);
         $property->forceDelete();
         return response()->noContent();
     }
@@ -96,6 +98,7 @@ class PropertyController extends AdminAPIBaseController
     public function trash($id)
     {
         $property = Property::findOrFail($id);
+        $this->authorize('trash', $property);
         $property->delete();
         return response()->noContent();
     }
@@ -108,7 +111,8 @@ class PropertyController extends AdminAPIBaseController
      */
     public function restore($id)
     {
-        $property = Property::withTrashed()->where('id', $id)->restore();
+        $property = Property::withTrashed()->findOrFail($id);
+        $this->authorize('restore', $property);
         $property->restore();
         return new PropertyResource($property);
     }

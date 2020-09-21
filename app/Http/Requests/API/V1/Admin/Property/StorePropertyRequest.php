@@ -26,7 +26,7 @@ class StorePropertyRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'type_id' => 'required',
+            // 'property_type_id ' => 'required',
             //'created_by_id'=>'required',
         ];
     }

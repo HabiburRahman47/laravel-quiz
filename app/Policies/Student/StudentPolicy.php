@@ -2,8 +2,8 @@
 
 namespace App\Policies\Student;
 
-use App\Model\V1\Student\Student;
-use App\Model\V1\User\User;
+use App\Models\V1\Student\Student;
+use App\Models\V1\User\User;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -14,7 +14,7 @@ class StudentPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -25,7 +25,7 @@ class StudentPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Student  $student
      * @return mixed
      */
@@ -37,7 +37,7 @@ class StudentPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -48,7 +48,7 @@ class StudentPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Student  $student
      * @return mixed
      */
@@ -60,7 +60,7 @@ class StudentPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Student  $student
      * @return mixed
      */
@@ -72,7 +72,7 @@ class StudentPolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Student  $student
      * @return mixed
      */
@@ -84,7 +84,7 @@ class StudentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Student  $student
      * @return mixed
      */

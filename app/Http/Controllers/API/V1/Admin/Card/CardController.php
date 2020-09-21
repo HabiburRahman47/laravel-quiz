@@ -8,14 +8,17 @@ use App\Http\Requests\API\V1\Admin\Card\StoreCardRequest;
 use App\Http\Requests\API\V1\Admin\Card\UpdateCardRequest;
 use App\Http\Resources\API\V1\Admin\Card\CardCollection;
 use App\Http\Resources\API\V1\Admin\Card\CardResource;
-use App\Model\V1\Card\Card;
+use App\Models\V1\Card\Card;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
     public function index(Request $request)
     {
-        $cards=Card::all();
+        $cards=Card::applyTrashFilterAble()
+        ->applyKeywordSearchAble()
+        ->applySortAble()
+        ->applyPaginateAble();
         return new CardCollection($cards);
     }
 
@@ -54,7 +57,8 @@ class CardController extends Controller
     //restore data
     public function restore($cardId)
     {
-        $card=Card::withTrashed()->where('id',$cardId)->restore();
+        $card=Card::withTrashed()->findOrFail($cardId);
+        $card->restore();
         return new CardResource($card);
     }
 

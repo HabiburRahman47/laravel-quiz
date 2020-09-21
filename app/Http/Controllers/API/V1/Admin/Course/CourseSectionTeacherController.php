@@ -8,7 +8,7 @@ use App\Http\Requests\API\V1\Admin\CourseSectionTeacher\StoreCourseSectionTeache
 use App\Http\Requests\API\V1\Admin\CourseSectionTeacher\UpdateCourseSectionTeacherRequest;
 use App\Http\Resources\API\V1\Admin\Course\CourseSectionTeacherCollection;
 use App\Http\Resources\API\V1\Admin\Course\CourseSectionTeacherResource;
-use App\Model\V1\Course\CourseSectionTeacher;
+use App\Models\V1\Course\CourseSectionTeacher;
 use Illuminate\Http\Request;
 
 class CourseSectionTeacherController extends AdminAPIBaseController
@@ -16,7 +16,10 @@ class CourseSectionTeacherController extends AdminAPIBaseController
 
     public function index(Request $request)
     {
-        $courseSectionTeachers=CourseSectionTeacher::all();
+        $courseSectionTeachers=CourseSectionTeacher::applyTrashFilterAble()
+                ->applyKeywordSearchAble()
+                ->applySortAble()
+                ->applyPaginateAble();
         return new CourseSectionTeacherCollection($courseSectionTeachers);
     }
 
@@ -63,7 +66,7 @@ class CourseSectionTeacherController extends AdminAPIBaseController
     {
         $courseSectionTeacher=CourseSectionTeacher::withTrashed()->findOrFail($courseSectionTeacherId);
         $this->authorize('restore',$courseSectionTeacher);
-        $courseSectionTeacherId->restore();
+        $courseSectionTeacher->restore();
         return new CourseSectionTeacherResource($courseSectionTeacher);
     }
 

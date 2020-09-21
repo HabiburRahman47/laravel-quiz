@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\V1\Admin\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Site\User\UserCollection;
-use App\Http\Resources\API\V1\Site\User\UserResource;
+use App\Http\Resources\API\V1\Admin\User\UserCollection;
+use App\Http\Resources\API\V1\Admin\User\UserResource;
 use App\Models\V1\User\User;
 use Illuminate\Http\Request;
 
@@ -20,13 +20,13 @@ class UserController extends Controller
     public function show($id)
     {
         $user=User::with('propertyTypes.properties')->findOrFail($id);
-        return $user;
+        return new UserResource($user);
     }
 
     public function showAnother($id)
     {
         $user=User::with('properties.propertyType')->findOrFail($id);
-        return $user;
+        return new UserResource($user);
 
     }
 

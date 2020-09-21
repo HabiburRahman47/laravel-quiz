@@ -2,8 +2,8 @@
 
 namespace App\Policies\Section;
 
-use App\Model\V1\Section\Section;
-use App\Model\V1\User\User;
+use App\Models\V1\Section\Section;
+use App\Models\V1\User\User;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -14,7 +14,7 @@ class SectionPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -25,7 +25,7 @@ class SectionPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Section  $section
      * @return mixed
      */
@@ -37,7 +37,7 @@ class SectionPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -48,7 +48,7 @@ class SectionPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Section  $section
      * @return mixed
      */
@@ -60,7 +60,7 @@ class SectionPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Section  $section
      * @return mixed
      */
@@ -74,7 +74,7 @@ class SectionPolicy
      *
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Section  $section
      * @return mixed
      */
@@ -86,7 +86,7 @@ class SectionPolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Model\V1\User\User  $user
+     * @param  \App\Models\V1\User\User  $user
      * @param  \App\Section  $section
      * @return mixed
      */

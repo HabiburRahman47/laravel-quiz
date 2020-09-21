@@ -9,7 +9,7 @@ use App\Http\Requests\API\V1\Admin\Attendance\StoreAttendanceRequest;
 use App\Http\Requests\API\V1\Admin\Attendance\UpdateAttendanceRequest;
 use App\Http\Resources\API\V1\Admin\Attendance\AttendanceCollection;
 use App\Http\Resources\API\V1\Admin\Attendance\AttendanceResource;
-use App\Model\V1\Attendance\Attendance;
+use App\Models\V1\Attendance\Attendance;
 use Illuminate\Http\Request;
 
 class AttendanceController extends AdminAPIBaseController
@@ -18,7 +18,10 @@ class AttendanceController extends AdminAPIBaseController
 
     public function index(Request $request)
     {
-        $attendances=Attendance::all();
+        $attendances=Attendance::applyTrashFilterAble()
+            ->applyKeywordSearchAble()
+            ->applySortAble()
+            ->applyPaginateAble();
         return new AttendanceCollection($attendances);
     }
 
@@ -75,7 +78,7 @@ class AttendanceController extends AdminAPIBaseController
         $attendance->forceDelete();
         return response()->noContent();
     }
-    public function attendanceCouseSection($attendanceId){
+    public function showWithCourseSection($attendanceId){
         $attendanceCourseSection=Attendance::with('teacher','courseSection')->findOrFail($attendanceId);
         return new AttendanceResource($attendanceCourseSection);
 

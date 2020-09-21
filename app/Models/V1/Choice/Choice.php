@@ -1,15 +1,23 @@
 <?php
 
-namespace App\Model\V1\Choice;
+namespace App\Models\V1\Choice;
 
-use App\Model\V1\Question\Question;
+use App\Models\V1\Question\Question;
+use App\Traits\Filters\PaginateAble;
+use App\Traits\Filters\SearchAble;
+use App\Traits\Filters\SortAble;
+use App\Traits\Filters\TrashFilterAble;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Choice extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,SortAble,SearchAble,TrashFilterAble,PaginateAble;
     protected $dates=['deleted_at'];
+
+    public $searchable = ["id", "name"];
+    public $sortable = ['id', 'updated_at', 'name'];
+
     protected $fillable=[
         'name',
         'image'

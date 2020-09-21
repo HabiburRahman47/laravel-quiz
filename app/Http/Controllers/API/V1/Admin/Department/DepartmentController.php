@@ -7,7 +7,7 @@ use App\Http\Requests\API\V1\Admin\Department\StoreDepartmentRequest;
 use App\Http\Requests\API\V1\Admin\Department\UpdateDepartmentRequest;
 use App\Http\Resources\API\V1\Admin\Department\DepartmentCollection;
 use App\Http\Resources\API\V1\Admin\Department\DepartmentResource;
-use App\Model\V1\Department\Department;
+use App\Models\V1\Department\Department;
 use Illuminate\Http\Request;
 
 class DepartmentController extends AdminAPIBaseController
@@ -16,7 +16,10 @@ class DepartmentController extends AdminAPIBaseController
 
     public function index(Request $request)
     {
-        $departments=Department::all();
+        $departments=Department::applyTrashFilterAble()
+                ->applyKeywordSearchAble()
+                ->applySortAble()
+                ->applyPaginateAble();
         return new DepartmentCollection($departments);
     }
 
@@ -49,7 +52,6 @@ class DepartmentController extends AdminAPIBaseController
         $department->save();
         return new DepartmentResource($department);
     }
-
 
     public function trash($departmentId)
     {

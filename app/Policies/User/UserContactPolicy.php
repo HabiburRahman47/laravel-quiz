@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Policies\Department;
+namespace App\Policies\User;
 
-use App\Models\V1\Department\Department;
 use App\Models\V1\User\User;
+use App\Models\V1\UserContact\UserContact;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DepartmentPolicy
+class UserContactPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class DepartmentPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\V1\User\User  $user
-     * @param  \App\Department  $department
+     * @param  \App\UserContact  $userContact
      * @return mixed
      */
-    public function view(User $user, Department $department)
+    public function view(User $user, UserContact $userContact)
     {
         //
     }
@@ -41,58 +41,58 @@ class DepartmentPolicy
      */
     public function create(User $user)
     {
-
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\V1\User\User  $user
-     * @param  \App\Department  $department
+     * @param  \App\UserContact  $userContact
      * @return mixed
      */
-    public function update(User $user, Department $department)
+    public function update(User $user, UserContact $userContact)
     {
-        return $this->check($user,$department);
+        return $this->check($user,$userContact);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\V1\User\User  $user
-     * @param  \App\Department  $department
+     * @param  \App\UserContact  $userContact
      * @return mixed
      */
-    public function trash(User $user, Department $department)
+    public function trash(User $user, UserContact $userContact)
     {
-        return $this->check($user,$department);
+        return $this->check($user,$userContact);
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\V1\User\User  $user
-     * @param  \App\Department  $department
+     * @param  \App\UserContact  $userContact
      * @return mixed
      */
-    public function restore(User $user, Department $department)
+    public function restore(User $user, UserContact $userContact)
     {
-        return $this->check($user,$department);
+        return $this->check($user,$userContact);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\V1\User\User  $user
-     * @param  \App\Department  $department
+     * @param  \App\UserContact  $userContact
      * @return mixed
      */
-    public function forceDelete(User $user, Department $department)
+    public function forceDelete(User $user, UserContact $userContact)
     {
-        return $this->check($user,$department);
+        return $this->check($user,$userContact);
     }
-    public function check(User $user, Department $department)
+    public function check(User $user, UserContact $userContact)
     {
-        return $user->id===$department->created_by_id;
+        return $user->id===$userContact->created_by;
     }
 }

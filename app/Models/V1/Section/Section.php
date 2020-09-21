@@ -1,17 +1,23 @@
 <?php
 
-namespace App\Model\V1\Section;
+namespace App\Models\V1\Section;
 
-use App\Model\V1\Course\Course;
-use App\Model\V1\Department\Department;
-use App\Model\V1\Student\Student;
+use App\Models\V1\Course\Course;
+use App\Models\V1\Department\Department;
+use App\Models\V1\Student\Student;
+use App\Traits\Filters\PaginateAble;
+use App\Traits\Filters\SearchAble;
+use App\Traits\Filters\SortAble;
+use App\Traits\Filters\TrashFilterAble;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Section extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,SearchAble,TrashFilterAble,PaginateAble,SortAble;
     protected $dates=['deleted_at'];
+    public $searchable = ["id", "name"];
+    public $sortable = ['id', 'updated_at', 'name'];
     protected $fillable=[
         'name',
         'department_id',
