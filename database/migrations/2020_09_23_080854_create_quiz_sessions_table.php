@@ -15,6 +15,7 @@ class CreateQuizSessionsTable extends Migration
     {
         Schema::create('quiz_sessions', function (Blueprint $table) {
             $table->id();
+            $table->string('quiz_name')->index();
             $table->unsignedBigInteger('quiz_id')->index();
             $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
             $table->unsignedBigInteger('created_by_id')->index();
