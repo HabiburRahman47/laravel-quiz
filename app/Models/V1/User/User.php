@@ -9,6 +9,7 @@ use App\Models\V1\Property\Property;
 use App\Models\V1\Property\PropertyType;
 use App\Models\V1\Topic\Topic;
 use App\Models\V1\Topic\TopicType;
+use App\Models\V1\UserContact\UserContact;
 use App\Traits\Filters\PaginateAble;
 use App\Traits\Filters\SearchAble;
 use App\Traits\Filters\SortAble;
@@ -54,8 +55,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    //property
+    public function userContacts(){
+        return $this->hasMany(UserContact::class,'created_by');
+    }
     public function propertyTypes()
     {
         return $this->hasMany(PropertyType::class,'created_by_id');

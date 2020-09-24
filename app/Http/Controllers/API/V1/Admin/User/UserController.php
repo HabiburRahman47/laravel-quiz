@@ -27,7 +27,11 @@ class UserController extends Controller
     {
         $user=User::with('properties.propertyType')->findOrFail($id);
         return new UserResource($user);
+    }
 
+    public function userWithUserContact($userId){
+        $user=User::with('userContacts')->findOrFail($userId);
+        return new UserResource($user);
     }
 
     //return all of user

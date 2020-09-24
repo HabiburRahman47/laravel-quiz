@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'email'=>$this->email,
-            'institutionTypes'=>PropertyTypeResource::collection($this->whenloaded('institutionTypes')),
+            'porpertyTypes'=>PropertyTypeResource::collection($this->whenloaded('institutionTypes')),
             'userContacts'=>UserContactResource::collection($this->whenLoaded('userContacts'))
         ];
     }

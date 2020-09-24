@@ -3,6 +3,7 @@
 namespace App\Models\V1\Property;
 
 use App\Models\V1\Calendar\Calendar;
+use App\Models\V1\Department\Department;
 use App\Models\V1\Event\Event;
 use App\Models\V1\User\User;
 use App\Traits\Filters\PaginateAble;
@@ -35,6 +36,15 @@ class Property extends Model
     public function owner()
     {
         return $this->belongsTo(User::class,'created_by_id');
+    }
+
+    public function departments()
+    {
+        return $this->hasMany(Department::class,'property_id');
+    }
+    public function courses()
+    {
+        return $this->hasMany(Course::class,'property_id');
     }
 
     public function users()

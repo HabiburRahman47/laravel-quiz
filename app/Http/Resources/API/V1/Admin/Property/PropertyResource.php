@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\V1\Admin\Property;
 
+use App\Http\Resources\API\V1\Admin\Department\DepartmentResource;
 use App\Http\Resources\API\V1\Admin\Event\EventResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,8 @@ class PropertyResource extends JsonResource
             'description'=>$this->description,
             // 'property_type_id'=>$this->type_id,
             //'createdById'=>$this->created_by_id,
-            //'property_type' => (new PropertyTypeResource($this->whenLoaded('propertyType'))),
+            'property_type' => (new PropertyTypeResource($this->whenLoaded('propertyType'))),
+            'department'=>DepartmentResource::collection($this->whenLoaded('departments')),
             'created_at' =>$this->created_at,
             'updated_at' =>$this->updated_at,
             //'events' => EventResource::collection($this->whenLoaded('events')),

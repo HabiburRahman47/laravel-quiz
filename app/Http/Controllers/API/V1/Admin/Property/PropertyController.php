@@ -54,7 +54,7 @@ class PropertyController extends AdminAPIBaseController
      */
     public function show($id)
     {
-        $property = Property::with('propertyType')->applyTrashFilterAble()->findOrFail($id);
+        $property = Property::with('propertyType','departments')->applyTrashFilterAble()->findOrFail($id);
         return new PropertyResource($property);
     }
 
