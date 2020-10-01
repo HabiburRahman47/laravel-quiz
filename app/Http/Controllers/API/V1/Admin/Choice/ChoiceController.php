@@ -66,6 +66,7 @@ class ChoiceController extends AdminAPIBaseController
     {
         $choice=Choice::withTrashed()->findOrFail($choiceId);
         $this->authorize('restore',$choice);
+        $choice->restore();
         return new ChoiceResource($choice);
     }
 

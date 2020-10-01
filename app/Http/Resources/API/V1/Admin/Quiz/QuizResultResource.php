@@ -4,7 +4,7 @@ namespace App\Http\Resources\API\V1\Admin\Quiz;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuizSessionResource extends JsonResource
+class QuizResultResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,9 @@ class QuizSessionResource extends JsonResource
     {
         return [
             'quiz_id'=>$this->quiz_id,
-            'session_id'=>$this->id,
-            'total_question_number'=>$this->objects()->count()
+            'session_id'=>$this->session_id,
+            'total_question'=>$this->total_question,
+            'total_right_ans'=>$this->total_right_ans,
         ];
     }
 }

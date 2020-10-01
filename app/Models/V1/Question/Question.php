@@ -5,6 +5,8 @@ namespace App\Models\V1\Question;
 use App\Models\V1\Choice\Choice;
 use App\Models\V1\Choice\ChoiceQuestion;
 use App\Models\V1\Quiz\Quiz;
+use App\Models\V1\Quiz\QuizSession;
+use App\Models\V1\Quiz\QuizSessionAnswer;
 use App\Traits\Filters\PaginateAble;
 use App\Traits\Filters\SearchAble;
 use App\Traits\Filters\SortAble;
@@ -34,5 +36,8 @@ class Question extends Model
     }
     public function choice(){
         return $this->hasMany(Choice::class);
+    }
+    public function quizSessionAns(){
+        return $this->belongsTo(QuizSessionAnswer::class,'question_id');
     }
 }

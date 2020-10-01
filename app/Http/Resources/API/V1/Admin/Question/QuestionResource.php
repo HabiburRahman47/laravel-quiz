@@ -21,7 +21,7 @@ class QuestionResource extends JsonResource
             'name'=>$this->name,
             'image'=>$this->image,
             'question_type'=>$this->question_type,
-            //'choice'=>ChoiceResource::collection($this->whenLoaded('choices'))
+            'choice'=>ChoiceResource::collection($this->whenLoaded('choices'))
         ];
     }
 }

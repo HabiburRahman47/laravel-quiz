@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\API\V1\Admin\Quiz;
 
 use App\Http\Controllers\API\V1\Admin\AdminAPIBaseController;
+use App\Http\Requests\API\V1\Admin\Quiz\StoreQuizSessionAnswerRequest;
+use App\Http\Requests\API\V1\Admin\Quiz\StoreQuizSessionRequest;
 use App\Http\Requests\API\V1\Admin\Quiz\UpdateQuizSessionRequest;
+use App\Http\Resources\API\V1\Admin\Quiz\QuizSessionAnswerResource;
 use App\Http\Resources\API\V1\Admin\Quiz\QuizSessionCollection;
 use App\Http\Resources\API\V1\Admin\Quiz\QuizSessionResource;
-use App\Models\V1\Quiz\Quiz_Session;
+use App\Models\V1\Question\Question;
+use App\Models\V1\Quiz\Quiz;
+use App\Models\V1\Quiz\QuizSession;
+use App\Models\V1\Quiz\QuizSessionAnswer;
 use Illuminate\Http\Request;
 
 class QuizSessionController extends AdminAPIBaseController
@@ -18,7 +24,7 @@ class QuizSessionController extends AdminAPIBaseController
      */
     public function index()
     {
-        $quizSessions=Quiz_Session::all();
+        $quizSessions=QuizSession::all();
         return new QuizSessionCollection($quizSessions);
     }
 
@@ -30,11 +36,15 @@ class QuizSessionController extends AdminAPIBaseController
     public function create(Request $request,$quizId)
     {
         $created_by_id = auth()->user()->id;
-        $quizSession= new Quiz_Session();
+        $quiz=Quiz::findOrFail($quizId);
+        $quizSession=new QuizSession();
+        $quizSession->quiz_name=$quiz->name;
         $quizSession->quiz_id=$quizId;
         $quizSession->created_by_id=$created_by_id;
+        session(['id' => 'id']);
         $quizSession->save();
         return new QuizSessionResource($quizSession);
+
     }
 
     /**
@@ -43,37 +53,62 @@ class QuizSessionController extends AdminAPIBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreQuizSessionAnswerRequest $request,$questionId,$selectedId,$sessionId)
     {
-        //
+        $session_id =Session()->get('id');
+        $quizSessionAns= new QuizSessionAnswer();
+        $quizSessionAns->session_id=$sessionId;
+        $quizSessionAns->question_id=$questionId;
+        $quizSessionAns->selected_choice_id=$selectedId;
+        $quizSessionAns->save();
+        return new QuizSessionAnswerResource($quizSessionAns);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Quiz_Session  $quiz_Session
+     * @param  \App\QuizSession  $QuizSession
      * @return \Illuminate\Http\Response
      */
-    public function show($quizSessionId)
+    public function show($sessionId)
     {
-        $quizSessionId=Quiz_Session::findOrFail($quizSessionId);
-        return new QuizSessionResource($quizSessionId);
+        //QuizSessionAns
+        $quizSessionAns=QuizSessionAnswer::where('session_id','=',$sessionId)->get();
+        $quizSessionAns=$quizSessionAns->pluck('selected_choice_id');
+        //Question
+        $quizSession=QuizSession::findOrFail($sessionId);
+        $quiz_id=$quizSession->quiz_id;
+        $quiz=Quiz::with('questions')->findOrFail($quiz_id);
+        $questions=$quiz->questions->pluck('config');
+        $count=$questions->count();
+        $result=0;
+        for($i=0;$i<$count;$i++){
+           if($questions[$i]==$quizSessionAns[$i]){
+               $result++;
+           }
+        }
+        return response()->json([
+            'quiz_id'=>$quiz_id,
+            'session_id'=>$sessionId,
+            'total_question_number'=>$count,
+            'right_total_question_number'=>$result
+            ]);
     }
 
 
     public function update(UpdateQuizSessionRequest $request,$quizSessionId)
     {
-        $quizSession=Quiz_Session::findOrFail($quizSessionId);
-        $quizSession->quiz_id=$request->input('quiz_id');
-        $quizSession->created_by_id=$request->input('created_by_id');
+        $quizSession=QuizSession::findOrFail($quizSessionId);
+        $quizSession->fill($request->all());
         $quizSession->save();
-        return new QuizSessionResource($quizSession);
+        return new QuizSessionResource($quizSession,);
 
     }
 
     public function trash($quizSessionId)
     {
-        $quizSession=Quiz_Session::findOrFail($quizSessionId);
+        $quizSession=QuizSession::findOrFail($quizSessionId);
         //$this->authorize('trash',$quizSession);
         $quizSession->delete();
         return response()->noContent();
@@ -82,7 +117,7 @@ class QuizSessionController extends AdminAPIBaseController
         //restore data
     public function restore($quizSessionId)
     {
-        $quizSession=Quiz_Session::withTrashed()->findOrFail($quizSessionId);
+        $quizSession=QuizSession::withTrashed()->findOrFail($quizSessionId);
         //$this->authorize('restore',$quizSession);
         $quizSession->restore();
         return new QuizSessionResource($quizSession);
@@ -91,7 +126,7 @@ class QuizSessionController extends AdminAPIBaseController
     //PERMANENT DELETE
     public function destroy($quizSessionId)
     {
-        $quizSession=Quiz_Session::withTrashed()->findOrFail($quizSessionId);
+        $quizSession=QuizSession::withTrashed()->findOrFail($quizSessionId);
         //$this->authorize('forceDelete',$quizSession);
         $quizSession->forceDelete();
         return response()->noContent();
