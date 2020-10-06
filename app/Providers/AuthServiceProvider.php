@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\V1\Attendance\Attendance;
+use App\Models\V1\Category\Category;
 use App\Models\V1\Choice\Choice;
 use App\Models\V1\Course\CourseSectionTeacher;
 use App\Models\V1\Department\Department;
@@ -14,6 +15,7 @@ use App\Models\V1\Section\Section;
 use App\Models\V1\Student\Student;
 use App\Models\V1\UserContact\UserContact;
 use App\Policies\Attendance\AttendancePolicy;
+use App\Policies\Category\CategoryPolicy;
 use App\Policies\Choice\ChoicePolicy;
 use App\Policies\Course\CourseSectionTeacherPolicy;
 use App\Policies\Department\DepartmentPolicy;
@@ -48,6 +50,7 @@ class AuthServiceProvider extends ServiceProvider
          Section::class=>SectionPolicy::class,
          Student::class=>StudentPolicy::class,
          UserContact::class=>UserContactPolicy::class,
+         Category::class=>CategoryPolicy::class
     ];
 
     /**

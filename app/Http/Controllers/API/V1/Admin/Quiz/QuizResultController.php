@@ -8,6 +8,7 @@ use App\Http\Resources\API\V1\Admin\Quiz\QuizResultResource;
 use App\Models\V1\Quiz\Quiz;
 use App\Models\V1\Quiz\QuizSession;
 use App\Models\V1\Quiz\QuizSessionAnswer;
+use App\Models\V1\Student\Student;
 use App\QuizResult;
 use Illuminate\Http\Request;
 
@@ -69,6 +70,7 @@ class QuizResultController extends Controller
      */
     public function show($quizResultId)
     {
+
         //QuizResult
         $quizResult=QuizResult::findOrFail($quizResultId);
         $quizSessionId=$quizResult->session_id;
@@ -79,39 +81,20 @@ class QuizResultController extends Controller
         $quizSession=QuizSession::findOrFail($quizSessionId);
         //Question with Choices
         $quizId=$quizSession->quiz_id;
-        $quiz=Quiz::with('questions.choices')->findOrFail($quizId);
+        $quiz=Quiz::with('questions')->findOrFail($quizId);
         $questions=$quiz->questions;
-
         $questionLimit=$questions->count();
         $response=[];
         for($i=0;$i<$questionLimit;$i++){
-           $response[$i]=[
-            'question_with_choice'=>$questions[$i],
-            'candidate_chosen_ans'=>$quizSessionAns[$i]
-           ];
+            $questions[$i]['canditade_selected_ans'] = $quizSessionAns[$i];
+            $response[] = [
+                'question_with_choice' => $questions[$i],
+            ];
         }
         return response()->json([
             'quiz_session'=>$quizSession,
-            'questions'=>$response
+            'question'=>$response
             ]);
-        // return response()->json([
-        //     'quiz_session'=>$quizSession,
-        //     'question_with_choice'=>$questionChoice,
-        //     'candidate_chosen_ans'=>$chosenAns
-
-        // $countries = ['India', 'Bangladesh', 'Pakistan'];
-        // $capital = ['Delhi', 'Dhaka', 'Islamabad'];
-        // $response = [];
-        // for($i=0;$i<3;$i++){
-        //     $response[$i] = [
-        //         'country' => $countries[$i],
-        //         'capital' => $capital[$i],
-        //     ];
-        // }
-        // return response()->json($response);
-        // return response()->json([
-        //    $array1
-        // ]);
     }
 
     /**
@@ -132,9 +115,19 @@ class QuizResultController extends Controller
      * @param  \App\QuizResult  $quizResult
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, QuizResult $quizResult)
+    public function update()
     {
-        //
+       $stuents=Student::all();
+       $count=$stuents->count();
+       $rolls=Roll::all();
+       $response=[];
+        for($i=0;$i<$count;$i++){
+            $response[$i]=[
+            'students'=>$stuents[$i],
+            'roll_number'=>$rolls[$i]
+            ];
+        }
+        return response($response);
     }
 
     /**

@@ -22,6 +22,6 @@ class QuizSessionAnswer extends Model
         'selected_choice_id'
     ];
     public function question(){
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Question::class,'id');
     }
 }

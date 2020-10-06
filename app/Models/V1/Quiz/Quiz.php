@@ -27,9 +27,9 @@ class Quiz extends Model
     {
        return $this->belongsToMany(Question::class);
     }
-    public function choiceQuestion(){
-        return $this->belongsTo(ChoiceQuestion::class);
-    }
+    // public function choiceQuestion(){
+    //     return $this->belongsTo(ChoiceQuestion::class);
+    // }
 
 
 }

@@ -15,7 +15,7 @@ Route::middleware('auth:api')->namespace('API\V1\Admin\Quiz')->group(function ()
     Route::post('quiz-results/finish/{sessionId}','QuizResultController@store');
     Route::get('quiz-results/{quizResultId}','QuizResultController@show');
     //for practise
-    Route::get('quiz-results','QuizResultController@practise');
+    Route::get('quiz-results/update','QuizResultController@update');
 
     // //Admin
     // Route::patch('quiz-sessions/{quizSessionId}/trash','QuizSessionController@trash');

@@ -38,6 +38,6 @@ class Question extends Model
         return $this->hasMany(Choice::class);
     }
     public function quizSessionAns(){
-        return $this->belongsTo(QuizSessionAnswer::class,'question_id');
+        return $this->belongsTo(QuizSessionAnswer::class,'id');
     }
 }
