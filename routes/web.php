@@ -29,6 +29,9 @@ Route::group(['middleware' => ['auth', 'get.menu']], function () {
         Route::patch('property-types/{id}/restore', 'PropertyTypeController@restore');
         Route::resource('property-types', 'PropertyTypeController');
 
+        //Category
+        Route::get('categories/getCategoryTree','CategoryController@getCategoryTree');
+
 //        //property
 //        Route::patch('property/{id}/trash', 'Property\PropertyController@trash');
 //        Route::patch('property/{id}/restore', 'PropertyController@restore');

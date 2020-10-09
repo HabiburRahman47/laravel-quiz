@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\Quiz;
 
+use App\Models\V1\Category\Category;
 use App\Models\V1\Choice\ChoiceQuestion;
 use App\Models\V1\Question\Question;
 use App\Traits\Filters\PaginateAble;
@@ -27,9 +28,15 @@ class Quiz extends Model
     {
        return $this->belongsToMany(Question::class);
     }
-    // public function choiceQuestion(){
-    //     return $this->belongsTo(ChoiceQuestion::class);
-    // }
+    public function choiceQuestion(){
+        return $this->belongsTo(ChoiceQuestion::class);
+    }
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 
 
 }
+
+
+

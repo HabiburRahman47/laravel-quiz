@@ -16,7 +16,9 @@ class CategoryController extends AdminAPIBaseController
 
 
     public function index()
+
     {
+        dd('habib');
         $categories=Category::applyTrashFilterAble()
                              ->applyKeywordSearchAble()
                              ->applySortAble()
@@ -43,7 +45,7 @@ class CategoryController extends AdminAPIBaseController
      */
     public function show($categoryId)
     {
-        $category=Category::findOrFail($categoryId);
+        $category=Category::with('quizzes')->findOrFail($categoryId);
         return new CategoryResource($category);
     }
 
@@ -80,4 +82,29 @@ class CategoryController extends AdminAPIBaseController
         $category->forceDelete();
         return response()->noContent();
     }
-}
+    //Get Category tree
+    public function getCategoryTree(){
+
+       $categories = Category::all();
+       $parent_id=0;
+       $result=$this->xyz($categories,$parent_id);
+       return response()->json($result);
+    //return new CategoryResource($result);
+     }
+     public function xyz($categories,$parent_id){
+        $res = [];
+        foreach ( $categories as $parent ) {
+            if ( $parent["parent_id"] == $parent_id ){
+                $children = $this->xyz($categories, $parent["id"]);
+                if ($children) {
+                    $parent["children"] = $children;
+                }else{
+                    $parent["children"] = null;
+                }
+                $res[]=$parent;
+            }
+        }
+        return $res;
+    }
+
+ }
