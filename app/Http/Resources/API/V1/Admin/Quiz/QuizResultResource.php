@@ -15,10 +15,11 @@ class QuizResultResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'quiz_id'=>$this->quiz_id,
-            'session_id'=>$this->session_id,
-            'total_question'=>$this->total_question,
-            'total_right_ans'=>$this->total_right_ans,
+            'quiz_name'=>$this->quiz_name,
+            'question'=>$this->question
+
         ];
     }
 }

@@ -11,26 +11,17 @@ Route::middleware('auth:api')->namespace('API\V1\Admin\Quiz')->group(function ()
     //Quiz Session
     Route::post('quizzes/sessions/{quizId}/start','QuizSessionController@create');
     Route::post('quiz-session-answers/{questionId}/{selectedId}/{sessionId}/submit','QuizSessionController@store');
+    Route::get('quiz-session/{sessionId}/result','QuizSessionController@show');
     //Quiz Result
     Route::post('quiz-results/finish/{sessionId}','QuizResultController@store');
     Route::get('quiz-results/{quizResultId}','QuizResultController@show');
+
+
     //for practise
-    Route::get('quiz-results/update','QuizResultController@update');
-
-    // //Admin
-    // Route::patch('quiz-sessions/{quizSessionId}/trash','QuizSessionController@trash');
-    // Route::patch('quiz-sessions/{quizSessionId}/restore','QuizSessionController@restore');
-    // Route::apiResource('quiz-sessions','QuizSessionController');
-
-    // //Quiz Session Answer
-    // //admin
-    // Route::patch('quiz-session-answers/{quizSessionAnsId}/trash','QuizSessionAnswerController@trash');
-    // Route::patch('quiz-session-answers/{quizSessionAnsId}/restore','QuizSessionAnswerController@restore');
-    // Route::apiResource('quiz-session-answers','QuizSessionAnswerController');
-
+    // Route::get('quiz-results/update','QuizResultController@update');
 
     //Practise
-    Route::get('practice','QuizSessionAnswerController@show');
+    // Route::get('practice','QuizSessionAnswerController@show');
 
 });
 

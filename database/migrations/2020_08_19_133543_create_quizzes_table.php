@@ -19,6 +19,8 @@ class CreateQuizzesTable extends Migration
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->text('config');
+            $table->unsignedBigInteger('category_id')->index()->nullable();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->unsignedBigInteger('created_by_id')->index();
             $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();

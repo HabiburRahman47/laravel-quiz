@@ -41,8 +41,8 @@ class QuizSessionController extends AdminAPIBaseController
         $quizSession->quiz_name=$quiz->name;
         $quizSession->quiz_id=$quizId;
         $quizSession->created_by_id=$created_by_id;
-        session(['id' => 'id']);
         $quizSession->save();
+        // return response($quizSession);
         return new QuizSessionResource($quizSession);
 
     }
@@ -88,12 +88,9 @@ class QuizSessionController extends AdminAPIBaseController
                $result++;
            }
         }
-        return response()->json([
-            'quiz_id'=>$quiz_id,
-            'session_id'=>$sessionId,
-            'total_question_number'=>$count,
-            'right_total_question_number'=>$result
-            ]);
+        $quizSession['total_question_number']=$count;
+        $quizSession['right_total_question_number']=$result;
+        return new QuizSessionResource($quizSession);
     }
 
 

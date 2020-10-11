@@ -9,6 +9,7 @@ use App\Http\Requests\API\V1\Admin\Category\UpdateCategoryRequest;
 use App\Http\Resources\API\V1\Admin\Category\CategoryCollection;
 use App\Http\Resources\API\V1\Admin\Category\CategoryResource;
 use App\Models\V1\Category\Category;
+use App\Models\V1\Quiz\Quiz;
 use Illuminate\Http\Request;
 
 class CategoryController extends AdminAPIBaseController
@@ -18,7 +19,6 @@ class CategoryController extends AdminAPIBaseController
     public function index()
 
     {
-        dd('habib');
         $categories=Category::applyTrashFilterAble()
                              ->applyKeywordSearchAble()
                              ->applySortAble()
@@ -45,8 +45,20 @@ class CategoryController extends AdminAPIBaseController
      */
     public function show($categoryId)
     {
-        $category=Category::with('quizzes')->findOrFail($categoryId);
+        $category=Category::findOrFail($categoryId);
+        $childs=Category::where('parent_id','=',$categoryId)->get();
+        $childId=$childs->pluck('id');
+        if ($childs->isEmpty()){
+            $childId=[$categoryId];
+        }
+        $quizzes = Quiz::select('id', 'name','category_id')
+               ->whereIn('category_id', $childId)
+               ->with('category')
+               ->get();
+        $category['quizzes']=$quizzes;
+        //return response()->json($category);
         return new CategoryResource($category);
+
     }
 
 
@@ -96,6 +108,7 @@ class CategoryController extends AdminAPIBaseController
         foreach ( $categories as $parent ) {
             if ( $parent["parent_id"] == $parent_id ){
                 $children = $this->xyz($categories, $parent["id"]);
+
                 if ($children) {
                     $parent["children"] = $children;
                 }else{

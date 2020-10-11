@@ -32,7 +32,7 @@ class Quiz extends Model
         return $this->belongsTo(ChoiceQuestion::class);
     }
     public function category(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,'category_id');
     }
 
 

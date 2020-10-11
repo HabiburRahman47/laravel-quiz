@@ -91,10 +91,8 @@ class QuizResultController extends Controller
                 'question_with_choice' => $questions[$i],
             ];
         }
-        return response()->json([
-            'quiz_session'=>$quizSession,
-            'question'=>$response
-            ]);
+        $quizSession['question']=$response;
+        return new QuizResultResource($quizSession);
     }
 
     /**
@@ -108,36 +106,4 @@ class QuizResultController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\QuizResult  $quizResult
-     * @return \Illuminate\Http\Response
-     */
-    public function update()
-    {
-       $stuents=Student::all();
-       $count=$stuents->count();
-       $rolls=Roll::all();
-       $response=[];
-        for($i=0;$i<$count;$i++){
-            $response[$i]=[
-            'students'=>$stuents[$i],
-            'roll_number'=>$rolls[$i]
-            ];
-        }
-        return response($response);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\QuizResult  $quizResult
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(QuizResult $quizResult)
-    {
-        //
-    }
 }
