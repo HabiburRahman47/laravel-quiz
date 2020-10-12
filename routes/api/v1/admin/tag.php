@@ -11,7 +11,7 @@ Route::middleware('auth:api')->namespace('API\V1\Admin\Tag')->group(function () 
         //Attaching tag with question
         Route::post('questions/{questionId}/addTag','QuestionTagController@attachTagToQuestion');
         Route::post('questions/{questionId}/addTags','QuestionTagController@attachTagsToQuestion');
-        Route::post('questions/{questionId}/addTagModel','QuestionTagController@attachTagToQuestionByTagModel');
+
         //Detaching tag with question
         Route::post('questions/{questionId}/tag/remove','QuestionTagController@detachSingleQuestionTag');
         Route::post('questions/{questionId}/tags/remove','QuestionTagController@detachMultipleQuestionTag');
@@ -21,9 +21,9 @@ Route::middleware('auth:api')->namespace('API\V1\Admin\Tag')->group(function () 
 
         //todo check tagName
         //Route::get('tags/{tagName}/questions/','QuestionTagController@retrieveTagWithQuestion');
-        Route::get('questions/tag/retrieve','QuestionTagController@retrieveTagWithQuestion');
+        Route::post('questions/tag/retrieve','QuestionTagController@retrieveTagWithQuestion');
         Route::post('questions/tag-type/retrieve','QuestionTagController@retrieveTagAndTypeWithQuestion');
-        Route::get('questions/tags/retrieve','QuestionTagController@retrieveQuestionsWithAnyTag');
+        Route::post('questions/tags/retrieve','QuestionTagController@retrieveTagWithAllQuestion');
 
         //Tag
         Route::apiResource('tags', 'TagController');

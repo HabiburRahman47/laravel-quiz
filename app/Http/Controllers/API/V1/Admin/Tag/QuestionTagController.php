@@ -24,29 +24,22 @@ class QuestionTagController extends AdminAPIBaseController
     //Attaching Tags
 
     //Adding a single tags
-    public function addSingleTagToQuestion(QuestionTagRequest $request,$questionId){
+    public function attachTagToQuestion(QuestionTagRequest $request,$questionId){
         $question=Question::findOrFail($questionId);
         $question->attachTag($request->tag);
     }
 
     //Adding a multiple tags
-    public function addMultipleTagToQuestion(QuestionTagRequest $request,$questionId){
+    public function attachTagsToQuestion(QuestionTagRequest $request,$questionId){
         $question=Question::findOrFail($questionId);
         $question->attachTags(explode(",",$request->tags));
-    }
-
-    //using an instance of \Spatie\Tags\Tag
-    public function addTagToQuestionByTagModel(QuestionTagRequest $request,$questionId){
-        $question=Question::findOrFail($questionId);
-        //$question->attachTags(explode(",",$request->tags));
-        $question->attach(\Spatie\Tags\Tag::findOrCreate($request->tags));
     }
 
     //Detaching Tags
     //using a string
     public function detachSingleQuestionTag(QuestionTagRequest $request,$questionId){
         $question=Question::findOrFail($questionId);
-        $question->detachTag($request->tags);
+        $question->detachTag($request->tag);
     }
     //using a array
     public function detachMultipleQuestionTag(QuestionTagRequest $request,$questionId){

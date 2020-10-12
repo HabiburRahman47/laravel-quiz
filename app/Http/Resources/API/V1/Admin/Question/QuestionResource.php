@@ -22,6 +22,7 @@ class QuestionResource extends JsonResource
             'name'=>$this->name,
             'image'=>$this->image,
             'question_type'=>$this->question_type,
+            'tag'=>$this->tags,
             'choice'=>ChoiceResource::collection($this->whenLoaded('choices')),
             'quiz_session_ans'=>new QuizSessionAnswerResource($this->whenLoaded('quizSessionAns'))
         ];
