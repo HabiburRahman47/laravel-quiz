@@ -6,7 +6,7 @@
         params.action = action;
         params._token = $('meta[name="csrf-token"]').attr('content');
 
-        if (onlyVisibles) {
+        if (onlyVisibles) {i
             params.visible_columns = _getVisibleColumns();
         } else {
             params.visible_columns = null;

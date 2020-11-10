@@ -9,9 +9,10 @@ Route::middleware('auth:api')->namespace('API\V1\Admin\Quiz')->group(function ()
     Route::apiResource('quizzes', 'QuizController');
 
     //Quiz Session
-    Route::post('quizzes/sessions/{quizId}/start','QuizSessionController@create');
-    Route::post('quiz-session-answers/{questionId}/{selectedId}/{sessionId}/submit','QuizSessionController@store');
-    Route::get('quiz-session/{sessionId}/result','QuizSessionController@show');
+    Route::post('quizzes-sessions/{quizId}/start','QuizSessionController@create');
+    Route::post('quiz-sessions/{sessionId}/questions/{questionId}/choices/{choicedId}/submit','QuizSessionController@store');
+    Route::get('quiz-sessions/{sessionId}/result','QuizSessionController@show');
+    Route::get('quiz-sessions/previous-quizzes','QuizSessionController@index');
     //Quiz Result
     Route::post('quiz-results/finish/{sessionId}','QuizResultController@store');
     Route::get('quiz-results/{quizResultId}','QuizResultController@show');

@@ -20,4 +20,7 @@ class CourseSectionTeacher extends Model
         'course_section_id',
         'teacher_id'
     ];
+    public function courseSection(){
+        return $this->belongsTo(CourseSection::class,'course_section_id');
+    }
 }

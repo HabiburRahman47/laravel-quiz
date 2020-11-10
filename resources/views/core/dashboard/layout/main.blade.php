@@ -26,7 +26,9 @@
 <!-- CoreUI and necessary plugins-->
 <script src="{{ asset('core/dashboard/js/coreui.bundle.min.js') }}"></script>
 <script src="{{ asset('core/dashboard/js/coreui-utils.js') }}"></script>
-@yield('javascript')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+{{--in page js--}}
+@stack('javascript')
 
 <script type="text/javascript">
     // $('#flash-overlay-modal').modal();
@@ -53,6 +55,14 @@
             }
         });
     }
+
+    var tooltipElementList = document.querySelectorAll('[data-toggle="tooltip"]');
+    tooltipElementList.forEach(function (tooltipElement) {
+        var tooltip = new coreui.Tooltip(tooltipElement, {
+            boundary: 'window'
+        });
+    });
+
 
 </script>
 <!--Scroll to top-->

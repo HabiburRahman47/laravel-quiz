@@ -24,7 +24,8 @@ class StoreSectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:50'
+            'prefix' => 'required',
+            'roll_number' => 'required'
         ];
     }
     public function messages()

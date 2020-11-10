@@ -14,6 +14,7 @@ Route::middleware('auth:api')->namespace('API\V1\Admin\Course')->group(function 
     Route::apiResource('course-section-teachers', 'CourseSectionTeacherController');
     //Route for CourseSection
     Route::get('course-sections/{courseSectionId}','CourseSectionController@show');
+    Route::get('courseSections','CourseSectionController@hellow');
 
 
 

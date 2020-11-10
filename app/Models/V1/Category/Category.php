@@ -17,9 +17,6 @@ class Category extends Model
 
     public $searchable = ["id","name"];
     public $sortable = ['id', 'updated_at','name'];
-
-
-
     public $fillable =[
         'name',
         'parent_id'
@@ -27,7 +24,6 @@ class Category extends Model
     public function childs(){
 
         return $this->hasMany(Category::class, 'parent_id','id');
-
     }
     public function quizzes(){
         return $this->hasMany(Quiz::class,'category_id');

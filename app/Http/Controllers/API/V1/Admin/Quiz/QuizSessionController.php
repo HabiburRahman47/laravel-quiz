@@ -13,6 +13,7 @@ use App\Models\V1\Question\Question;
 use App\Models\V1\Quiz\Quiz;
 use App\Models\V1\Quiz\QuizSession;
 use App\Models\V1\Quiz\QuizSessionAnswer;
+use App\QuizResult;
 use Illuminate\Http\Request;
 
 class QuizSessionController extends AdminAPIBaseController
@@ -24,8 +25,17 @@ class QuizSessionController extends AdminAPIBaseController
      */
     public function index()
     {
-        $quizSessions=QuizSession::all();
-        return new QuizSessionCollection($quizSessions);
+        $created_by_id = auth()->user()->id;
+        $quizSessions=QuizSession::where('created_by_id','=',$created_by_id)
+                 ->with('result')
+                 ->get();
+        // $sessionId=$quizSessions->pluck('id');
+        // $quizResults=QuizResult::select('total_question','total_right_ans')
+        //              ->whereIn('session_id',$sessionId)
+        //              ->get();
+        // $quizSessions['quiz_result']=$quizResults;
+        return response()->json($quizSessions);
+        // return new QuizSessionCollection($quizSessions);
     }
 
     /**
@@ -55,7 +65,6 @@ class QuizSessionController extends AdminAPIBaseController
      */
     public function store(StoreQuizSessionAnswerRequest $request,$questionId,$selectedId,$sessionId)
     {
-        $session_id =Session()->get('id');
         $quizSessionAns= new QuizSessionAnswer();
         $quizSessionAns->session_id=$sessionId;
         $quizSessionAns->question_id=$questionId;

@@ -23,14 +23,14 @@
 
 
 <link href="{{ asset('core/dashboard/css/free.min.css') }}" rel="stylesheet"> <!-- icons -->
-<link href="{{ asset('core/dashboard/css/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons -->
+{{--<link href="{{ asset('core/dashboard/css/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons -->--}}
 <!-- Main styles for this application-->
 <link href="{{ asset('core/dashboard/css/style.css') }}" rel="stylesheet">
 
-{{-- Data table--}}
-<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css" rel="stylesheet">
-
-@yield('css')
+{{--<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,700;1,600&display=swap" rel="stylesheet">--}}
+<link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{{--in page css--}}
+@stack('css')
 
 <link href="{{ asset('core/dashboard/css/custom.css') }}" rel="stylesheet">

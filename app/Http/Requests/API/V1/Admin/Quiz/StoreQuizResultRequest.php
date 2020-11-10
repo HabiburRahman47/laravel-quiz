@@ -24,7 +24,9 @@ class StoreQuizResultRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'session_id'=>'required',
+            'total_question'=>'required',
+            'total_right_ans'=>'required'
         ];
     }
 }

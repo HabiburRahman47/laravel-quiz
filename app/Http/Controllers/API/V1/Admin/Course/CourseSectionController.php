@@ -9,6 +9,10 @@ use App\Models\V1\Course\CourseSection;
 class CourseSectionController extends Controller
 {
 
+    public function hellow(){
+        $hellow=CourseSection::all();
+        return response($hellow);
+    }
     public function show($courseSectionId)
     {
         $courseSection=CourseSection::with('section','course')->findOrFail($courseSectionId);

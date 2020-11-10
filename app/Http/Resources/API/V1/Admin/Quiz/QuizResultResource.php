@@ -17,8 +17,8 @@ class QuizResultResource extends JsonResource
         return [
             'id'=>$this->id,
             'quiz_id'=>$this->quiz_id,
-            'quiz_name'=>$this->quiz_name,
-            'question'=>$this->question
+            'total_question'=>$this->total_question,
+            'total_right_ans'=>$this->total_right_ans
 
         ];
     }

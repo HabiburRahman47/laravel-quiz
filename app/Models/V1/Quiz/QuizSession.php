@@ -21,5 +21,8 @@ class QuizSession extends Model
         'quiz_id',
         'status'
     ];
+    public function result(){
+        return $this->belongsTo(QuizResult::class,'id');
+    }
 
 }

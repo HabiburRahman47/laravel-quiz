@@ -24,7 +24,7 @@ class StoreCourseSectionTeacherRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'course_section_id'=>'required',
         ];
     }
 }

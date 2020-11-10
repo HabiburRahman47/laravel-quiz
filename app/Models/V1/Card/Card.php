@@ -20,11 +20,10 @@ class Card extends Model
 
     protected $fillable=[
         'id',
-        'property_id',
-        'student_id',
         'card_number'
     ];
-    public function student(){
-        return $this->belongsTo(Student::class);
+    public function cardable()
+    {
+       return $this->morphTo();
     }
 }

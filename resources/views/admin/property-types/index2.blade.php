@@ -46,7 +46,7 @@
 @endsection
 
 @section('javascript')
-    @include('core.dashboard.layout.partials.datatable.js')
+    @include('core.dashboard.layout.partials.datatables.js')
     <script type="text/javascript">
         $(document).ready(function () {
             var table = $('#property-types').DataTable({

@@ -2,9 +2,7 @@
 
 namespace App\Models\V1\Property;
 
-use App\Models\V1\Calendar\Calendar;
 use App\Models\V1\Department\Department;
-use App\Models\V1\Event\Event;
 use App\Models\V1\User\User;
 use App\Traits\Filters\PaginateAble;
 use App\Traits\Filters\SearchAble;

@@ -56,8 +56,8 @@ class CategoryController extends AdminAPIBaseController
                ->with('category')
                ->get();
         $category['quizzes']=$quizzes;
-        //return response()->json($category);
-        return new CategoryResource($category);
+        return response()->json($category);
+       // return new CategoryResource($category);
 
     }
 
@@ -101,7 +101,7 @@ class CategoryController extends AdminAPIBaseController
        $parent_id=0;
        $result=$this->xyz($categories,$parent_id);
        return response()->json($result);
-    //return new CategoryResource($result);
+      // return new CategoryResource($result);
      }
      public function xyz($categories,$parent_id){
         $res = [];

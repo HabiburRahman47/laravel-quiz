@@ -22,9 +22,11 @@ class Student extends Model
         'section_id',
         'user_id',
         'prefix',
-        'roll_number'
+        'roll_number',
+        'created_by_id'
     ];
-    public function card(){
-        return $this->hasOne(Card::class);
+    public function cards()
+    {
+    return $this->morphMany(Card::class, 'cardable');
     }
 }

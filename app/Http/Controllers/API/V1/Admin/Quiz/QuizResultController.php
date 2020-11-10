@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Admin\Quiz\StoreQuizResultRequest;
 use App\Http\Resources\API\V1\Admin\Quiz\QuizResultResource;
 use App\Models\V1\Quiz\Quiz;
+use App\Models\V1\Quiz\QuizResult;
 use App\Models\V1\Quiz\QuizSession;
 use App\Models\V1\Quiz\QuizSessionAnswer;
-use App\Models\V1\Student\Student;
-use App\QuizResult;
 use Illuminate\Http\Request;
 
 class QuizResultController extends Controller
@@ -54,11 +53,11 @@ class QuizResultController extends Controller
            }
         }
         $quizResult= new QuizResult();
-        $quizResult->quiz_id=$quiz_id;
         $quizResult->session_id=$sessionId;
         $quizResult->total_question=$questionCount;
         $quizResult->total_right_ans=$result;
         $quizResult->save();
+        // return response($quizResult);
         return new QuizResultResource($quizResult);
     }
 

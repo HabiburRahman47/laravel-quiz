@@ -25,15 +25,130 @@ Route::group(['middleware' => ['auth', 'get.menu']], function () {
     });
     Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Property')->group(function () {
         //property_type
-        Route::patch('property-types/{id}/trash', 'PropertyTypeController@trash');
-        Route::patch('property-types/{id}/restore', 'PropertyTypeController@restore');
+        Route::patch('property-types/{id}/trash', 'PropertyTypeController@trash')->name('property-types.trash');
+        Route::patch('property-types/{id}/restore', 'PropertyTypeController@restore')->name('property-types.restore');
         Route::resource('property-types', 'PropertyTypeController');
+        Route::post('property-types/{id}','PropertyTypeController@update')->name('property-types.update.all');
+        //property
+        Route::get('properties/branch','PropertyController@manageParent')->name('properties.branch');
+        Route::patch('properties/{id}/trash', 'PropertyController@trash')->name('properties.trash');
+        Route::patch('properties/{id}/restore', 'PropertyController@restore')->name('properties.restore');
+        Route::Resource('properties', 'PropertyController');
+        Route::post('properties/{id}','PropertyController@update')->name('properties.update.all');
+
+    });
+    Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Topic')->group(function () {
+        //topic type
+        Route::patch('topic-types/{id}/trash', 'TopicTypeController@trash')->name('topic-types.trash');
+        Route::patch('topic-types/{id}/restore', 'TopicTypeController@restore')->name('topic-types.restore');
+        Route::resource('topic-types', 'TopicTypeController');
+        Route::post('topic-types/{id}','TopicTypeController@update')->name('topic-types.update.all');
+        //topic
+        Route::patch('topics/{id}/trash', 'TopicController@trash')->name('topics.trash');
+        Route::patch('topics/{id}/restore', 'TopicController@restore')->name('topics.restore');
+        Route::resource('topics', 'TopicController');
+        Route::post('topics/{id}','TopicController@update')->name('topics.update.all');
 
 
-//        //property
-//        Route::patch('property/{id}/trash', 'Property\PropertyController@trash');
-//        Route::patch('property/{id}/restore', 'PropertyController@restore');
-//        Route::apiResource('property', 'PropertyController');
+    });
+    Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Department')->group(function () {
+        //department
+        Route::patch('departments/{id}/trash', 'DepartmentController@trash')->name('departments.trash');
+        Route::patch('departments/{id}/restore', 'DepartmentController@restore')->name('departments.restore');
+        Route::resource('departments', 'DepartmentController');
+        Route::post('departments/{id}','DepartmentController@update')->name('departments.update.all');
+    });
+    Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Section')->group(function () {
+        //section
+        Route::patch('sections/{id}/trash', 'SectionController@trash')->name('sections.trash');
+        Route::patch('sections/{id}/restore', 'SectionController@restore')->name('sections.restore');
+        Route::resource('sections', 'SectionController');
+        Route::post('sections/{id}','SectionController@update')->name('sections.update.all');
+        //section-course
+        Route::patch('section-courses/{id}/trash', 'SectionCourseController@trash')->name('section-courses.trash');
+        Route::patch('section-courses/{id}/restore', 'SectionCourseController@restore')->name('section-courses.restore');
+        Route::resource('section-courses', 'SectionCourseController');
+        Route::post('section-courses/{id}','SectionCourseController@update')->name('section-courses.update.all');
+       
+    });
+     Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Course')->group(function () {
+        //course
+        Route::patch('courses/{id}/trash', 'CourseController@trash')->name('courses.trash');
+        Route::patch('courses/{id}/restore', 'CourseController@restore')->name('courses.restore');
+        Route::resource('courses', 'CourseController');
+        Route::post('courses/{id}','CourseController@update')->name('courses.update.all');
+         //course-section-teacher
+        Route::patch('course-section-teachers/{id}/trash', 'CourseSectionTeacherController@trash')->name('course-section-teachers.trash');
+        Route::patch('course-section-teachers/{id}/restore', 'CourseSectionTeacherController@restore')->name('course-section-teachers.restore');
+        Route::resource('course-section-teachers', 'CourseSectionTeacherController');
+        Route::post('course-section-teachers/{id}','CourseSectionTeacherController@update')->name('course-section-teachers.update.all');
+    });
+    //student
+    Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Student')->group(function () {
+        //student
+        Route::patch('students/{id}/trash','StudentController@trash')->name('students.trash');
+        Route::patch('students/{id}/restore','StudentController@restore')->name('students.restore');
+        Route::resource('students','StudentController');
+        Route::post('students/{id}','StudentController@update')->name('students.update.all');
+    });
+     Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Attendance')->group(function () {
+        //Attendance
+        Route::patch('attendances/{id}/trash','AttendanceController@trash')->name('attendances.trash');
+        Route::patch('attendances/{id}/restore','AttendanceController@restore')->name('attendances.restore');
+        Route::resource('attendances','AttendanceController');
+        Route::post('attendances/{id}','AttendanceController@update')->name('attendances.update.all');
+    });
+   Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Quiz')->group(function () {
+        //quiz
+        Route::patch('quizzes/{id}/trash','QuizController@trash')->name('quizzes.trash');
+        Route::patch('quizzes/{id}/restore','QuizController@restore')->name('quizzes.restore');
+        Route::resource('quizzes','QuizController');
+        Route::post('quizzes/{id}','QuizController@update')->name('quizzes.update.all');
+        //quiz-question
+        Route::patch('quiz-questions/{id}/trash','QuizQuestionController@trash')->name('quiz-questions.trash');
+        Route::patch('quiz-questions/{id}/restore','QuizQuestionController@restore')->name('quiz-questions.restore');
+        Route::resource('quiz-questions','QuizQuestionController');
+        Route::post('quiz-questions/{id}','QuizQuestionController@update')->name('quiz-questions.update.all');
+        //quiz-result
+        Route::patch('quiz-results/{id}/trash','QuizResultController@trash')->name('quiz-results.trash');
+        Route::patch('quiz-results/{id}/restore','QuizResultController@restore')->name('quiz-results.restore');
+        Route::resource('quiz-results','QuizResultController');
+        Route::post('quiz-results/{id}','QuizResultController@update')->name('quiz-results.update.all');
+
+        
+    });
+    Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Category')->group(function () {
+        //category
+        Route::patch('categories/{id}/trash','CategoryController@trash')->name('categories.trash');
+        Route::patch('categories/{id}/restore','CategoryController@restore')->name('categories.restore');
+        Route::resource('categories','CategoryController');
+        Route::post('categories/{id}','CategoryController@update')->name('categories.update.all');
+    });
+     Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Question')->group(function () {
+        //question
+        Route::patch('questions/{id}/trash','QuestionController@trash')->name('questions.trash');
+        Route::patch('questions/{id}/restore','QuestionController@restore')->name('questions.restore');
+        Route::resource('questions','QuestionController');
+        Route::post('questions/{id}','QuestionController@update')->name('questions.update.all');
+          //Question-Choice
+        Route::patch('question-choices/{id}/trash','QuestionChoiceController@trash')->name('question-choices.trash');
+        Route::patch('question-choices/{id}/restore','QuestionChoiceController@restore')->name('question-choices.restore');
+        Route::Resource('question-choices','QuestionChoiceController');
+        Route::post('question-choices/{id}','QuestionChoiceController@update')->name('question-choices.update.all');
+    });
+     Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Choice')->group(function () {
+        //Choice
+        Route::patch('choices/{id}/trash','ChoiceController@trash')->name('choices.trash');
+        Route::patch('choices/{id}/restore','ChoiceController@restore')->name('choices.restore');
+        Route::resource('choices','ChoiceController');
+        Route::post('choices/{id}','ChoiceController@update')->name('choices.update.all');
+    });
+     Route::name('web.admin.')->prefix("web/admin")->namespace('Web\Admin\Card')->group(function () {
+        //Card
+        Route::patch('cards/{id}/trash','CardController@trash')->name('cards.trash');
+        Route::patch('cards/{id}/restore','CardController@restore')->name('cards.restore');
+        Route::resource('cards','CardController');
+        Route::post('cards/{id}','CardController@update')->name('cards.update.all');
     });
 
 });
@@ -42,4 +157,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/property-branch', function () {
 
+    return  view('admin.properties.categoryTreeview');
+});
