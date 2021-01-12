@@ -19,6 +19,9 @@ class CreateChoiceQuestionTable extends Migration
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
             $table->unsignedBigInteger('choice_id')->index();
             $table->foreign('choice_id')->references('id')->on('choices')->onDelete('cascade');
+            $table->unsignedBigInteger('created_by_id')->index();
+            $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

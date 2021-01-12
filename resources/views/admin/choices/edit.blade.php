@@ -31,7 +31,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label" for="text-input">Image</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" id="text-input" type="text" name="image" value="{{old('image',$choice->image)}}"
+                                        <input class="form-control" id="text-input" type="file" name="image" value="{{old('image',$choice->image)}}"
                                                placeholder="Text">
                                     </div>
                                 </div>

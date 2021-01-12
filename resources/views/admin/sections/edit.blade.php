@@ -28,6 +28,17 @@
                                                placeholder="Text">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="department_id">Department</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="department_id" name="department_id">
+                                            <option value="">Select Department</option>
+                                            @foreach($departments as $department)
+                                                <option value="{{$department->id}}"  {{$department->id == $section->department_id ? 'selected' : ''}}>{{$department->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <hr>
                                 <div class="form-actions">
                                     <a class="btn btn-secondary" type="button" href="{{route('web.admin.sections.index')}}">Cancel</a>

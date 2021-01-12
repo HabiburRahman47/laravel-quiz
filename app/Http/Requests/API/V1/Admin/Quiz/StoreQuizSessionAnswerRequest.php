@@ -24,7 +24,18 @@ class StoreQuizSessionAnswerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'session_id'=>'required',
+            'question_id'=>'required',
+            'selected_choice_id'=>'required'
         ];
     }
+    public function messages()
+    {
+        return [
+            'session_id.required'=>'Session is required',
+            'question_id.required'=>'Question is required',
+            'selected_choice_id.required'=>'Choice is required'
+        ];
+    }
+
 }

@@ -12,7 +12,12 @@
                             <table class="table table-hover">
                                 <tr>
                                     <td>Course Section</td>
-                                    <td>{{ $courseSectionTeacher->course_section_id }}</td>
+                                    @foreach($courseSections as $courseSection)
+                                        @if($courseSectionTeacher->course_section_id==$courseSection->id)
+                                            <td>{{ $courseSection->course->name}}({{ $courseSection->section->name}})</td>
+                                        @endif
+                                    @endforeach
+                                    
                                 </tr>
                                 <tr>
                                     <td>Created At</td>

@@ -19,6 +19,8 @@ class CreateQuizResultsTable extends Migration
             $table->foreign('session_id')->references('id')->on('quiz_sessions')->onDelete('cascade');
             $table->unsignedBigInteger('total_question');
             $table->unsignedBigInteger('total_right_ans');
+            $table->unsignedBigInteger('created_by_id')->index();
+            $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

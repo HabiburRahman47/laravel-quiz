@@ -22,10 +22,19 @@
                                 @csrf
                                 @include('errors.form-error', ['errors'=>$errors])
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="text-input">Course Section Teacher</label>
+                                    {{-- <label class="col-md-3 col-form-label" for="text-input">Course Section Teacher</label>
                                     <div class="col-md-9">
                                         <input class="form-control" id="text-input" type="text" name="course_section_id" value="{{old('course_section_id',$courseSectionTeacher->course_section_id)}}"
                                                placeholder="Text">
+                                    </div> --}}
+                                    <label class="col-md-3 col-form-label" for="course_section_id">Course Section</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="course_section_id" name="course_section_id">
+                                            <option value="">Select Course Section</option>
+                                            @foreach($courseSections as $courseSection)
+                                                <option value="{{$courseSection->id}}"  {{$courseSection->id == $courseSectionTeacher->course_section_id ? 'selected' : ''}}>{{$courseSection->course->name}}({{ $courseSection->section->name }})</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <hr>

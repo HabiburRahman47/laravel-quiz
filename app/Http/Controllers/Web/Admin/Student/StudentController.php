@@ -7,6 +7,8 @@ use App\DataTables\Student\StudentDataTable;
 use App\Http\Controllers\Web\Admin\AdminBaseController;
 use App\Http\Requests\API\V1\Admin\Section\StoreSectionRequest;
 use App\Http\Requests\API\V1\Admin\Section\UpdateSectionRequest;
+use App\Http\Requests\API\V1\Admin\Student\StoreStudentRequest;
+use App\Http\Requests\API\V1\Admin\Student\UpdateStudentRequest;
 use App\Models\V1\Property\Property;
 use App\Models\V1\Section\Section;
 use App\Models\V1\Student\Student;
@@ -33,7 +35,7 @@ class StudentController extends AdminBaseController
      * @param StoreSectionRequest $request
      * @return void
      */
-    public function store(StoreSectionRequest $request)
+    public function store(StoreStudentRequest $request)
     {
         $created_by_id = auth()->user()->id;
         $student = new Student();
@@ -75,7 +77,7 @@ class StudentController extends AdminBaseController
      * @param int $id
      * @return SectionResource
      */
-    public function update(UpdateSectionRequest $request, $id)
+    public function update(UpdateStudentRequest $request, $id)
     {
         $student = Student::findOrFail($id);
         $student->fill($request->all());

@@ -24,7 +24,17 @@ class UpdateQuizSessionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'quiz_name'=>'required',
+            'quiz_id'=>'required',
+            'status'=>'required'
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'quiz_name.required'=>'Quiz Name is required',
+            'quiz_id.required'=>'Quiz is required',
+            'status.required'=>'Status is required'
         ];
     }
 }

@@ -16,7 +16,13 @@
                                 </tr>
                                 <tr>
                                     <td>Image</td>
-                                    <td>{{ $choice->image }}</td>
+                                    <td>
+                                        <a href="{{ asset("uploads/straps/$choice->id/image/$choice->image")}}">
+                                            <img
+                                                src="{{ asset("uploads/straps/$choice->id/image/$choice->image")}}"
+                                                style="height:100px;">
+                                        </a>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Created At</td>

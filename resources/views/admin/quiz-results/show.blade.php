@@ -11,20 +11,24 @@
                         <div class="card-body">
                             <table class="table table-hover">
                                 <tr>
-                                    <td>Name</td>
-                                    <td>{{ $quiz->name }}</td>
+                                    <td>Session Quiz</td>
+                                    <td>{{ $quizResult->quizSession->quiz_name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Description</td>
-                                    <td>{{ $quiz->description }}</td>
+                                    <td>Total Question</td>
+                                    <td>{{ $quizResult->total_question }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Right Ans</td>
+                                    <td>{{ $quizResult->total_right_ans }}</td>
                                 </tr>
                                 <tr>
                                     <td>Created At</td>
-                                    <td>{{ $quiz->created_at }}</td>
+                                    <td>{{ $quizResult->created_at }}</td>
                                 </tr>
                                 <tr>
                                     <td>Updated At</td>
-                                    <td>{{ $quiz->updated_at }}</td>
+                                    <td>{{ $quizResult->updated_at }}</td>
                                 </tr>
 
                             </table>

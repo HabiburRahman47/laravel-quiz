@@ -15,6 +15,11 @@
                                     <td>{{ $course->name }}</td>
                                 </tr>
                                 <tr>
+                                    <td>Property</td>
+                                    <td>
+                                    <a href="{{ route('web.admin.properties.show',[$course->property->id]) }}">{{ $course->property->name }}</a></td>
+                                </tr>
+                                <tr>
                                     <td>Created At</td>
                                     <td>{{ $course->created_at }}</td>
                                 </tr>

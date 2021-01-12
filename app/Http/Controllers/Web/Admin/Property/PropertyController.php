@@ -58,7 +58,7 @@ class PropertyController extends AdminBaseController
      */
     public function show($id)
     {
-        $property = Property::with('propertyType','parent')->findOrFail($id);
+        $property = Property::with('propertyType')->findOrFail($id);
         return view('admin.properties.show', compact('property'));
     }
 

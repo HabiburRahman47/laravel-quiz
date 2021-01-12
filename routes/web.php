@@ -13,13 +13,36 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/','Web\Site\Quiz\HomeController@index');
+Route::get('/properties','Web\Site\Quiz\HomeController@properties')->name('properties');
+Route::get('properties/schools','Web\Site\Quiz\SchoolController@index')->name('schools');
+// Route::get('properties/schools/{id}','Web\Site\Quiz\SchoolController@show')->name('school.show');
+Route::get('properties/schools/{id}', ['as'=>'school.show','uses'=>'Web\Site\Quiz\SchoolController@show']);
+
+Route::get('/categories','Web\Site\Quiz\CategoryController@index')->name('category.index');
+Route::get('/categories/{id}','Web\Site\Quiz\CategoryController@show')->name('category.show');
+Route::get('/category-quizzes/{id}','Web\Site\Quiz\CategoryController@categoryQuiz')->name('category.quiz');
+Route::get('quizzes/sessions/{quizId}/start','Web\Site\Quiz\QuizSessionController@create')->name('quizSession');
+Route::get('/quiz-questions/{id}','Web\Site\Quiz\QuizController@quizQuestions')->name('quizQuestions');
+Route::post('quiz-session-ans/{sessionId}/questions/choices/submit','Web\Site\Quiz\QuizSessionAnsController@store')->name('quizSubmit');
+//Session-Incomplete
+Route::post('quiz-session-ans/{sessionId}/questions/choices/save','Web\Site\Quiz\QuizSessionAnsController@incompleteSession')->name('quiz.incomplete');
+//Session-Finish
+Route::post('quiz-results/finish/{sessionId}','Web\Site\Quiz\QuizResultController@store')->name('quiz.finish');
+Route::get('quiz-results/{quizResultId}','Web\Site\Quiz\QuizResultController@show')->name('quiz.result');
+//Previous history
+Route::get('quiz-session/previous-history','Web\Site\Quiz\QuizSessionController@index')->name('quiz.history');
+
+
 
 Auth::routes(['register' => false]);
 Route::group(['middleware' => ['auth', 'get.menu']], function () {
+     
+    // Route::get('/', function () {
+    //     return view('admin.dashboard');
 
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    });
+
+    // });
     Route::get('/test', function () {
         return view('admin.notifications.modals');
     });
@@ -114,6 +137,18 @@ Route::group(['middleware' => ['auth', 'get.menu']], function () {
         Route::patch('quiz-results/{id}/restore','QuizResultController@restore')->name('quiz-results.restore');
         Route::resource('quiz-results','QuizResultController');
         Route::post('quiz-results/{id}','QuizResultController@update')->name('quiz-results.update.all');
+        //quiz-session
+        Route::patch('quiz-sessions/{id}/trash','QuizSessionController@trash')->name('quiz-sessions.trash');
+        Route::patch('quiz-sessions/{id}/restore','QuizSessionController@restore')->name('quiz-sessions.restore');
+        Route::resource('quiz-sessions','QuizSessionController');
+        Route::post('quiz-sessions/{id}','QuizSessionController@update')->name('quiz-sessions.update.all');
+        //quiz-session-answer
+        Route::patch('quiz-session-answers/{id}/trash','QuizSessionAnswerController@trash')->name('quiz-session-answers.trash');
+        Route::patch('quiz-session-answers/{id}/restore','QuizSessionAnswerController@restore')->name('quiz-session-answers.restore');
+        Route::resource('quiz-session-answers','QuizSessionAnswerController');
+        Route::post('quiz-session-answers/{id}','QuizSessionAnswerController@update')->name('quiz-session-answers.update.all');
+
+
 
         
     });

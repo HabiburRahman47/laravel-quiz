@@ -28,6 +28,17 @@
                                                placeholder="Text">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="property_id">Property</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="property_id" name="property_id">
+                                            <option value="">Select Property</option>
+                                            @foreach($properties as $property)
+                                                <option value="{{$property->id}}"  {{$property->id == $course->property_id ? 'selected' : ''}}>{{$property->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <hr>
                                 <div class="form-actions">
                                     <a class="btn btn-secondary" type="button" href="{{route('web.admin.courses.index')}}">Cancel</a>

@@ -56,7 +56,6 @@ class AttendanceController extends AdminBaseController
     public function show($id)
     {
         $attendance = Attendance::findOrFail($id);
-        // $this->authorize('show',$attendance);
         return view('admin.attendances.show', compact('attendance'));
     }
 
@@ -95,7 +94,7 @@ class AttendanceController extends AdminBaseController
     public function destroy($id)
     {
         $attendance = Attendance::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$attendance);
+        $this->authorize('forceDelete',$attendance);
         $attendance->forceDelete();
         return response('PERMANENTLY DELETED');
     }

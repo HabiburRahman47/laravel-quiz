@@ -30,6 +30,7 @@
 {{--<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,700;1,600&display=swap" rel="stylesheet">--}}
 <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 {{--in page css--}}
 @stack('css')
 

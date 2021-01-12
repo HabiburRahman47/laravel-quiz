@@ -21,10 +21,22 @@ class UpdateQuizRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+   public function rules()
     {
         return [
-            //
+            'name'=>'required',
+            'description'=>'required',
+            'config'=>'required',
+            'category_id'=>'required'
+        ];
+    }
+     public function messages()
+    {
+        return [
+            'name.required'=>'Name is required',
+            'description.required'=>'Description is required',
+            'config.required'=>'Config is required',
+            'category_id.required'=>'Category is required'
         ];
     }
 }

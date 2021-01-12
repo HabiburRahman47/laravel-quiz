@@ -3,7 +3,9 @@
 namespace App\DataTables\Course;
 
 use App\Models\V1\Course\Course;
+use App\Models\V1\Course\CourseSection;
 use App\Models\V1\Course\CourseSectionTeacher;
+use App\Models\V1\Section\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\Html\Button;
@@ -20,11 +22,35 @@ class CourseSectionTeacherDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $courseSections=CourseSection::get();
+        $courses=Course::get();
+        $sections=Section::get();
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-            ->editColumn('course_section_id', function ($courseSectionTeacher) {
-                return '<a href="#"><span  class="badge badge-info">'.$courseSectionTeacher->course_section_id.'</span></a>';
+            ->editColumn('course_section', function ($courseSectionTeacher) use($courseSections,$courses,$sections) {
+                $a='';
+                $b='';
+                $c='+';
+                foreach ($courseSections as $courseSection) {
+                    if($courseSectionTeacher->course_section_id==$courseSection->id){
+                        foreach ($courses as $course) {
+                            if($courseSection->course_id==$course->id){
+                                $a= $course->name;
+                            }
+                        }
+                    }
+                }
+                foreach ($courseSections as $courseSection) {
+                    if($courseSectionTeacher->course_section_id==$courseSection->id){
+                        foreach ($sections as $section) {
+                            if($courseSection->section_id==$section->id){
+                                $b= $section->name;
+                            }
+                        }    
+                    }
+                }
+                return '<a href="#">'.$a.$c.$b.'</a>';
             })
             ->editColumn('created_at', function ($courseSectionTeacher) {
                 return $courseSectionTeacher->created_at->format(config('common.date_time.format.output.normal'));
@@ -47,7 +73,7 @@ class CourseSectionTeacherDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action','course_section_id'])
+            ->rawColumns(['action','course_section'])
             ->whitelist(['name']);
     }
 
@@ -61,7 +87,7 @@ class CourseSectionTeacherDataTable extends DataTable
      */
     public function query(CourseSectionTeacher $model)
     {
-        $model = CourseSectionTeacher::query();
+        $model = CourseSectionTeacher::query('courseSection');
 
         $teacher_id = $this->request('id');
         if ($teacher_id)
@@ -124,7 +150,7 @@ class CourseSectionTeacherDataTable extends DataTable
         return [
 
             Column::make('DT_RowIndex')->title('No.'),
-            Column::make('course_section_id'),
+            Column::make('course_section'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(true)

@@ -26,6 +26,9 @@ class AttendanceDataTable extends DataTable
             ->editColumn('created_at', function (Attendance $attendance) {
                 return $attendance->created_at->format(config('common.date_time.format.output.normal'));
             })
+            ->editColumn('course-section', function ($attendance) {
+                return '<a href="#"><span  class="badge badge-info">'.$attendance->courseSection->course_id.'</span></a>';
+            })
             ->addColumn('action', function ($attendance) {
                 $id = $attendance->id;
                 $editUrl = null;
@@ -44,7 +47,7 @@ class AttendanceDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','course-section'])
             ->whitelist(['name']);
     }
 
@@ -123,7 +126,7 @@ class AttendanceDataTable extends DataTable
             Column::make('DT_RowIndex')->title('No.'),
             Column::make('info'),
             Column::make('notes'),
-            Column::make('teacher_id'),
+            Column::make('course-section'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(true)

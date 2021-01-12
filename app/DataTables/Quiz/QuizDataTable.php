@@ -25,6 +25,9 @@ class QuizDataTable extends DataTable
             ->editColumn('created_at', function ($quiz) {
                 return $quiz->created_at->format(config('common.date_time.format.output.normal'));
             })
+            ->editColumn('category', function ($quiz) {
+                return '<a href="'. route('web.admin.categories.show',$quiz->category_id) .'">' . $quiz->category->name . '</a>';
+            }) 
             ->addColumn('action', function ($quiz) {
                 $id = $quiz->id;
                 $editUrl = null;
@@ -43,7 +46,7 @@ class QuizDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','category'])
             ->whitelist(['name']);
     }
 
@@ -122,6 +125,9 @@ class QuizDataTable extends DataTable
             Column::make('DT_RowIndex')->title('No.'),
             Column::make('name'),
             Column::make('description'),
+            Column::make('image'),
+            Column::make('config'),
+            Column::make('category'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(true)

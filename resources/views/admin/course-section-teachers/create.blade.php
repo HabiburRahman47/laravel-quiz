@@ -23,12 +23,12 @@
                                     </div>
                                 </div> --}}
                                  <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="course_section_id">Course Section Teacher</label>
+                                    <label class="col-md-3 col-form-label" for="course_section_id">Course Section</label>
                                     <div class="col-md-9">
                                         <select class="form-control" id="course_section_id" name="course_section_id">
-                                            <option value="">Select Course Section Teacher</option>
-                                            @foreach($courseSectionTeachers as $courseSectionTeacher)
-                                                <option value="{{$courseSectionTeacher->id}}" {{(collect(old('course_section_id'))->contains($courseSectionTeacher->id)) ? 'selected':''}}>{{$courseSectionTeacher->name}}</option>
+                                            <option value="">Select Course Section</option>
+                                            @foreach($courseSections as $courseSection)
+                                                <option value="{{$courseSection->id}}" {{(collect(old('course_section_id'))->contains($courseSection->id)) ? 'selected':''}}>{{$courseSection->course->name}}({{ $courseSection->section->name }})</option>
                                             @endforeach
                                         </select>
                                     </div>

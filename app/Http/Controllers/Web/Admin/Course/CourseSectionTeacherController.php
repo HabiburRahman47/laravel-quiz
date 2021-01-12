@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Admin\AdminBaseController;
 use App\Http\Requests\API\V1\Admin\Course\StoreCourseRequest;
 use App\Http\Requests\API\V1\Admin\Course\UpdateCourseRequest;
 use App\Http\Requests\API\V1\Admin\CourseSectionTeacher\StoreCourseSectionTeacherRequest;
+use App\Models\V1\Course\CourseSection;
 use App\Models\V1\Course\CourseSectionTeacher;
 use App\Models\V1\Section\Section;
 
@@ -16,16 +17,16 @@ class CourseSectionTeacherController extends AdminBaseController
 
     public function index(CourseSectionTeacherDataTable $dataTable)
     {
-        // $sections = Section::get();
+        $sections = Section::get();
         // $courses = CourseSectionTeacher::get();
-        return $dataTable->render('admin.course-section-teachers.index');
+        return $dataTable->render('admin.course-section-teachers.index',compact('sections'));
     }
 
     public function create()
     {
         $sections = Section::where('created_by_id', auth()->user()->id)->get();
-        $courseSectionTeachers = CourseSectionTeacher::where('teacher_id', auth()->user()->id)->get();
-        return view('admin.course-section-teachers.create', compact('sections', 'courseSectionTeachers'));
+        $courseSections = CourseSection::with('course','section')->where('created_by_id', auth()->user()->id)->get();
+        return view('admin.course-section-teachers.create', compact('sections', 'courseSections'));
     }
 
     /**
@@ -56,15 +57,17 @@ class CourseSectionTeacherController extends AdminBaseController
      */
     public function show($id)
     {
+        $courseSections=CourseSection::with('section','course')->where('created_by_id', auth()->user()->id)->get();
         $courseSectionTeacher = CourseSectionTeacher::findOrFail($id);
         // $this->authorize('show',$courseSectionTeacher);
-        return view('admin.course-section-teachers.show', compact('courseSectionTeacher'));
+        return view('admin.course-section-teachers.show', compact('courseSectionTeacher','courseSections'));
     }
 
     public function edit($id)
     {
+        $courseSections=CourseSection::with('section','course')->where('created_by_id', auth()->user()->id)->get();
         $courseSectionTeacher = CourseSectionTeacher::findOrFail($id);
-        return view('admin.course-section-teachers.edit', compact('courseSectionTeacher'));
+        return view('admin.course-section-teachers.edit', compact('courseSectionTeacher','courseSections'));
     }
 
     /**
@@ -95,7 +98,7 @@ class CourseSectionTeacherController extends AdminBaseController
     public function destroy($id)
     {
         $courseSectionTeacher = CourseSectionTeacher::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$courseSectionTeacher);
+        $this->authorize('forceDelete',$courseSectionTeacher);
         $courseSectionTeacher->forceDelete();
         return response('PERMANENTLY DELETED');
     }

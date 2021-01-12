@@ -36,9 +36,24 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="property_id">Category</label>
+                                <label class="col-md-3 col-form-label" for="image-input">Image</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="image-input" type="file" name="image"
+                                           value="{{old('image',$quiz->image)}}"
+                                           placeholder="Text">
+                                </div>
+                            </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">Config</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" id="property_id" name="property_id">
+                                        <input class="form-control" id="text-input" type="text" name="config" value="{{old('config',$quiz->config)}}"
+                                               placeholder="Text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="category_id">Category</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="category_id" name="category_id">
                                             <option value="">Select Category</option>
                                             @foreach($categories as $category)
                                                 <option value="{{$category->id}}"  {{$category->id == $quiz->category_id ? 'selected' : ''}}>{{$category->name}}</option>

@@ -24,7 +24,15 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required'
+            'name'=>'required',
+            'parent_id'=>'required'
+        ];
+    }
+     public function messages()
+    {
+        return [
+            'name.required'=>'Name is required',
+            'parent_id.required'=>'Parent is required'
         ];
     }
 }

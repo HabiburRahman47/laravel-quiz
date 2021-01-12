@@ -19,11 +19,24 @@ class CategoryDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $categories=Category::get();
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
             ->editColumn('created_at', function (Category $category) {
                 return $category->created_at->format(config('common.date_time.format.output.normal'));
+            })
+            ->editColumn('parent_id', function (Category $category) use ($categories) {
+                if($category->parent_id==0){
+                    return $category->name;
+                }
+                else{
+                    foreach($categories as $parent){
+                        if($parent->id==$category->parent_id){
+                            return $parent->name;
+                        }
+                    }
+                }                       
             })
             ->addColumn('action', function ($category) {
                 $id = $category->id;
@@ -43,7 +56,7 @@ class CategoryDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','parent_id'])
             ->whitelist(['name']);
     }
 

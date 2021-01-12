@@ -1,5 +1,9 @@
 @extends('core.dashboard.layout.main')
 
+@push('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
+
 @section('content')
 
     <div class="container-fluid">
@@ -52,6 +56,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">Tags</label>
+                                    <div class="col-md-9">
+                                         <select name="tags[]" id="tags" class="form-control js-example-tags" multiple>
+                                            @foreach($tags as $tag)
+                                                 <option value="{{ $tag->name }}" 
+                                                    {{ (collect(old('tags',$question->tags->pluck('id')))->contains($tag->id)) ? 'selected':'' }} 
+                                                    >
+                                                    {{ $tag->name }}
+                                                 </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <hr>
                                 <div class="form-actions">
                                     <a class="btn btn-secondary" type="button" href="{{route('web.admin.questions.index')}}">Cancel</a>
@@ -70,5 +88,20 @@
 @section('javascript')
 
 @endsection
+
+@push('javascript')
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function(){
+           $(".js-example-tags").select2({
+                placeholder:'Select tags',
+                tags: true,
+                tokenSeparators: [',', ' ']
+                });
+        });
+    </script>
+@endpush
+
 
 

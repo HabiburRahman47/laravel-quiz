@@ -23,6 +23,23 @@
                                     <td>{{ $question->question_type }}</td>
                                 </tr>
                                 <tr>
+                                    <td>Suggested</td>
+                                    <td>
+                                        @if ($question->suggested)
+                                            <span class="badge badge-success">Yes</span>
+                                        @else
+                                            <span class="badge badge-warning">No</span>
+                                    @endif
+                                </tr>
+                                <tr>
+                                    <td>tags</td>
+                                    <td>
+                                        @foreach($tagNames as $tag)
+                                        <span class="badge badge-info">{{$tag}}</span>
+                                       @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>Created At</td>
                                     <td>{{ $question->created_at }}</td>
                                 </tr>

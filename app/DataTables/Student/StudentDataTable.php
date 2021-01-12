@@ -25,6 +25,12 @@ class StudentDataTable extends DataTable
             ->editColumn('created_at', function (Student $student) {
                 return $student->created_at->format(config('common.date_time.format.output.normal'));
             })
+             ->editColumn('section', function ($student) {
+                return '<a href="#">' . $student->section->name . '</a>';
+            }) 
+            ->editColumn('property', function ($student) {
+                return '<a href="#">' . $student->property->name . '</a>';
+            }) 
             ->addColumn('action', function ($student) {
                 $id = $student->id;
                 $editUrl = null;
@@ -43,7 +49,7 @@ class StudentDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','property','section'])
             ->whitelist(['name']);
     }
 
@@ -122,6 +128,8 @@ class StudentDataTable extends DataTable
             Column::make('DT_RowIndex')->title('No.'),
             Column::make('prefix'),
             Column::make('roll_number'),
+            Column::make('section'),
+            Column::make('property'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(true)

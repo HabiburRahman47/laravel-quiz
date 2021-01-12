@@ -2,9 +2,12 @@
 
 @section('content')
     <div class="container-fluid">
+        
         <div class="fade-in">
+            
             <!-- /.row-->
             <h4 class="mb-4">Section</h4>
+
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <div class="card">
@@ -13,6 +16,11 @@
                                 <tr>
                                     <td>Name</td>
                                     <td>{{ $section->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Department</td>
+                                    <td>
+                                    <a href="{{ route('web.admin.departments.show',[$section->department->id]) }}">{{ $section->department->name }}</a></td>
                                 </tr>
                                 <tr>
                                     <td>Created At</td>
@@ -32,6 +40,7 @@
             <!-- /.row-->
         </div>
     </div>
+    
 @endsection
 
 

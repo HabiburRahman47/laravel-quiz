@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\Admin\AdminBaseController;
 use App\Http\Requests\API\V1\Admin\Question\StoreQuestionRequest;
 use App\Http\Requests\API\V1\Admin\Question\UpdateQuestionRequest;
 use App\Models\V1\Question\Question;
+use Spatie\Tags\Tag;
 
 class QuestionController extends AdminBaseController
 {
@@ -19,7 +20,8 @@ class QuestionController extends AdminBaseController
     public function create()
     {
         // $categories = Category::where('created_by_id', auth()->user()->id)->get();
-        return view('admin.questions.create');        
+        $tags=Tag::get();
+        return view('admin.questions.create',compact('tags'));        
     }
 
     /**
@@ -35,6 +37,7 @@ class QuestionController extends AdminBaseController
         $question->fill($request->all());
         $question->created_by_id = $created_by_id;
         $question->save();
+        $question->attachTags($request->tags);
 
 
         $displayUrl = route('web.admin.questions.show', $question->id);
@@ -50,16 +53,21 @@ class QuestionController extends AdminBaseController
      */
     public function show($id)
     {
-        $question = Question::findOrFail($id);
-        // $this->authorize('show',$question);
-        return view('admin.questions.show', compact('question'));
+        $tags=Tag::get();
+        $question = Question::with('tags')->findOrFail($id);
+        $tagNames=$question->tags->pluck('name');
+        // return response(gettype($tagNames));
+
+        return view('admin.questions.show', compact('question','tagNames'));
     }
 
     public function edit($id)
     {
-        // $categories = Category::where('created_by_id', auth()->user()->id)->get();
-        $question = Question::findOrFail($id);
-        return view('admin.questions.edit', compact('question'));
+        $tags=Tag::get();
+        $question = Question::with('tags')->findOrFail($id);
+        $tagName=$question->tags->pluck('name');
+        // return response($tagName);
+        return view('admin.questions.edit', compact('question','tags','tagName'));
     }
 
     /**
@@ -75,6 +83,8 @@ class QuestionController extends AdminBaseController
         $question->fill($request->all());
         $this->authorize('update',$question);
         $question->save();
+        $question->attachTags($request->tags);
+
         $displayUrl = route('web.admin.questions.show', $question->id);
         $this->flashUpdatedMsg($displayUrl);
         return redirect()->back()->with(['rID' => $question->id]);
@@ -90,7 +100,7 @@ class QuestionController extends AdminBaseController
     public function destroy($id)
     {
         $question = Question::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$question);
+        $this->authorize('forceDelete',$question);
         $question->forceDelete();
         return response('PERMANENTLY DELETED');
     }

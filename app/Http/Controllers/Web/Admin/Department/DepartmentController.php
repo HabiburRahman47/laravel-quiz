@@ -8,6 +8,7 @@ use App\Http\Requests\API\V1\Admin\Department\StoreDepartmentRequest;
 use App\Http\Requests\API\V1\Admin\Department\UpdateDepartmentRequest;
 use App\Models\V1\Department\Department;
 use App\Models\V1\Property\Property;
+use App\Models\V1\Section\Section;
 
 class DepartmentController extends AdminBaseController
 {
@@ -52,15 +53,18 @@ class DepartmentController extends AdminBaseController
      */
     public function show($id)
     {
-        $department = Department::findOrFail($id);
-        // $this->authorize('show',$department);
+        $department = Department::with('sections.courses')->findOrFail($id);        
+       // $sections = Section::with('courses')->where('department_id',$id)->get();    
+        // return response($sections); 
+        
         return view('admin.departments.show', compact('department'));
     }
 
     public function edit($id)
     {
+        $properties = Property::where('created_by_id', auth()->user()->id)->get();
         $department = Department::findOrFail($id);
-        return view('admin.departments.edit', compact('department'));
+        return view('admin.departments.edit', compact('department','properties'));
     }
 
     /**
@@ -91,7 +95,7 @@ class DepartmentController extends AdminBaseController
     public function destroy($id)
     {
         $department = Department::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$department);
+        $this->authorize('forceDelete',$department);
         $department->forceDelete();
         return response('PERMANENTLY DELETED');
     }

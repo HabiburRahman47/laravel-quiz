@@ -6,6 +6,7 @@ use App\DataTables\Section\SectionDataTable;
 use App\Http\Controllers\Web\Admin\AdminBaseController;
 use App\Http\Requests\API\V1\Admin\Section\StoreSectionRequest;
 use App\Http\Requests\API\V1\Admin\Section\UpdateSectionRequest;
+use App\Models\V1\Course\Course;
 use App\Models\V1\Department\Department;
 use App\Models\V1\Section\Section;
 
@@ -14,7 +15,9 @@ class SectionController extends AdminBaseController
 
     public function index(SectionDataTable $dataTable)
     {
-        return $dataTable->render('admin.sections.index');
+        $sections=Section::get();
+        $courses=Course::get();
+        return $dataTable->render('admin.sections.index',compact('sections','courses'));
     }
 
     public function create()
@@ -53,7 +56,7 @@ class SectionController extends AdminBaseController
      */
     public function show($id)
     {
-        $section = Section::findOrFail($id);
+        $section = Section::with('courses')->findOrFail($id);
         // $this->authorize('show',$section);
         return view('admin.sections.show', compact('section'));
     }
@@ -61,7 +64,8 @@ class SectionController extends AdminBaseController
     public function edit($id)
     {
         $section = Section::findOrFail($id);
-        return view('admin.sections.edit', compact('section'));
+        $departments=Department::where('created_by_id', auth()->user()->id)->get();
+        return view('admin.sections.edit', compact('section','departments'));
     }
 
     /**
@@ -92,7 +96,7 @@ class SectionController extends AdminBaseController
     public function destroy($id)
     {
         $section = Section::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$section);
+        $this->authorize('forceDelete',$section);
         $section->forceDelete();
         return response('PERMANENTLY DELETED');
     }

@@ -6,8 +6,6 @@ use App\DataTables\Quiz\QuizDataTable;
 use App\Http\Controllers\Web\Admin\AdminBaseController;
 use App\Http\Requests\API\V1\Admin\Quiz\StoreQuizRequest;
 use App\Http\Requests\API\V1\Admin\Quiz\UpdateQuizRequest;
-use App\Http\Requests\API\V1\Admin\Section\StoreSectionRequest;
-use App\Http\Requests\API\V1\Admin\Section\UpdateSectionRequest;
 use App\Models\V1\Category\Category;
 use App\Models\V1\Quiz\Quiz;
 
@@ -93,7 +91,7 @@ class QuizController extends AdminBaseController
     public function destroy($id)
     {
         $quiz = Quiz::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$quiz);
+        $this->authorize('forceDelete',$quiz);
         $quiz->forceDelete();
         return response('PERMANENTLY DELETED');
     }

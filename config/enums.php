@@ -28,5 +28,17 @@ return [
                 'Yes' => "success"
             ]
         ]
+    ],
+    'quiz_sessions'=>[
+        'status'=>[
+            'name'=>[
+                0=>'complete',
+                1=>'incomplete'
+            ],
+            'color'=>[
+                'complete'=>'success',
+                'incomplete'=>'danger'
+            ]
+        ]
     ]
 ];

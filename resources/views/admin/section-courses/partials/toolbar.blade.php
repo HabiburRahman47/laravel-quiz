@@ -32,8 +32,8 @@
         <div class="card card-body bg-light mb-0">
 
             <form class="form-inline">
-                <div class="form-group col-md-3 mb-0">
-                    <select name="question_id" id="question_id" class="form-control filterable" required>
+                {{-- <div class="form-group col-md-3 mb-0">
+                    <select name="section_id" id="section_id" class="form-control filterable" required>
                         <option value="">Select Section</option>
                         @foreach($sections as $section)
                             <option value="{{ $section->id }}"  @if( request('section_id')== $section->id) selected @endif >{{ $section->name }}</option>
@@ -41,13 +41,13 @@
                     </select>
                 </div>
                 <div class="form-group col-md-3 mb-0">
-                    <select name="question_id" id="question_id" class="form-control filterable" required>
+                    <select name="course_id" id="course_id" class="form-control filterable" required>
                         <option value="">Select Course</option>
                         @foreach($courses as $course)
                             <option value="{{ $course->id }}"  @if( request('course_id')== $course->id) selected @endif >{{ $course->name }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
 
                 <div class="form-group col-md-3 input-daterange">
                     <input type="text" name="from_date" id="from_date" class="form-control filterable"

@@ -24,14 +24,15 @@ class UpdateSectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'prefix' => 'required',
-            'roll_number'=>'required'
+            'name' => 'required',
+            'department_id' => 'required'
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Name is required!',
+            'department_id.required' => 'Department is required!',
         ];
     }
 }

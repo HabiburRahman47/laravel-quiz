@@ -28,4 +28,11 @@ class StoreQuizQuestionRequest extends FormRequest
             'question_id'=>'required'
         ];
     }
+    public function messages()
+    {
+        return [
+            'quiz_id.required'=>'Quiz is required',
+            'question_id.required'=>'Question is required'
+        ];
+    }
 }

@@ -28,11 +28,7 @@ class QuizResultDataTable extends DataTable
 
             ->editColumn('session_id', function ($quizResult) {
                 return '<a href="#">' . $quizResult->quizSession->quiz_name . '</a>';
-            })
-            // ->addColumn('quiz', function ($quizResult) {
-            //     return '<a href="' . route('web.admin.quizzes.show', $quizResult->quiz_id) . '">' . $quizResult->quiz->name . '</a>';
-            // })
-           
+            })           
              ->addColumn('action', function ($quizResult) {
                 $id = $quizResult->id;
                 $editUrl = null;

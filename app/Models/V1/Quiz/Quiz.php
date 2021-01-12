@@ -22,7 +22,7 @@ class Quiz extends Model
         'name',
         'description',
         'config',
-        'image'
+        'category_id'
     ];
     public function questions()
     {

@@ -19,7 +19,8 @@ class QuizSessionAnswer extends Model
     protected $fillable=[
         'session_id',
         'question_id',
-        'selected_choice_id'
+        'selected_choice_id',
+        'created_by_id'
     ];
     public function question(){
         return $this->belongsTo(Question::class,'id');

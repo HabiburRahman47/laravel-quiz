@@ -60,7 +60,8 @@ class CourseController extends AdminBaseController
     public function edit($id)
     {
         $course = Course::findOrFail($id);
-        return view('admin.courses.edit', compact('course'));
+        $properties=Property::where('created_by_id', auth()->user()->id)->get();
+        return view('admin.courses.edit', compact('course','properties'));
     }
 
     /**
@@ -91,7 +92,7 @@ class CourseController extends AdminBaseController
     public function destroy($id)
     {
         $course = Course::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$course);
+        $this->authorize('forceDelete',$course);
         $course->forceDelete();
         return response('PERMANENTLY DELETED');
     }

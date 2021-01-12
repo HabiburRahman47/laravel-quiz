@@ -7,6 +7,7 @@ use App\Models\V1\Choice\ChoiceQuestion;
 use App\Models\V1\Quiz\Quiz;
 use App\Models\V1\Quiz\QuizSession;
 use App\Models\V1\Quiz\QuizSessionAnswer;
+use App\Models\V1\Tag\Tag;
 use App\Traits\Filters\PaginateAble;
 use App\Traits\Filters\SearchAble;
 use App\Traits\Filters\SortAble;
@@ -40,4 +41,9 @@ class Question extends Model
     public function quizSessionAns(){
         return $this->belongsTo(QuizSessionAnswer::class,'id');
     }
+    // public function tags()
+    // {
+    //    return $this->belongsToMany(Tag::class);
+    // }
+    
 }

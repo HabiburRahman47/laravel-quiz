@@ -28,4 +28,10 @@ class StoreQuestionChoiceRequest extends FormRequest
             'choice_id'=>'required'
         ];
     }
+    public function messages(){
+        return [
+            'question_id.required'=>'Question is required',
+            'choice_id.required'=>'Choice is required'
+        ];
+    }
 }

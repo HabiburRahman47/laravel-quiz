@@ -19,10 +19,12 @@ class QuizResult extends Model
     protected $fillable=[
         'session_id',
         'total_question',
-        'total_right_ans'
+        'total_right_ans',
+        'created_by_id'
+
         ];
 
     public function quizSession(){
-        return $this->belongsTo(QuizSession::class,'session_id');
+        return $this->belongsTo(QuizSession::class,'id');
     }
 }

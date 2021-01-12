@@ -20,9 +20,10 @@ class SectionCourseController extends AdminBaseController
      */
     public function index(SectionCourseDataTable $dataTable)
     {
-        $sections = Section::get();
-        $courses = Course::get();
-        return $dataTable->render('admin.section-courses.index', compact('sections','courses'));
+        // $sections = Section::get();
+        // $courses = Course::get();
+        // return $dataTable->render('admin.section-courses.index', compact('sections','courses'));
+         return $dataTable->render('admin.section-courses.index');
     }
 
     /**
@@ -45,6 +46,7 @@ class SectionCourseController extends AdminBaseController
      */
     public function store(StoreSectionCourseRequest $request)
     {
+        $created_by_id = auth()->user()->id;
         $sectionCourse = CourseSection::where('course_id',$request->course_id)->where('section_id',$request->section_id)->first();
         if (!empty($sectionCourse)){
             $this->flashAlreadyCreatedMsg(route('web.admin.section-courses.edit',$sectionCourse->id));
@@ -52,6 +54,7 @@ class SectionCourseController extends AdminBaseController
         }
         $sectionCourse = new CourseSection();
         $sectionCourse->fill($request->all());
+        $sectionCourse->created_by_id=$created_by_id;
         $sectionCourse->save();
 
         // if ($request->hasFile('image')) {

@@ -35,7 +35,7 @@ class QuizQuestionController extends AdminBaseController
     {
         $questions = Question::where('created_by_id', auth()->user()->id)->get();
         $quizzes = Quiz::where('created_by_id', auth()->user()->id)->get();
-        return view('admin.quiz-questions.create', compact('questions', 'quiz'));
+        return view('admin.quiz-questions.create', compact('questions', 'quizzes'));
     }
 
     /**
@@ -46,6 +46,7 @@ class QuizQuestionController extends AdminBaseController
      */
     public function store(StoreQuizQuestionRequest $request)
     {
+        $created_by_id = auth()->user()->id;
         $quizQuestion = Question_Quiz::where('quiz_id',$request->quiz_id)->where('question_id',$request->question_id)->first();
         if (!empty($quizQuestion)){
             $this->flashAlreadyCreatedMsg(route('web.admin.quiz-questions.edit',$quizQuestion->id));
@@ -53,17 +54,8 @@ class QuizQuestionController extends AdminBaseController
         }
         $quizQuestion = new Question_Quiz();
         $quizQuestion->fill($request->all());
+        $quizQuestion->created_by_id=$created_by_id;
         $quizQuestion->save();
-
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $extension = $file->getClientOriginalName(); // getting image extension
-        //     $file->move("uploads/Quiz-watch-faces/$quizQuestion->id/image/", $extension);
-        //     $quizQuestion->image = $extension;
-        //     $quizQuestion->save();
-        // }
-
-
         // $quizQuestion->setMeta('seo', json_encode($request->seo));
 
         $displayUrl = route('web.admin.quiz-questions.show', $quizQuestion->id);
@@ -111,16 +103,8 @@ class QuizQuestionController extends AdminBaseController
     {
         $quizQuestion = Question_Quiz::findOrFail($id);
         $quizQuestion->fill($request->all());
+        $this->authorize('update',$quizQuestion);
         $quizQuestion->save();
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $extension = $file->getClientOriginalName(); // getting image extension
-        //     $file->move("uploads/Quiz-watch-faces/$quizQuestion->id/image/", $extension);
-        //     $quizQuestion->image = $extension;
-        //     $quizQuestion->save();
-        // }
-        // $quizQuestion->setMeta('seo', json_encode($request->seo));
-
         $displayUrl = route('web.admin.quiz-questions.show', $quizQuestion->id);
         $this->flashUpdatedMsg($displayUrl);
         return redirect()->back()->with(['rID' => $quizQuestion->id]);
@@ -135,6 +119,7 @@ class QuizQuestionController extends AdminBaseController
     public function destroy($id)
     {
         $quizQuestion = Question_Quiz::withTrashed()->findOrFail($id);
+        $this->authorize('forceDelete',$quizQuestion);
         $quizQuestion->forceDelete();
         return response()->json("success");
     }
@@ -142,6 +127,7 @@ class QuizQuestionController extends AdminBaseController
     public function trash($id)
     {
         $quizQuestion = Question_Quiz::find($id);
+        $this->authorize('trash',$quizQuestion);
         $quizQuestion->delete();
         return response()->noContent();
     }
@@ -149,6 +135,7 @@ class QuizQuestionController extends AdminBaseController
     public function restore($id)
     {
         $quizQuestion = Question_Quiz::withTrashed()->findOrFail($id);
+        $this->authorize('restore',$quizQuestion);
         $quizQuestion->restore();
         return response()->noContent();
     }

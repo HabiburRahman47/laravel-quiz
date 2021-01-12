@@ -754,4 +754,5 @@
     <script src="{{ asset('core/dashboard/js/Chart.min.js') }}"></script>
     <script src="{{ asset('core/dashboard/js/coreui-chartjs.bundle.js') }}"></script>
     <script src="{{ asset('core/dashboard/js/main.js') }}" defer></script>
+    
 @endsection

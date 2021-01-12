@@ -53,8 +53,9 @@ class CategoryController extends AdminBaseController
     public function show($id)
     {
         $category = Category::findOrFail($id);
+        $categories=Category::get();
         // $this->authorize('show',$category);
-        return view('admin.categories.show', compact('category'));
+        return view('admin.categories.show', compact('category','categories'));
     }
 
     public function edit($id)
@@ -92,7 +93,7 @@ class CategoryController extends AdminBaseController
     public function destroy($id)
     {
         $category = Category::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$category);
+        $this->authorize('forceDelete',$category);
         $category->forceDelete();
         return response('PERMANENTLY DELETED');
     }

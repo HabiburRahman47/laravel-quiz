@@ -15,38 +15,30 @@
                                 @csrf
                                 @include('errors.form-error', ['errors'=>$errors])
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="text-input">Name</label>
+                                    <label class="col-md-3 col-form-label" for="text-input">Quiz Name</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" id="text-input" type="text" name="name"
-                                               value="{{old('name')}}"
-                                               placeholder="Name">
+                                        <select class="form-control" id="session_id" name="session_id">
+                                            <option value="">Select Department</option>
+                                            @foreach($quizSessions as $quizSession)
+                                                <option value="{{$quizSession->id}}" {{(collect(old('session_id'))->contains($quizSession->id)) ? 'selected':''}}>{{$quizSession->quiz_name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                  <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="text-input">Description</label>
+                                    <label class="col-md-3 col-form-label" for="text-input">Total Question</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" id="text-input" type="text" name="description"
-                                               value="{{old('description')}}"
-                                               placeholder="Description">
+                                        <input class="form-control" id="text-input" type="text" name="total_question"
+                                               value="{{old('total_question')}}"
+                                               placeholder="Total Question">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="text-input">Config</label>
+                                    <label class="col-md-3 col-form-label" for="text-input">Total Right Ans</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" id="text-input" type="text" name="config"
-                                               value="{{old('config')}}"
-                                               placeholder="Config">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="category_id">Property</label>
-                                    <div class="col-md-9">
-                                        <select class="form-control" id="category_id" name="category_id">
-                                            <option value="">Select Category</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{$category->id}}" {{(collect(old('category_id'))->contains($category->id)) ? 'selected':''}}>{{$category->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <input class="form-control" id="text-input" type="text" name="total_right_ans"
+                                               value="{{old('total_right_ans')}}"
+                                               placeholder="Total Right Ans">
                                     </div>
                                 </div>
                                 <hr>

@@ -21,10 +21,18 @@ class UpdateCategoryRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+     public function rules()
     {
         return [
-            //
+            'name'=>'required',
+            'parent_id'=>'required'
+        ];
+    }
+     public function messages()
+    {
+        return [
+            'name.required'=>'Name is required',
+            'parent_id.required'=>'Parent is required'
         ];
     }
 }

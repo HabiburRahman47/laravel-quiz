@@ -36,7 +36,7 @@
                                     <label class="col-md-3 col-form-label" for="choice_id">Choice</label>
                                     <div class="col-md-9">
                                         <select class="form-control" id="choice_id" name="choice_id">
-                                            <option value="">Select Strap</option>
+                                            <option value="">Select Choice</option>
                                             @foreach($choices as $choice)
                                                 <option value="{{$choice->id}}"  {{old('choice_id',$choice->id) == $questionChoice->choice_id ? 'selected' : ''}}>{{$choice->name}}</option>
                                             @endforeach

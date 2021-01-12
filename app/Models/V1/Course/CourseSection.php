@@ -13,9 +13,9 @@ class CourseSection extends Model
 {
 
     protected $table='course_section';
-     protected $dates=['deleted_at'];
+    protected $dates=['deleted_at'];
     use SearchAble, SortAble, TrashFilterAble, PaginateAble,SoftDeletes;
-     public $searchable = ["id", "course_id","section_id"];
+    public $searchable = ["id", "course_id","section_id"];
     public $sortable = ['id', 'updated_at', 'section_id'];
     protected $fillable=[
         'course_id',

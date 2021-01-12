@@ -2,6 +2,7 @@
 
 namespace App\Models\V1\Quiz;
 
+use App\Models\V1\Question\Question;
 use App\Traits\Filters\PaginateAble;
 use App\Traits\Filters\SearchAble;
 use App\Traits\Filters\SortAble;
@@ -22,7 +23,13 @@ class QuizSession extends Model
         'status'
     ];
     public function result(){
-        return $this->belongsTo(QuizResult::class,'id');
+        return $this->hasOne(QuizResult::class,'session_id');
+    }
+    public function quiz(){
+       return $this->belongsTo(Quiz::class,'quiz_id');
+    }
+    public function question(){
+        return $this->belongsTo(Question::class,'question_id');
     }
 
 }

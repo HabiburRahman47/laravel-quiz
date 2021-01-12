@@ -31,7 +31,8 @@ class UpdateSectionCourseRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Name is required!',
+            'section_id.required' => 'Section is required!',
+            'course_id.required' => 'Course is required!',
         ];
     }
 }

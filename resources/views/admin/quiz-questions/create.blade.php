@@ -13,13 +13,13 @@
                                 @csrf
                                 @include('errors.form-error', ['errors'=>$errors])
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="'quiz_id'">Quiz</label>
+                                    <label class="col-md-3 col-form-label" for="quiz_id">Quiz</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" id="'quiz_id'" name="'quiz_id'">
+                                        <select class="form-control" id="quiz_id" name="quiz_id">
 
                                             <option value="">Select Quiz</option>
                                             @foreach($quizzes as $quiz)
-                                                <option value="{{$quiz->id}}" {{(collect(old(''quiz_id''))->contains($quiz->id)) ? 'selected':''}}>{{$quiz->name}}</option>
+                                                <option value="{{$quiz->id}}" {{(collect(old('quiz_id'))->contains($quiz->id)) ? 'selected':''}}>{{$quiz->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

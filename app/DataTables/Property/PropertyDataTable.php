@@ -29,8 +29,8 @@ class PropertyDataTable extends DataTable
                             return '<span  class="badge badge-info">Public </span>';
                             } })
             ->addColumn('updated_at','{{ \Carbon\Carbon::parse($updated_at)->toDayDateTimeString() }}')
-            ->addColumn('property_type',function($property){
-                        return '<a href="'. route('web.admin.property-types.show',$property->property_type_id) .'">'. $property->propertyType->name .'</a>';})
+            // ->addColumn('property_type',function($property){
+            //             return '<a href="'. route('web.admin.property-types.show',$property->property_type_id) .'">'. $property->propertyType->name .'</a>';})
             ->addColumn('action', function ($property) {
                 $id = $property->id;
                 $editUrl = null;

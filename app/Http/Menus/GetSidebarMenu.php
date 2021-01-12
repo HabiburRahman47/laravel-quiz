@@ -48,38 +48,44 @@ class GetSidebarMenu implements MenuInterface
         $departmentSection = ["id" => 36, "parent_id" => null, "name" => "Department Management", "href" => null, "icon" => "cil-calculator", "slug" => "dropdown"];
         $department = ["id" => 37, "parent_id" => $departmentSection["id"], "name" => "Department", "href" => route('web.admin.departments.index'), "icon" => null, "slug" => "link"];
         //section
-        $section = ["id" => 39, "parent_id" => $departmentSection["id"], "name" => "Section", "href" => route('web.admin.sections.index'), "icon" => null, "slug" => "link"];
+        $section = ["id" => 38, "parent_id" => $departmentSection["id"], "name" => "Section", "href" => route('web.admin.sections.index'), "icon" => null, "slug" => "link"];
         //course
-        $course = ["id" => 41, "parent_id" => $departmentSection["id"], "name" => "Course", "href" => route('web.admin.courses.index'), "icon" => null, "slug" => "link"];
+        $course = ["id" => 49, "parent_id" => $departmentSection["id"], "name" => "Course", "href" => route('web.admin.courses.index'), "icon" => null, "slug" => "link"];
         //section-course
-        $sectionCourse = ["id" => 88, "parent_id" => $departmentSection["id"], "name" => "Section With Course", "href" => route('web.admin.section-courses.index'), "icon" => null, "slug" => "link"];
+        $sectionCourse = ["id" => 50, "parent_id" => $departmentSection["id"], "name" => "Section With Course", "href" => route('web.admin.section-courses.index'), "icon" => null, "slug" => "link"];
         //course-section-teacher
-        $courseSectionTeacher = ["id" => 89, "parent_id" => $departmentSection["id"], "name" => "Course Section Teacher", "href" => route('web.admin.course-section-teachers.index'), "icon" => null, "slug" => "link"];
+        $courseSectionTeacher = ["id" => 51, "parent_id" => $departmentSection["id"], "name" => "Course Section Teacher", "href" => route('web.admin.course-section-teachers.index'), "icon" => null, "slug" => "link"];
         //student
-        $student = ["id" => 43, "parent_id" => $departmentSection["id"], "name" => "Student", "href" => route('web.admin.students.index'), "icon" => null, "slug" => "link"];
-         //card
-        $cardSection = ["id" =>44, "parent_id" => null, "name" => "Card", "href" => null, "icon" => "cil-calculator", "slug" => "dropdown"];
-        $card = ["id" => 45, "parent_id" => $cardSection["id"], "name" => "Card", "href" => route('web.admin.cards.index'), "icon" => null, "slug" => "link"];
-
+        $student = ["id" => 52, "parent_id" => $departmentSection["id"], "name" => "Student", "href" => route('web.admin.students.index'), "icon" => null, "slug" => "link"];
 
         //Attendance
-        $attendanceSection = ["id" => 46, "parent_id" => null, "name" => "Attendance", "href" => null, "icon" => "cil-calculator", "slug" => "dropdown"];
-        $attendance = ["id" => 47, "parent_id" => $attendanceSection["id"], "name" => "Attendance", "href" => route('web.admin.attendances.index'), "icon" => null, "slug" => "link"];
-        //Quiz
-        $quizSection = ["id" => 48, "parent_id" => null, "name" => "Quiz Management", "href" => null, "icon" => "cil-calculator", "slug" => "dropdown"];
-        $quiz = ["id" => 49, "parent_id" => $quizSection["id"], "name" => "Quiz", "href" => route('web.admin.quizzes.index'), "icon" => null, "slug" => "link"];
-        //category
-        $category = ["id" => 51, "parent_id" => $quizSection["id"], "name" => "Category", "href" => route('web.admin.categories.index'), "icon" => null, "slug" => "link"];
-        //question
-        $question = ["id" => 53, "parent_id" => $quizSection["id"], "name" => "Question", "href" => route('web.admin.questions.index'), "icon" => null, "slug" => "link"];
-        $questionChoice = ["id" => 54, "parent_id" => $quizSection["id"], "name" => "Question With Choice", "href" => route('web.admin.question-choices.index'), "icon" => null, "slug" => "link"];
-        //choice
-        $choice = ["id" => 56, "parent_id" => $quizSection["id"], "name" => "Choice", "href" => route('web.admin.choices.index'), "icon" => null, "slug" => "link"];
-        //quiz-question
-        $quizQuestion = ["id" => 57, "parent_id" => $quizSection["id"], "name" => "Quiz With Question", "href" => route('web.admin.quiz-questions.index'), "icon" => null, "slug" => "link"];
-        //Quiz-result
-         $quizResult= ["id" => 57, "parent_id" => $quizSection["id"], "name" => "Quiz Result", "href" => route('web.admin.quiz-results.index'), "icon" => null, "slug" => "link"];
+        $attendanceSection = ["id" => 60, "parent_id" => null, "name" => "Attendance Management", "href" => null, "icon" => "cil-calculator", "slug" => "dropdown"];
+        $attendance = ["id" => 61, "parent_id" => $attendanceSection["id"], "name" => "Attendance", "href" => route('web.admin.attendances.index'), "icon" => null, "slug" => "link"];
+        //card
+        $card = ["id" => 62, "parent_id" => $attendanceSection["id"], "name" => "Card", "href" => route('web.admin.cards.index'), "icon" => null, "slug" => "link"];
 
+        //Quiz
+        $quizSection = ["id" => 70, "parent_id" => null, "name" => "Quiz Management", "href" => null, "icon" => "cil-calculator", "slug" => "dropdown"];
+        $quiz = ["id" => 71, "parent_id" => $quizSection["id"], "name" => "Quiz", "href" => route('web.admin.quizzes.index'), "icon" => null, "slug" => "link"];
+        //Quiz-result
+        //  $quizResult= ["id" => 72, "parent_id" => $quizSection["id"], "name" => "Quiz Result", "href" => route('web.admin.quiz-results.index'), "icon" => null, "slug" => "link"];
+          $quizResult = ["id" => 72, "parent_id" => $quizSection["id"], "name" => "Quiz Result", "href" => route('web.admin.quiz-results.index'), "icon" => null, "slug" => "link"];
+       
+        //question
+        $question = ["id" => 73, "parent_id" => $quizSection["id"], "name" => "Question", "href" => route('web.admin.questions.index'), "icon" => null, "slug" => "link"];
+        $questionChoice = ["id" => 74, "parent_id" => $quizSection["id"], "name" => "Question With Choice", "href" => route('web.admin.question-choices.index'), "icon" => null, "slug" => "link"];
+        //choice
+        $choice = ["id" => 75, "parent_id" => $quizSection["id"], "name" => "Choice", "href" => route('web.admin.choices.index'), "icon" => null, "slug" => "link"];
+        //quiz-question
+        $quizQuestion = ["id" => 76, "parent_id" => $quizSection["id"], "name" => "Quiz With Question", "href" => route('web.admin.quiz-questions.index'), "icon" => null, "slug" => "link"];
+          //category
+        $category = ["id" => 77, "parent_id" => $quizSection["id"], "name" => "Category", "href" => route('web.admin.categories.index'), "icon" => null, "slug" => "link"];
+        //quiz-session
+        $quizSession = ["id" => 78, "parent_id" => $quizSection["id"], "name" => "Quiz Session", "href" => route('web.admin.quiz-sessions.index'), "icon" => null, "slug" => "link"];
+        //quiz-session-answer
+         $quizSessionAns = ["id" => 78, "parent_id" => $quizSection["id"], "name" => "Quiz Session Answer", "href" => route('web.admin.quiz-session-answers.index'), "icon" => null, "slug" => "link"];
+
+       
 
 
        
@@ -93,7 +99,7 @@ class GetSidebarMenu implements MenuInterface
         $leftMenuData = [
             $dashboard,
             $propertySection,$propertyTypes,$property,$departmentSection,$department,$section,$course,$sectionCourse,$courseSectionTeacher,
-            $student,$card,$cardSection,$attendance,$attendanceSection,$quiz,$quizSection,$category,$question,$questionChoice,$choice,$quizQuestion,$quizResult,
+            $student,$card,$attendance,$attendanceSection,$quiz,$quizSection,$quizResult,$category,$question,$questionChoice,$choice,$quizQuestion,$quizSession,$quizSessionAns,
 
             $settings, $settingsNotes, $settingsEmail,
             $themeSection, $color,

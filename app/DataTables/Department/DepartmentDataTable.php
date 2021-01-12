@@ -25,6 +25,9 @@ class DepartmentDataTable extends DataTable
             ->editColumn('created_at', function (Department $department) {
                 return $department->created_at->format(config('common.date_time.format.output.normal'));
             })
+            ->editColumn('property', function ($department) {
+                return '<a href="#">' . $department->property->name . '</a>';
+            }) 
             ->addColumn('action', function ($department) {
                 $id = $department->id;
                 $editUrl = null;
@@ -43,7 +46,7 @@ class DepartmentDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','property'])
             ->whitelist(['name']);
     }
 
@@ -120,7 +123,8 @@ class DepartmentDataTable extends DataTable
         return [
 
             Column::make('DT_RowIndex')->title('No.'),
-            Column::make('name'),
+            Column::make('name'),            
+            Column::make('property'),            
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(true)

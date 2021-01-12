@@ -25,7 +25,15 @@ class UpdateAttendanceRequest extends FormRequest
     {
         return [
             'info'=>'required',
-            'notes'=>'required'
+            'notes'=>'required',
+            'course_section_id'=>'required'
+        ];
+    }
+    public function messages(){
+        return [
+             'info.required'=>'Info is required',
+             'notes.required'=>'Notes is required',
+             'course_section_id.required'=>'Course Section is required',
         ];
     }
 }

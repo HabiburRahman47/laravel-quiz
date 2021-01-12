@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Web\Admin\Quiz;
 
-use App\DataTables\Quiz\QuizDataTable;
 use App\DataTables\Quiz\QuizResultDataTable;
 use App\Http\Controllers\Web\Admin\AdminBaseController;
 use App\Http\Requests\API\V1\Admin\Quiz\StoreQuizResultRequest;
 use App\Http\Requests\API\V1\Admin\Quiz\UpdateQuizResultRequest;
-use App\Http\Requests\API\V1\Admin\Section\StoreSectionRequest;
-use App\Http\Requests\API\V1\Admin\Section\UpdateSectionRequest;
-use App\Models\V1\Category\Category;
-use App\Models\V1\Quiz\Quiz;
+use App\Models\V1\Quiz\QuizResult;
+use App\Models\V1\Quiz\QuizSession;
 
 class QuizResultController extends AdminBaseController
 {
@@ -22,8 +19,8 @@ class QuizResultController extends AdminBaseController
 
     public function create()
     {
-        $categories = Category::where('created_by_id', auth()->user()->id)->get();
-        return view('admin.quiz-results.create', compact('categories'));        
+        $quizSessions = QuizSession::where('created_by_id', auth()->user()->id)->get();
+        return view('admin.quiz-results.create', compact('quizSessions'));        
     }
 
     /**
@@ -34,14 +31,16 @@ class QuizResultController extends AdminBaseController
      */
     public function store(StoreQuizResultRequest $request)
     {
-        $quiz = new Quiz();
-        $quiz->fill($request->all());
-        $quiz->save();
+        $created_by_id = auth()->user()->id;
+        $quizResult = new QuizResult();
+        $quizResult->fill($request->all());
+        $quizResult->created_by_id=$created_by_id;
+        $quizResult->save();
 
 
-        $displayUrl = route('web.admin.quiz-results.show', $quiz->id);
+        $displayUrl = route('web.admin.quiz-results.show', $quizResult->id);
         $this->flashStoredMsg($displayUrl);
-        return redirect()->back()->with(['rID' =>$quiz->id ]);
+        return redirect()->back()->with(['rID' =>$quizResult->id ]);
     }
 
     /**
@@ -52,16 +51,16 @@ class QuizResultController extends AdminBaseController
      */
     public function show($id)
     {
-        $quiz = Quiz::findOrFail($id);
-        // $this->authorize('show',$quiz);
-        return view('admin.quiz-results.show', compact('quiz'));
+        $quizResult = QuizResult::findOrFail($id);
+        // $this->authorize('show',$quizResult);
+        return view('admin.quiz-results.show', compact('quizResult'));
     }
 
     public function edit($id)
     {
-        $categories = Category::where('created_by_id', auth()->user()->id)->get();
-        $quiz = Quiz::findOrFail($id);
-        return view('admin.quiz-results.edit', compact('quiz','categories'));
+        $quizSessions = QuizSession::where('created_by_id', auth()->user()->id)->get();
+        $quizResult = QuizResult::findOrFail($id);
+        return view('admin.quiz-results.edit', compact('quizResult','quizSessions'));
     }
 
     /**
@@ -73,13 +72,13 @@ class QuizResultController extends AdminBaseController
      */
     public function update(UpdateQuizResultRequest $request, $id)
     {
-        $quiz = Quiz::findOrFail($id);
-        $quiz->fill($request->all());
-        $this->authorize('update',$quiz);
-        $quiz->save();
-        $displayUrl = route('web.admin.quiz-results.show', $quiz->id);
+        $quizResult = QuizResult::findOrFail($id);
+        $quizResult->fill($request->all());
+        $this->authorize('update',$quizResult);
+        $quizResult->save();
+        $displayUrl = route('web.admin.quiz-results.show', $quizResult->id);
         $this->flashUpdatedMsg($displayUrl);
-        return redirect()->back()->with(['rID' => $quiz->id]);
+        return redirect()->back()->with(['rID' => $quizResult->id]);
     }
 
     /**
@@ -91,9 +90,9 @@ class QuizResultController extends AdminBaseController
 
     public function destroy($id)
     {
-        $quiz = Quiz::withTrashed()->findOrFail($id);
-        $this->authorize('destroy',$quiz);
-        $quiz->forceDelete();
+        $quizResult = QuizResult::withTrashed()->findOrFail($id);
+        $this->authorize('forceDelete',$quizResult);
+        $quizResult->forceDelete();
         return response('PERMANENTLY DELETED');
     }
 
@@ -103,9 +102,9 @@ class QuizResultController extends AdminBaseController
      */
     public function trash($id)
     {
-        $quiz = Quiz::find($id);
-        $this->authorize('trash',$quiz);
-        $quiz->delete();
+        $quizResult = QuizResult::find($id);
+        $this->authorize('trash',$quizResult);
+        $quizResult->delete();
         return response()->noContent();
     }
 
@@ -115,10 +114,10 @@ class QuizResultController extends AdminBaseController
      */
     public function restore($id)
     {
-        //$quiz = Quiz::withTrashed()->where('id', $id)->restore();
-        $quiz = Quiz::withTrashed()->findOrFail($id);
-        $this->authorize('restore',$quiz);
-        $quiz->restore();
+        //$quizResult = QuizResult::withTrashed()->where('id', $id)->restore();
+        $quizResult = QuizResult::withTrashed()->findOrFail($id);
+        $this->authorize('restore',$quizResult);
+        $quizResult->restore();
         return response('SUCCESSFULLY RESTORED');
     }
 

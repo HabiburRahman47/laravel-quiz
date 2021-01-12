@@ -19,6 +19,8 @@ class CreateQuizSessionAnswersTable extends Migration
             $table->unsignedBigInteger('question_id')->index();
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
             $table->unsignedBigInteger('selected_choice_id')->index();
+            $table->unsignedBigInteger('created_by_id')->index();
+            $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

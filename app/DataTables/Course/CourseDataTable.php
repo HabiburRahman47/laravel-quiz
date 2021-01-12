@@ -25,6 +25,9 @@ class CourseDataTable extends DataTable
             ->editColumn('created_at', function (Course $course) {
                 return $course->created_at->format(config('common.date_time.format.output.normal'));
             })
+            ->editColumn('property', function ($course) {
+                return '<a href="#">' . $course->property->name . '</a>';
+            }) 
             ->addColumn('action', function ($course) {
                 $id = $course->id;
                 $editUrl = null;
@@ -43,7 +46,7 @@ class CourseDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','property'])
             ->whitelist(['name']);
     }
 
@@ -121,6 +124,7 @@ class CourseDataTable extends DataTable
 
             Column::make('DT_RowIndex')->title('No.'),
             Column::make('name'),
+            Column::make('property'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(true)

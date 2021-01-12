@@ -24,6 +24,16 @@
                                     <td>{{ $student->roll_number }}</td>
                                 </tr>
                                 <tr>
+                                    <td>Section</td>
+                                    <td>
+                                    <a href="{{ route('web.admin.sections.show',[$student->section->id]) }}">{{ $student->section->name }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Property</td>
+                                    <td>
+                                    <a href="{{ route('web.admin.properties.show',[$student->property->id]) }}">{{ $student->property->name }}</a></td>
+                                </tr>
+                                <tr>
                                     <td>Created At</td>
                                     <td>{{ $student->created_at }}</td>
                                 </tr>

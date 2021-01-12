@@ -16,7 +16,15 @@
                                 </tr>
                                 <tr>
                                     <td>Parent</td>
-                                    <td>{{ $category->parent_id }}</td>
+                                    @if($category->parent_id==0)
+                                        <td>{{ $category->name }}</td>
+                                    @else
+                                        @foreach($categories as $parent)
+                                            @if( $category->parent_id === $parent->id )
+                                                <td>{{ $parent->name }}</td>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </tr>
                                 <tr>
                                     <td>Created At</td>

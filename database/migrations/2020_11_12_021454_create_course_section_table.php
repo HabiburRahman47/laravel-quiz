@@ -19,6 +19,9 @@ class CreateCourseSectionTable extends Migration
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->unsignedBigInteger('section_id')->nullable()->index();
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
+            $table->unsignedBigInteger('created_by_id')->index();
+            $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

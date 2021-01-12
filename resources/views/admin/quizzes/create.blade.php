@@ -31,6 +31,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="image-input">Image</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="image" type="file" name="image"
+                                               value="{{old('image')}}"
+                                               placeholder="Text">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     <label class="col-md-3 col-form-label" for="text-input">Config</label>
                                     <div class="col-md-9">
                                         <input class="form-control" id="text-input" type="text" name="config"
@@ -38,8 +47,9 @@
                                                placeholder="Config">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="category_id">Property</label>
+
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="category_id">Category</label>
                                     <div class="col-md-9">
                                         <select class="form-control" id="category_id" name="category_id">
                                             <option value="">Select Category</option>

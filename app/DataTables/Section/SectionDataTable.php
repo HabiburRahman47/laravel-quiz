@@ -25,6 +25,9 @@ class SectionDataTable extends DataTable
             ->editColumn('created_at', function (Section $section) {
                 return $section->created_at->format(config('common.date_time.format.output.normal'));
             })
+            ->editColumn('department', function ($section) {
+                return '<a href="'. route('web.admin.departments.show',$section->department_id) .'">' . $section->department->name . '</a>';
+            }) 
             ->addColumn('action', function ($section) {
                 $id = $section->id;
                 $editUrl = null;
@@ -43,7 +46,7 @@ class SectionDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','department'])
             ->whitelist(['name']);
     }
 
@@ -64,7 +67,9 @@ class SectionDataTable extends DataTable
         {
             $model->where('created_by_id', auth()->user()->id)->get();
         }
-
+        if($department_id=request('department_id')){
+            $model->where('department_id',$department_id);
+        }
         $trashed = request('trashed');
         if ($trashed) {
             $model->onlyTrashed();
@@ -124,6 +129,7 @@ class SectionDataTable extends DataTable
 
             Column::make('DT_RowIndex')->title('No.'),
             Column::make('name'),
+            Column::make('department'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(true)

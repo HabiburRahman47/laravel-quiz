@@ -8,7 +8,7 @@
     <div class="container-fluid index">
         <div class="fade-in">
             <!-- /.row-->
-            <h4 class="mb-4">Course</h4>
+            <h4 class="mb-4">Section With Course</h4>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">

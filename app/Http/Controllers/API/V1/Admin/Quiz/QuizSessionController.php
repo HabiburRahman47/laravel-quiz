@@ -34,6 +34,7 @@ class QuizSessionController extends AdminAPIBaseController
         //              ->whereIn('session_id',$sessionId)
         //              ->get();
         // $quizSessions['quiz_result']=$quizResults;
+        
         return response()->json($quizSessions);
         // return new QuizSessionCollection($quizSessions);
     }

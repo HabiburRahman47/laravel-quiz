@@ -25,7 +25,9 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'config'=>'required'
+            'config'=>'required',
+            'question_type'=>'required',
+            'suggested'=>'required'
         ];
     }
 }

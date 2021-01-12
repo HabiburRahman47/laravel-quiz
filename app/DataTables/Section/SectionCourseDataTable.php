@@ -3,6 +3,7 @@
 namespace App\DataTables\Section;
 
 use App\Models\V1\Course\CourseSection;
+use App\Models\V1\Section\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\Html\Button;
@@ -22,14 +23,11 @@ class SectionCourseDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-            // ->editColumn('created_at', function ($question) {
-            //     return $question->created_at->format(config('common.date_time.format.output.normal'));
-            // })
             ->addColumn('updated_at', '{{ \Carbon\Carbon::parse($updated_at)->toDayDateTimeString() }}')
-            ->addColumn('section', function ($sectionCourse) {
+            ->editColumn('section_id', function ($sectionCourse) {
                 return '<a href="' . route('web.admin.sections.show', $sectionCourse->section_id) . '">' . $sectionCourse->section->name . '</a>';
             })
-            ->addColumn('course', function ($sectionCourse) {
+            ->addColumn('course_id', function ($sectionCourse) {
                 return '<a href="' . route('web.admin.courses.show', $sectionCourse->course_id) . '">' . $sectionCourse->course->name . '</a>';
             })
            
@@ -51,7 +49,7 @@ class SectionCourseDataTable extends DataTable
                 $action = view('core.dashboard.layout.partials.datatables.action', compact('id', 'showUrl', 'editUrl', 'deleteUrl', 'trashUrl', 'restoreUrl'));
                 return $action;
             })
-            ->rawColumns(['action', 'section', 'course']);
+            ->rawColumns(['action', 'section_id', 'course_id']);
             // ->whitelist(['name']);
     }
 
@@ -73,6 +71,11 @@ class SectionCourseDataTable extends DataTable
 
         if ($course_id = request('course_id')) {
             $model->where('course_id', $course_id);
+        }
+        $created_by_id = $this->request('id');
+        if ($created_by_id)
+        {
+            $model->where('created_by_id', auth()->user()->id)->get();
         }
 
         $trashed = request('trashed');
@@ -132,8 +135,8 @@ class SectionCourseDataTable extends DataTable
             Column::make('DT_RowIndex')->title('No.')
                ->searchable(false)
                ->orderable(false),
-            Column::make('section'),
-            Column::make('course')->searchable(true),            
+            Column::make('section_id'),
+            Column::make('course_id')->searchable(true),            
             Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(true)

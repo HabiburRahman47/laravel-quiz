@@ -23,8 +23,6 @@
                        class="btn btn-dark"
                        type="button">View Trashed</a>
                 @endif
-                <a href="{{ route('web.admin.cards.create') }}"
-                   class="btn btn-primary" type="button"><span class="cil-plus"></span>Create</a>
             </div>
         </div>
     </div>

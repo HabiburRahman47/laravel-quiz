@@ -24,13 +24,15 @@ class StoreDepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:50'
+            'name' => 'required|max:25',
+            'property_id'=>'required|max:20'
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Name is required!',
+            'property_id.required' => 'Property is required!',
         ];
     }
 }

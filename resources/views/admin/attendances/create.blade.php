@@ -30,13 +30,13 @@
                                                placeholder="Notes">
                                     </div>
                                 </div>
-                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="section_id">CourseSection</label>
+                                  <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="course_section_id">Course Section</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" id="section_id" name="section_id">
+                                        <select class="form-control" id="course_section_id" name="course_section_id">
                                             <option value="">Select Property</option>
-                                            @foreach($sections as $sections)
-                                                <option value="{{$sections->id}}" {{(collect(old('section_id'))->contains($sections->id)) ? 'selected':''}}>{{$sections->name}}</option>
+                                            @foreach($courseSections as $courseSction)
+                                                <option value="{{$courseSction->id}}"  {{(collect(old('course_section_id'))->contains($courseSction->id)) ? 'selected':''}}>{{$courseSction->course->name}}({{$courseSction->section->name}})</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <div class="card">
-                        <div class="card-header"><strong>Edit</strong> Quiz</div>
+                        <div class="card-header"><strong>Edit</strong> Quiz Result</div>
                         @if(session()->has('success'))
                             <div class="row">
                                 <div class="alert alert-success">
@@ -18,32 +18,33 @@
                             </div>
                         @endif
                         <div class="card-body">
-                            <form class="form-horizontal" action="{{route('web.admin.quiz-results.update.all',$quiz->id)}}" method="post" enctype="multipart/form-data">
+                            <form class="form-horizontal" action="{{route('web.admin.quiz-results.update.all',$quizResult->id)}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @include('errors.form-error', ['errors'=>$errors])
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="text-input">Name</label>
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="session_id">Session Quiz</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" id="text-input" type="text" name="name" value="{{old('prefix',$quiz->name)}}"
-                                               placeholder="Name">
+                                        <select class="form-control" id="session_id" name="session_id">
+                                            <option value="">Select Category</option>
+                                            @foreach($quizSessions as $quizSession)
+                                                <option value="{{$quizSession->id}}"  {{$quizSession->id == $quizResult->session_id ? 'selected' : ''}}>{{$quizSession->quiz_name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
+                                
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="text-input">Description</label>
+                                    <label class="col-md-3 col-form-label" for="text-input">Total Question</label>
                                     <div class="col-md-9">
-                                        <input class="form-control" id="text-input" type="text" name="description" value="{{old('description',$quiz->description)}}"
+                                        <input class="form-control" id="text-input" type="number" name="total_question" value="{{old('total_question',$quizResult->total_question)}}"
                                                placeholder="Text">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="property_id">Category</label>
+                               <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">Total Right Ans</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" id="property_id" name="property_id">
-                                            <option value="">Select Category</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{$category->id}}"  {{$category->id == $quiz->category_id ? 'selected' : ''}}>{{$category->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <input class="form-control" id="text-input" type="text" name="total_right_ans" value="{{old('total_right_ans',$quizResult->total_right_ans)}}"
+                                               placeholder="Name">
                                     </div>
                                 </div>
                                 <hr>

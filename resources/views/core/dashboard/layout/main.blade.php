@@ -2,6 +2,8 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     @include('core.dashboard.layout.partials.head')
+    {{-- css link of select2 --}}
+ <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body class="c-app">
@@ -27,6 +29,7 @@
 <script src="{{ asset('core/dashboard/js/coreui.bundle.min.js') }}"></script>
 <script src="{{ asset('core/dashboard/js/coreui-utils.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 {{--in page js--}}
 @stack('javascript')
 
@@ -62,12 +65,21 @@
             boundary: 'window'
         });
     });
-
+     $(document).ready(function(){
+           $(".js-example-tags").select2({
+                placeholder:'Select tags',
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
+        }); 
 
 </script>
+
 <!--Scroll to top-->
 <div class="scroll-to-top scroll-to-target" data-target=".header-top">
     <span class="icon fa fa-angle-up"></span>
 </div>
+
+
 </body>
 </html>

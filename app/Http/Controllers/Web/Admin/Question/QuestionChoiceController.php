@@ -110,14 +110,8 @@ class QuestionChoiceController extends AdminBaseController
     {
         $questionChoice = ChoiceQuestion::findOrFail($id);
         $questionChoice->fill($request->all());
+        $this->authorize('update',$questionChoice);
         $questionChoice->save();
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $extension = $file->getClientOriginalName(); // getting image extension
-        //     $file->move("uploads/Choice-watch-faces/$questionChoice->id/image/", $extension);
-        //     $questionChoice->image = $extension;
-        //     $questionChoice->save();
-        // }
         // $questionChoice->setMeta('seo', json_encode($request->seo));
 
         $displayUrl = route('web.admin.question-choices.show', $questionChoice->id);
@@ -134,6 +128,7 @@ class QuestionChoiceController extends AdminBaseController
     public function destroy($id)
     {
         $questionChoice = ChoiceQuestion::withTrashed()->findOrFail($id);
+        $this->authorize('forceDelete',$questionChoice);
         $questionChoice->forceDelete();
         return response()->json("success");
     }
@@ -141,6 +136,7 @@ class QuestionChoiceController extends AdminBaseController
     public function trash($id)
     {
         $questionChoice = ChoiceQuestion::find($id);
+        $this->authorize('trash',$questionChoice);
         $questionChoice->delete();
         return response()->noContent();
     }
@@ -148,6 +144,7 @@ class QuestionChoiceController extends AdminBaseController
     public function restore($id)
     {
         $questionChoice = ChoiceQuestion::withTrashed()->findOrFail($id);
+        $this->authorize('restore',$questionChoice);
         $questionChoice->restore();
         return response()->noContent();
     }

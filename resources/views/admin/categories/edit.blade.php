@@ -29,12 +29,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label" for="property_id">Parent</label>
+                                    <label class="col-md-3 col-form-label" for="parent_id">Parent</label>
                                     <div class="col-md-9">
-                                        <select class="form-control" id="property_id" name="property_id">
+                                        <select class="form-control" id="parent_id" name="parent_id">
                                             <option value="">Select Parent</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{$category->id}}"  {{$category->id == $category->parent_id ? 'selected' : ''}}>{{$category->name}}</option>
+                                            @foreach($categories as $parent)
+                                                <option value="{{$parent->id}}"  {{$parent->id == $category->parent_id ? 'selected' : ''}}>{{$parent->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
