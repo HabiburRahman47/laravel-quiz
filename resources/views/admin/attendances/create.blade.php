@@ -36,7 +36,9 @@
                                         <select class="form-control" id="course_section_id" name="course_section_id">
                                             <option value="">Select Property</option>
                                             @foreach($courseSections as $courseSction)
-                                                <option value="{{$courseSction->id}}"  {{(collect(old('course_section_id'))->contains($courseSction->id)) ? 'selected':''}}>{{$courseSction->course->name}}({{$courseSction->section->name}})</option>
+                                                <option value="{{$courseSction->id}}"  {{(collect(old('course_section_id'))->contains($courseSction->id)) ? 'selected':''}}>{{$courseSction->course->name}}({
+                                                    
+                                                    {$courseSction->section->name}})</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -80,7 +80,7 @@ class QuizResultController extends Controller
         $quizSession=QuizSession::findOrFail($quizSessionId);
         //Question with Choices
         $quizId=$quizSession->quiz_id;
-        $quiz=Quiz::with('questions')->findOrFail($quizId);
+        $quiz=Quiz::with('questions.choices')->findOrFail($quizId);
         $questions=$quiz->questions;
         $questionLimit=$questions->count();
         $response=[];
@@ -91,7 +91,8 @@ class QuizResultController extends Controller
             ];
         }
         $quizSession['question']=$response;
-        return new QuizResultResource($quizSession);
+        return response()->json($quizSession);
+        //return new QuizResultResource($quizSession);
     }
 
     /**

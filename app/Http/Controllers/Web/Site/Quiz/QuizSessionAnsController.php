@@ -61,20 +61,23 @@ class QuizSessionAnsController extends AdminBaseController
      */
     public function store(Request $request,$sessionId)
     {
-       
+       //return response()->json($request);
         foreach($request->input('questions', []) as $key => $question){
-            QuizSessionAnswer::create([
+            QuizSessionAnswer::updateOrCreate([
                 'session_id'=> $sessionId,
-                'question_id' => $question,
-                'selected_choice_id'   => $request->input('choice.'.$question),
-                 'created_by_id'=> auth()->user()->id,
+                'question_id'=> $question,
+                'selected_choice_id'=> $request->input('choice.'.$question),
+                'created_by_id'=> auth()->user()->id,
             ]);
-        }//QuizSessionAns
+        }
+        //QuizSessionAns
         $quizSessionAns=QuizSessionAnswer::where('session_id','=',$sessionId)->get();
         $quizSessionAns=$quizSessionAns->pluck('selected_choice_id');
         //Question
 
         $quizSession=QuizSession::findOrFail($sessionId);
+        $quizSession->status=1;
+        $quizSession->save();
         $quiz_id=$quizSession->quiz_id;
         $quiz=Quiz::with('questions')->findOrFail($quiz_id);
         $questions=$quiz->questions->pluck('config');
@@ -94,14 +97,36 @@ class QuizSessionAnsController extends AdminBaseController
         $quizResult->created_by_id=$created_by_id;
         $quizResult->save();
         $quizResultId=$quizResult->id;
+        //Question and Selected choice 
+        //QuizResult
+        $quizResult=QuizResult::findOrFail($quizResultId);
+        $quizSessionId=$quizResult->session_id;
+        //QuizSessionAns
+        $quizSessionAns=QuizSessionAnswer::where('session_id','=',$quizSessionId)->get();
+        $quizSessionAns=$quizSessionAns->pluck('selected_choice_id');
+        //QuizSession
+        $quizSession=QuizSession::findOrFail($quizSessionId);
+        //Question with Choices
+        $quizId=$quizSession->quiz_id;
+        $quiz=Quiz::with('questions.choices')->findOrFail($quizId);
+        $questions=$quiz->questions;
+        $questionLimit=$questions->count();
+        $response=[];
+        for($i=0;$i<$questionLimit;$i++){
+            $questions[$i]['canditade_selected_ans'] = $quizSessionAns[$i];
+            $response[] = $questions[$i];
+        }
+        $quizSession['question']=$response;
+        $questions=$quizSession->question;
+        //return response()->json($quizSession->question);
     
-        return view('site.quizzes.showQuizResult',compact('quizResult'));
+        return view('site.quizzes.showQuizResult',compact('quizResult','questions'));
 
     }
 
     public function incompleteSession(Request $request,$sessionId)
     {
-       
+       //return response()->json($request);
         foreach($request->input('questions', []) as $key1 => $question){
             foreach($request->input('choice', []) as $key2 => $choice){
                 if($key2==$question){
@@ -115,8 +140,9 @@ class QuizSessionAnsController extends AdminBaseController
             }           
         }
         $quizSession = QuizSession::findOrFail($sessionId);
-        $quizSession->status=1;
         $quizSession->save();
+        //return view('site.quizzes.showQuizHistory',compact('quizSessions'));
+        return redirect()->route('web.site.quiz.history');
         
     }
     /**

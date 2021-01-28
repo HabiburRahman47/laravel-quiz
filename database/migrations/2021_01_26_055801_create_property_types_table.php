@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuizSessionsTable extends Migration
+class CreatePropertyTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateQuizSessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('quiz_sessions', function (Blueprint $table) {
+        Schema::create('property_types', function (Blueprint $table) {
             $table->id();
-            $table->string('quiz_name')->index();
-            $table->unsignedBigInteger('quiz_id')->index();
-            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->tinyInteger('suggested')->default('0');
+            $table->text('user_interface')->nullable();
+            $table->string('slug');
             $table->unsignedBigInteger('created_by_id')->index();
             $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
-            $table->tinyInteger('status')->default('0');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -33,6 +34,6 @@ class CreateQuizSessionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quiz_sessions');
+        Schema::dropIfExists('property_types');
     }
 }

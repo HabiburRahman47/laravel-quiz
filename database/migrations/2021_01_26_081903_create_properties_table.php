@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriesTable extends Migration
+class CreatePropertiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->string('private_name')->nullable();
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('property_type_id')->unsigned()->index();
+            $table->foreign('property_type_id')->references('id')->on('property_types')->onDelete('cascade');
+            $table->tinyInteger('visibility')->default('0');
+            $table->string('slug');
             $table->unsignedBigInteger('created_by_id')->index();
             $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
@@ -31,6 +36,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('properties');
     }
 }

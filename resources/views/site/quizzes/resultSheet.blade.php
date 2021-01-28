@@ -1,4 +1,4 @@
-@extends('site\quizzes\main')
+{{-- @extends('site\quizzes\main')
 @section('css-style')
 <style>
   .rightAns {
@@ -9,7 +9,7 @@
   }
 </style>
 @endsection
-@section('content')
+@section('content') --}}
 <div class=" container justify-content-center">
       <div class="row">
         <div class="col 6">
@@ -32,8 +32,8 @@
               $q = 1+$key
               @endphp
               <div class="form-group">                
-                  {{-- <label class="form-check-label" for="question">Question {{1+$key}}:</label> --}}
-                  <h4>({{1+$key}}) {{$question->name}}</h4>
+                  <label class="form-check-label" for="question">Question {{1+$key}}:</label>
+                  <h4>{{$question->name}}</h4>
                   @foreach($question->choices as $key =>  $choice)
                     <label class="
                         @if ($question->config==$question->canditade_selected_ans && $choice->id==$question->config)
@@ -55,4 +55,4 @@
 
     </div>
 </div>
-@endsection
+{{-- @endsection --}}

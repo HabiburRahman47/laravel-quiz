@@ -20,8 +20,8 @@ return [
 //                1 => 'Yes',//yes->true
 //            ],
             "label" => [
-                "false" => 'Nope',
-                "true" => 'Yappp',
+                "false" => 'No',
+                "true" => 'Yes',
             ],
             "color" => [
                 'No' => "danger",
@@ -31,9 +31,9 @@ return [
     ],
     'quiz_sessions'=>[
         'status'=>[
-            'name'=>[
-                0=>'complete',
-                1=>'incomplete'
+            'label'=>[
+                'false'=>'incomplete',
+                'true'=>'complete'
             ],
             'color'=>[
                 'complete'=>'success',

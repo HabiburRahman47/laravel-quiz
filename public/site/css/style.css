@@ -1,0 +1,103 @@
+.fakeimg {
+    height: 200px;
+    background: #aaa;
+}
+.carousel-inner img {
+    width: 100%; /* Set width to 100% */
+    min-height: 200px;
+}
+
+/* Hide the carousel text when the screen is less than 600 pixels wide */
+@media (max-width: 600px) {
+    .carousel-caption {
+        display: none;
+    }
+}
+img {
+    height: 150px;
+    width: 100%;
+}
+
+div [class^="col-"] {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.card {
+    transition: 0.5s;
+    cursor: pointer;
+}
+.card-title {
+    font-size: 15px;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+}
+.card-text {
+    height: 80px;
+}
+
+.card::before,
+.card::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: scale3d(0, 0, 1);
+    transition: transform 0.3s ease-out 0s;
+    background: rgba(255, 255, 255, 0.1);
+    content: "";
+    pointer-events: none;
+}
+.card::before {
+    transform-origin: left top;
+}
+.card::after {
+    transform-origin: right bottom;
+}
+.card:hover::before,
+.card:hover::after,
+.card:focus::before,
+.card:focus::after {
+    transform: scale3d(1, 1, 1);
+}
+body {
+    background: #eeeded;
+}
+
+.card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.card:hover {
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.card > .card-inner {
+    padding: 10px;
+}
+.card .header h2,
+h3 {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.card .header {
+    margin-bottom: 5px;
+}
+.card img {
+    width: 100%;
+}
+.rightAns {
+    color: #0f0;
+}
+.wrongAns {
+    color: #f00;
+}

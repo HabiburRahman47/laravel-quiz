@@ -9,11 +9,14 @@
             </a>
         </div>
         <div class="col-sm-5">
-            <h1 class="display-4">{{ $category->name }}</h1>
+            <h1 class="display-4">{{ $property->name }}</h1>
+            <h3>Private Name:{{ $property->private_name }}</h3>
+            <h3>Description:{{ $property->description }}</h3>
+            <h3>Property Type:{{ $property->propertyType->name }}</h3>
             <button type="button" class="btn btn-outline-info rounded-pill d-none d-xl-block d-lg-block d-xl-none">
-            <a href="{{ route('web.site.category.quiz',$category->slug) }}">
-                Take a Quiz
-            </a>
+              <a href="{{ route('web.site.category.index') }}">
+                Quiz
+              </a>
               
             </button>
 

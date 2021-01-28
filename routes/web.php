@@ -13,26 +13,32 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/','Web\Site\Quiz\HomeController@index');
-Route::get('/properties','Web\Site\Quiz\HomeController@properties')->name('properties');
-Route::get('properties/schools','Web\Site\Quiz\SchoolController@index')->name('schools');
-// Route::get('properties/schools/{id}','Web\Site\Quiz\SchoolController@show')->name('school.show');
-Route::get('properties/schools/{id}', ['as'=>'school.show','uses'=>'Web\Site\Quiz\SchoolController@show']);
+Route::name('web.site.')->namespace('Web\Site\Quiz')->group(function () {
+       //Home page
+        Route::get('/','HomeController@index')->name('homepage');
+        Route::get('/property-types','PropertyTypeController@index')->name('property.types');
+        Route::get('/property-types/{slug}/properties','PropertyController@index')->name('properties.index');
+        Route::get('properties/{slug}','PropertyController@show')->name('property.show');
 
-Route::get('/categories','Web\Site\Quiz\CategoryController@index')->name('category.index');
-Route::get('/categories/{id}','Web\Site\Quiz\CategoryController@show')->name('category.show');
-Route::get('/category-quizzes/{id}','Web\Site\Quiz\CategoryController@categoryQuiz')->name('category.quiz');
-Route::get('quizzes/sessions/{quizId}/start','Web\Site\Quiz\QuizSessionController@create')->name('quizSession');
-Route::get('/quiz-questions/{id}','Web\Site\Quiz\QuizController@quizQuestions')->name('quizQuestions');
-Route::post('quiz-session-ans/{sessionId}/questions/choices/submit','Web\Site\Quiz\QuizSessionAnsController@store')->name('quizSubmit');
-//Session-Incomplete
-Route::post('quiz-session-ans/{sessionId}/questions/choices/save','Web\Site\Quiz\QuizSessionAnsController@incompleteSession')->name('quiz.incomplete');
-//Session-Finish
-Route::post('quiz-results/finish/{sessionId}','Web\Site\Quiz\QuizResultController@store')->name('quiz.finish');
-Route::get('quiz-results/{quizResultId}','Web\Site\Quiz\QuizResultController@show')->name('quiz.result');
-//Previous history
-Route::get('quiz-session/previous-history','Web\Site\Quiz\QuizSessionController@index')->name('quiz.history');
+        Route::get('/categories','CategoryController@index')->name('category.index');
+        Route::get('/categories/{slug}','CategoryController@show')->name('category.show');
+        Route::get('/category/{slug}/quizzes','CategoryController@categoryQuiz')->name('category.quiz');
+        Route::get('quizzes/{slug}/sessions/start','QuizSessionController@create')->name('quizSession');
+        Route::get('/quiz/{slug}/questions','QuizController@quizQuestions')->name('quizQuestions');
+        Route::post('quiz-session-ans/{sessionId}/questions/choices/submit','QuizSessionAnsController@store')->name('quizSubmit');
+        //Session-Incomplete
+        Route::post('quiz-session-ans/{sessionId}/questions/choices/save','QuizSessionAnsController@incompleteSession')->name('quiz.incomplete');
+        //Session-Finish
+        Route::post('quiz-results/finish/{sessionId}','QuizResultController@store')->name('quiz.finish');
+        Route::get('quiz-results/quiz-session/{sessionId}','QuizResultController@show')->name('quiz.result');
+        //Previous history
+        Route::get('quiz-session/previous-history','QuizSessionController@index')->name('quiz.history');
+        //Display Incomplete Quiz
+        Route::get('quiz-session/{sessionId}/incomplete-quiz','QuizSessionController@displayIncompleteQuiz')->name('incomplete.quiz.show');
+        //Generate PDF of Quiz Result
+        Route::get('quiz-session/{sessionId}/quiz-result/pdf-generation','QuizResultController@pdfGeneration')->name('quiz.result.sheet');
 
+});
 
 
 Auth::routes(['register' => false]);

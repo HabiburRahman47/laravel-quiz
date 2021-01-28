@@ -21,16 +21,17 @@ class CategoryController extends AdminBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $category=Category::with('quizzes')->findOrFail($id);
+        $category=Category::with('quizzes')->where('slug',$slug)->firstOrFail();
         // dd($category);
-        // return response($category);
+        // return response()->json($category);
         return view('site.quizzes.showCategory',compact('category'));
     }    
-    public function categoryQuiz($id)
+    public function categoryQuiz($slug)
     {
-        $categoryQuizzes=Category::with('quizzes')->findOrFail($id);
+        $categoryQuizzes=Category::with('quizzes')->where('slug',$slug)->firstOrFail();
+        //return response()->json($categoryQuizzes);
         return view('site.quizzes.showCategoryQuizzes',compact('categoryQuizzes'));
     }
 }

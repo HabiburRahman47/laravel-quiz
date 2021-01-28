@@ -18,21 +18,21 @@ class HomeController extends AdminBaseController
     {
         return view('site.quizzes.index');
     }
-    public function properties()
-    {
+    // public function properties()
+    // {
         
-        return view('site.quizzes.properties');
-    }
-    public function schools()
-    {
-        $schools=Property::get();
-        return view('site.quizzes.schools',compact('schools'));
-    }
-    public function categories()
-    {
-        $categories=Category::get();
-        return view('site.quizzes.categories',compact('categories'));
-    }
+    //     return view('site.quizzes.properties');
+    // }
+    // public function schools()
+    // {
+    //     $schools=Property::get();
+    //     return view('site.quizzes.schools',compact('schools'));
+    // }
+    // public function categories()
+    // {
+    //     $categories=Category::get();
+    //     return view('site.quizzes.categories',compact('categories'));
+    // }
 
     /**
      * Show the form for creating a new resource.

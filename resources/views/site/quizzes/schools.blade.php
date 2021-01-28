@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{--  <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>We Connect</title>
@@ -93,7 +93,9 @@
       </li>    
     </ul>
   </div>  
-</nav>
+</nav>  --}}
+@extends('site\quizzes\main')
+@section('content')
 <div class="container p-3">
   <h2 class="text-center">List of Schools</h2><br>
   <hr>
@@ -104,7 +106,7 @@
                   <div class="card card-block text-center p-3">
                      <img src="https://via.placeholder.com/400" alt="Photo of sunset">
                       <h5 class="card-title mt-3 mb-3">
-                      <a href="{{ route('school.show',$school->id) }}">
+                      <a href="{{ route('web.site.school.show',$school->id) }}">
                          {{ $school->name }}
                       </a>
             
@@ -116,10 +118,4 @@
          
     </div>
 </div>
-
-<div class="jumbotron text-center" style="margin-bottom:0">
-  <p>Footer</p>
-</div>
-
-</body>
-</html>
+@endsection

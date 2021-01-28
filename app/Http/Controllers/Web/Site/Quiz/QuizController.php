@@ -22,17 +22,14 @@ class QuizController extends AdminBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($categoryId)
     {
-        $category=Category::with('quizzes')->findOrFail($id);
-        // dd($category);
-        // return response($category);
+        $category=Category::with('quizzes')->findOrFail($categoryId);
         return view('site.quizzes.showCategory',compact('category'));
     }    
-    public function quizQuestions($id)
+    public function quizQuestions($slug)
     {
-        $quizQuestions=Quiz::with('questions.choices')->findOrFail($id);
-        // return response()->json($quizQuestions);
+        $quizQuestions=Quiz::with('questions.choices')->where('slug',$slug)->firstOrFail();
         return view('site.quizzes.showQuestions',compact('quizQuestions'));
     }
 }

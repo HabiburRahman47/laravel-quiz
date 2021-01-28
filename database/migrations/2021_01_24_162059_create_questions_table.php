@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->text('config');
+            $table->text('explanation')->nullable();
             $table->string('question_type');
             $table->tinyInteger('suggested');
             $table->unsignedBigInteger('created_by_id')->index();

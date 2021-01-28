@@ -23,19 +23,6 @@ class QuizSessionController extends AdminBaseController
         $quizSessions=QuizSession::where('created_by_id','=',$created_by_id)
                  ->with('result')
                  ->get();
-        // $sessionId=$quizSessions->pluck('id');
-        // $quizResults=QuizResult::select('total_question','total_right_ans')
-        //              ->whereIn('session_id',$sessionId)
-        //              ->get();
-        // $quizSessions['quiz_result']=$quizResults;
-        //dd($quizSessions);
-        //return response()->json($quizSessions);
-        // $quizSessions = json_decode($quizSessions,TRUE);
-        // $quizSessions = (object) $quizSessions;
-        // dd(gettype($quizSessions));
-        // $quizSessions = json_decode (json_encode ($quizSessions), FALSE);
-        // $quizSessions = (object) $quizSessions;
-        // dd(gettype($quizSessions->result));
         return view('site.quizzes.showQuizHistory',compact('quizSessions'));
         // return new QuizSessionCollection($quizSessions);
     }
@@ -45,18 +32,44 @@ class QuizSessionController extends AdminBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request,$quizId)
+    public function create(Request $request,$slug)
     {
         $created_by_id = auth()->user()->id;
-        $quizQuestions=Quiz::with('questions.choices')->findOrFail($quizId);
+        $quizQuestions=Quiz::with('questions.choices')->where('slug',$slug)->firstOrFail();
+        $questions=$quizQuestions->questions;
         $quizSession=new QuizSession();
         $quizSession->quiz_name=$quizQuestions->name;
-        $quizSession->quiz_id=$quizId;
+        $quizSession->quiz_id=$quizQuestions->id;
         $quizSession->created_by_id=$created_by_id;
         $quizSession->save();
         $sessionId=$quizSession->id;
+        //return response()->json($quizQuestions);
 
-        return view('site.quizzes.showQuestions',compact('quizQuestions','sessionId'));
+        return view('site.quizzes.showQuestions',compact('questions','sessionId'));
+
+    }
+    //Display of Incomplete question
+    public function displayIncompleteQuiz(Request $request,$sessionId)
+    {
+         //QuizSessionAns
+        $quizSessionAns=QuizSessionAnswer::where('session_id','=',$sessionId)->get();
+        $quizSessionAns=$quizSessionAns->pluck('selected_choice_id');
+        //QuizSession
+        $quizSession=QuizSession::findOrFail($sessionId);
+        //Question with Choices
+        $quizId=$quizSession->quiz_id;
+        $quiz=Quiz::with('questions.choices')->findOrFail($quizId);
+        $questions=$quiz->questions;
+        $questionLimit=$questions->count();
+        $response=[];
+        for($i=0;$i<$questionLimit;$i++){
+            $questions[$i]['canditade_selected_ans'] = isset($quizSessionAns[$i])?$quizSessionAns[$i]:null;
+            $response[] = $questions[$i];
+        }
+        $quizSession['question']=$response;
+        $questions=$quizSession->question;
+        //return response()->json($quizQuestions);
+        return view('site.quizzes.showQuestions',compact('questions','sessionId'));
 
     }
 
