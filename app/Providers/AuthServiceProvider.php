@@ -75,9 +75,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         if (app()->environment('local')) {
+
+            // Passport::routes(null, ['prefix' => 'api/v1/oauth']);
             Passport::routes(function ($router) {
                 $router->forAccessTokens();
-            });
+            }, ['prefix' => 'api/v1/oauth']);
         }
     }
 }
