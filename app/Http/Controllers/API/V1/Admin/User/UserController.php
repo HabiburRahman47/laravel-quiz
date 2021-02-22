@@ -41,6 +41,7 @@ class UserController extends Controller
         // $user=User::with('properties.propertyType.events.eventType','topics.topicType.events.eventType')->findOrFail($id);
         return new UserResource($user);
     }
+    
 
 
 }

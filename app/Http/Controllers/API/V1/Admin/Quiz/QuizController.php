@@ -8,6 +8,7 @@ use App\Http\Requests\API\V1\Admin\Quiz\UpdateQuizRequest;
 use App\Http\Resources\API\V1\Admin\Quiz\QuizCollection;
 use App\Http\Resources\API\V1\Admin\Quiz\QuizResource;
 use App\Models\V1\Quiz\Quiz;
+use App\Models\V1\User\User;
 use Illuminate\Http\Request;
 
 class QuizController extends AdminAPIBaseController
@@ -76,4 +77,10 @@ class QuizController extends AdminAPIBaseController
         $quiz->forceDelete();
         return response()->noContent();
     }
+    public function profile(Request $request)
+	{
+		
+		$user =User::findOrFail(auth()->user()->id);
+		return response()->json($user);
+	}
 }
