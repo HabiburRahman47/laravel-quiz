@@ -41,6 +41,12 @@ class UserController extends Controller
         // $user=User::with('properties.propertyType.events.eventType','topics.topicType.events.eventType')->findOrFail($id);
         return new UserResource($user);
     }
+    public function profile(Request $request)
+    {
+        
+        $user =User::findOrFail(auth()->user()->id);
+        return response()->json($user);
+    }
     
 
 
