@@ -38,7 +38,8 @@ class QuizController extends AdminAPIBaseController
     public function show($quizId)
     {
         $quiz=Quiz::with('questions.choices')->findOrFail($quizId);
-        return new QuizResource($quiz);
+        // return new QuizResource($quiz);
+        return response()->json($quiz);
     }
 
     public function update(UpdateQuizRequest $request,$quizId)

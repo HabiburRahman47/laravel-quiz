@@ -15,7 +15,6 @@ class UserController extends Controller
 	
 	public function profile(Request $request)
 	{
-		dd('habibur');
 		$user = User::findOrFail(auth()->user()->id);
 		return response()->json($user);
 	}
