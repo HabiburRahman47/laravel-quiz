@@ -15,11 +15,12 @@ class QuizController extends AdminAPIBaseController
 {
     public function index(Request $request)
     {
-       $quizzes=Quiz::applyTrashFilterAble()
-                ->applyKeywordSearchAble()
-                ->applySortAble()
-                ->applyPaginateAble();
-       return new QuizCollection($quizzes);
+       // $quizzes=Quiz::applyTrashFilterAble()
+       //          ->applyKeywordSearchAble()
+       //          ->applySortAble()
+       //          ->applyPaginateAble();
+       // return new QuizCollection($quizzes);
+        return response()->json(Quiz::with('category')->get());
     }
 
 
@@ -37,7 +38,7 @@ class QuizController extends AdminAPIBaseController
 
     public function show($quizId)
     {
-        $quiz=Quiz::with('questions.choices')->findOrFail($quizId);
+        $quiz=Quiz::with('questions.choices','category')->findOrFail($quizId);
         // return new QuizResource($quiz);
         return response()->json($quiz);
     }
@@ -46,7 +47,7 @@ class QuizController extends AdminAPIBaseController
     {
         $quiz=Quiz::findOrFail($quizId);
         $quiz->fill($request->all());
-        $this->authorize('update',$quiz);
+        // $this->authorize('update',$quiz);
         $quiz->save();
         return new QuizResource($quiz);
     }
@@ -55,8 +56,9 @@ class QuizController extends AdminAPIBaseController
 
     public function trash($quizId)
     {
+        // return response()->json('Successful');
         $quiz=Quiz::findOrFail($quizId);
-        $this->authorize('trash',$quiz);
+        // $this->authorize('trash',$quiz);
         $quiz->delete();
         return response()->noContent();
     }

@@ -19,11 +19,12 @@ class CategoryController extends AdminAPIBaseController
     public function index()
 
     {
-        $categories=Category::applyTrashFilterAble()
-                             ->applyKeywordSearchAble()
-                             ->applySortAble()
-                             ->applyPaginateAble();
-        return new CategoryCollection($categories);
+        // $categories=Category::applyTrashFilterAble()
+        //                      ->applyKeywordSearchAble()
+        //                      ->applySortAble()
+        //                      ->applyPaginateAble();
+        // return new CategoryCollection($categories);
+       return response()->json(Category::get());
     }
 
 

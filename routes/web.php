@@ -44,11 +44,11 @@ Route::name('web.site.')->namespace('Web\Site\Quiz')->group(function () {
 Auth::routes(['register' => false]);
 Route::group(['middleware' => ['auth', 'get.menu']], function () {
      
-    // Route::get('/', function () {
-    //     return view('admin.dashboard');
+    Route::get('/', function () {
+        return view('admin.dashboard');
 
 
-    // });
+    });
     Route::get('/test', function () {
         return view('admin.notifications.modals');
     });
